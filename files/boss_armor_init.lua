@@ -1,0 +1,17 @@
+local me = GetUpdatedEntityID()
+local comp = EntityGetFirstComponent(me, "VariableStorageComponent", "boss_reworks_armor")
+if comp == nil then
+    local health = EntityGetFirstComponent(me, "DamageModelComponent")
+    if not health then return end
+    EntityAddComponent2(me, "VariableStorageComponent", {
+        _tags="boss_reworks_armor",
+        value_float=0,
+        value_int=ComponentGetValue2(health, "max_hp"),
+    })
+    EntityAddComponent2(me, "LuaComponent", {
+        script_damage_about_to_be_received="mods/boss_reworks/files/boss_armor.lua",
+        execute_every_n_frame=-1,
+    })
+else
+    ComponentSetValue2(comp, "value_float", ComponentGetValue2(comp, "value_float") / 1.01)
+end
