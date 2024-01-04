@@ -1,5 +1,7 @@
 local me = GetUpdatedEntityID()
 local comp = EntityGetFirstComponent(me, "SpriteParticleEmitterComponent")
+local player = EntityGetClosestWithTag(x, y, "player_unit") or EntityGetClosestWithTag(x, y, "polymorphed_player")
+local x, y = EntityGetTransform(me)
 if comp ~= nil then
     local xs, ys = ComponentGetValue2(comp, "scale")
     xs = xs + (0.5 - xs) / 5
@@ -7,9 +9,8 @@ if comp ~= nil then
     ComponentSetValue2(comp, "scale", xs, ys)
 end
 local vel = EntityGetFirstComponent(me, "VelocityComponent")
-if vel and ComponentGetValue2(vel, "mVelocity") == 0 then
-    local x, y = EntityGetTransform(me)
-    local x2, y2 = EntityGetTransform(EntityGetClosestWithTag(x, y, "player_unit"))
+if vel and ComponentGetValue2(vel, "mVelocity") == 0 and player ~= nil then
+    local x2, y2 = EntityGetTransform(player)
     local newx, newy
     if x2 > x then newx = 90 else newx = -90 end
     if y2 > y then newy = -90 else newy = 90 end
@@ -59,6 +60,7 @@ end
 
 if GameGetFrameNum() % 25 == 0 then
     dofile_once("data/scripts/lib/utilities.lua")
-    local x, y = EntityGetTransform(me)
-    shoot_at_entity(me, EntityGetClosestWithTag(x, y, "player_unit"), 300, "mods/boss_reworks/files/boss_dragon/dragon_orb.xml")
+    if player ~= nil then
+        shoot_at_entity(me, EntityGetClosestWithTag(x, y, "player_unit"), 300, "mods/boss_reworks/files/boss_dragon/dragon_orb.xml")
+    end
 end
