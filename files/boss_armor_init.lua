@@ -13,5 +13,5 @@ if comp == nil then
         execute_every_n_frame=-1,
     })
 else
-    ComponentSetValue2(comp, "value_float", ComponentGetValue2(comp, "value_float") / 1.01)
+    ComponentSetValue2(comp, "value_float", ComponentGetValue2(comp, "value_float") * 0.99) -- decay by 50% over 60f
 end
