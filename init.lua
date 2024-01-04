@@ -1,1 +1,1 @@
-GamePrint("hi")
+dofile_once("mods/boss_reworks/files/boss_dragon/edit.lua")
