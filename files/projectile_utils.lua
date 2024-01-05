@@ -1,4 +1,4 @@
-function Shoot_projectile(who_shot, entity_file, x, y, vel_x, vel_y, velocity_multiplier)
+function ShootProjectile(who_shot, entity_file, x, y, vel_x, vel_y, velocity_multiplier)
 	if not velocity_multiplier then velocity_multiplier = 1 end
 	local entity_id = EntityLoad(entity_file, x, y)
 	local herd = 2
@@ -29,5 +29,5 @@ end
 
 function ShootProjectileAtEntity(who_shot, entity_file, x, y, to_entity, velocity_multiplier)
 	local ex, ey = EntityGetTransform(to_entity)
-	Shoot_projectile(who_shot, entity_file, x, y, ex - x, ey - y, velocity_multiplier)
+	ShootProjectile(who_shot, entity_file, x, y, ex - x, ey - y, velocity_multiplier)
 end

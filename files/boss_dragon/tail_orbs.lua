@@ -22,7 +22,7 @@ for i = 1, how_many do
 
 	GameEntityPlaySound(entity_id, "duplicate")
 	dofile_once("mods/boss_reworks/files/projectile_utils.lua")
-	Shoot_projectile(entity_id, "mods/boss_reworks/files/boss_dragon/tail_orbs.xml", px, py, vel_x, vel_y, false, 0.3)
+	ShootProjectile(entity_id, "mods/boss_reworks/files/boss_dragon/tail_orbs.xml", px, py, vel_x, vel_y, false, 0.3)
 end
 
 GamePlaySound("data/audio/Desktop/projectiles.bank", "projectiles/orb_dragon/create", pos_x, pos_y)

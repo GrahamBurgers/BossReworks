@@ -24,6 +24,6 @@ if GameGetFrameNum() % 180 == 0 and #EntityGetWithTag("gate_monster") > 1 then
 
 		GameEntityPlaySound(me, "duplicate")
 		dofile_once("mods/boss_reworks/files/projectile_utils.lua")
-		Shoot_projectile(me, "mods/boss_reworks/files/boss_gate/orb.xml", px, py, vel_x, vel_y)
+		ShootProjectile(me, "mods/boss_reworks/files/boss_gate/orb.xml", px, py, vel_x, vel_y)
 	end
 end
