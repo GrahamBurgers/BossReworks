@@ -61,14 +61,10 @@
 	  emissive="1"
     >
   </SpriteComponent>
-
-  <LuaComponent
-    script_source_file="mods/boss_reworks/files/boss_gate/orb.lua"
-  ></LuaComponent>
   
 	<VariableStorageComponent
 		name="projectile_file"
-		value_string="mods/boss_reworks/files/boss_gate/orb.xml"
+		value_string="mods/boss_reworks/files/boss_gate/dart.xml"
 		>
 	</VariableStorageComponent>
 
