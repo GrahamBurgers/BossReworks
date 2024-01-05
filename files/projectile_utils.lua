@@ -1,5 +1,5 @@
 function ShootProjectile(who_shot, entity_file, x, y, vel_x, vel_y, velocity_multiplier)
-	if not velocity_multiplier then velocity_multiplier = 1 end
+	velocity_multiplier = velocity_multiplier or 1
 	local entity_id = EntityLoad(entity_file, x, y)
 	local herd = 2
 	local genome = EntityGetFirstComponent(who_shot, "GenomeDataComponent")

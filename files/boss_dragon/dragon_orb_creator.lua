@@ -25,7 +25,7 @@ if GameGetFrameNum() % 25 == 0 then
 		theta = theta + ((math.random() > 0.5) and -0.25 or 0.25)
 		if px < x then theta = theta + math.pi end
 		local proj = ShootProjectile(me, "mods/boss_reworks/files/boss_dragon/dragon_orb.xml", x, y, math.cos(theta),
-			math.sin(theta), false, 0.5)
+			math.sin(theta), 0.4)
 		-- TODO: add either 0.25 or -0.25 to the projectile's direction
 	end
 end
