@@ -15,7 +15,7 @@ if GameGetFrameNum() % 150 == 0 then
 		local y2 = (ComponentGetValue2(hitbox, "aabb_min_y") + ComponentGetValue2(hitbox, "aabb_max_y")) / 2
 		SetRandomSeed(x + 425909, y + GameGetFrameNum())
 		dofile_once("mods/boss_reworks/files/projectile_utils.lua")
-		Shoot_projectile(me, "mods/boss_reworks/files/boss_dragon/dragon_orb_creator.xml", x + x2, y + y2, 0, 0, 0)
+		Shoot_projectile(me, "mods/boss_reworks/files/boss_dragon/dragon_orb_creator.xml", x + x2, y + y2, 0, 0)
 	end
 	local hpcomp = EntityGetFirstComponent(me, "DamageModelComponent")
 	local healthbar = EntityGetFirstComponent(me, "SpriteComponent", "health_bar")

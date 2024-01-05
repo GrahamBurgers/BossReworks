@@ -26,5 +26,5 @@ if go then
 	local target_entity = EntityGetClosestWithTag(x, y, "player_unit") or
 	EntityGetClosestWithTag(x, y, "polymorphed_player")
 	dofile_once("mods/boss_reworks/files/projectile_utils.lua")
-	Shoot_projectile(whoshot, "mods/boss_reworks/files/boss_gate/dart.xml", x, y, 0, 0, target_entity)
+	ShootProjectileAtEntity(whoshot, "mods/boss_reworks/files/boss_gate/dart.xml", x, y, target_entity)
 end
