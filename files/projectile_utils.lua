@@ -1,4 +1,4 @@
-function Shoot_projectile(who_shot, entity_file, x, y, vel_x, vel_y, velocity_multiplier)
+function Shoot_projectile(who_shot, entity_file, x, y, vel_x, vel_y, to_entity, velocity_multiplier)
 	if not velocity_multiplier then velocity_multiplier = 1 end
 	local entity_id = EntityLoad(entity_file, x, y)
 	local herd = 2
@@ -12,7 +12,12 @@ function Shoot_projectile(who_shot, entity_file, x, y, vel_x, vel_y, velocity_mu
 			herd = ComponentGetValue2(comp, "mShooterHerdId")
 		end
 	end
-	GameShootProjectile(who_shot, x, y, x + vel_x, y + vel_y, entity_id, true, who_shot)
+    if to_entity then
+        vel_x, vel_y = EntityGetTransform(to_entity)
+        GameShootProjectile( who_shot, x, y, vel_x, vel_y, entity_id, true, who_shot )
+    else
+        GameShootProjectile( who_shot, x, y, x+vel_x, y+vel_y, entity_id, true, who_shot )
+    end
 	local comp = EntityGetFirstComponent(entity_id, "VelocityComponent") or 0
 	local vx, vy = ComponentGetValue2(comp, "mVelocity")
 	vx = vx * velocity_multiplier
