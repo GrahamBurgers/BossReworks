@@ -1,0 +1,7 @@
+local me = GetUpdatedEntityID()
+local this = GetUpdatedComponentID()
+local x, y = EntityGetTransform(me)
+local amount = #EntityGetWithTag("gate_monster")
+ComponentSetValue2(this, "execute_every_n_frame", (amount * 14) - 9)
+dofile_once("mods/boss_reworks/files/projectile_utils.lua")
+Shoot_projectile( me, "mods/boss_reworks/files/boss_gate/glyph_shot.xml", x, y, math.sin((GameGetFrameNum() / 30) + GetUpdatedEntityID() * 20) * 250, -35 )

@@ -21,7 +21,8 @@ for i=1,how_many do
 	local py = pos_y + vel_y * 0.1
 
 	GameEntityPlaySound( entity_id, "duplicate" )
-	shoot_projectile( entity_id, "mods/boss_reworks/files/boss_dragon/tail_orbs.xml", px, py, vel_x, vel_y )
+	dofile_once("mods/boss_reworks/files/projectile_utils.lua")
+	Shoot_projectile( entity_id, "mods/boss_reworks/files/boss_dragon/tail_orbs.xml", px, py, vel_x, vel_y, false, 0.5 )
 end
 
 GamePlaySound( "data/audio/Desktop/projectiles.bank", "projectiles/orb_dragon/create", pos_x, pos_y )

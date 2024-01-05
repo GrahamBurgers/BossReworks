@@ -1,5 +1,6 @@
 local nxml = dofile("mods/boss_reworks/files/lib/nxml.lua")
-local tree = nxml.parse(ModTextFileGetContent("data/entities/animals/boss_dragon.xml"))
+local path = "data/entities/animals/boss_dragon.xml"
+local tree = nxml.parse(ModTextFileGetContent(path))
 table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_armor_init.lua"> </LuaComponent>'))
 table.insert(tree.children,
@@ -19,4 +20,4 @@ end
 table.insert(tree.children,
 	nxml.parse(
 		'<Entity> <InheritTransformComponent/> <GameEffectComponent effect="STUN_PROTECTION_FREEZE" frames="-1"> </GameEffectComponent>'))
-ModTextFileSetContent("data/entities/animals/boss_dragon.xml", tostring(tree))
+ModTextFileSetContent(path, tostring(tree))

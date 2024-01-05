@@ -7,7 +7,6 @@ if xs and ys then
     ComponentSetValue2(comp, "bite_damage", scale)
 end
 if GameGetFrameNum() % 150 == 0 then
-    dofile_once("data/scripts/lib/utilities.lua")
     local hitboxes = EntityGetComponent(me, "HitboxComponent")
     if hitboxes ~= nil then
         local hitbox = hitboxes[#hitboxes]
@@ -15,7 +14,8 @@ if GameGetFrameNum() % 150 == 0 then
         local x2 = (ComponentGetValue2(hitbox, "aabb_min_x") + ComponentGetValue2(hitbox, "aabb_max_x")) / 2
         local y2 = (ComponentGetValue2(hitbox, "aabb_min_y") + ComponentGetValue2(hitbox, "aabb_max_y")) / 2
         SetRandomSeed(x + 425909, y + GameGetFrameNum())
-        shoot_projectile( me, "mods/boss_reworks/files/boss_dragon/dragon_orb_creator.xml", x + x2, y + y2, 0, 0)
+        dofile_once("mods/boss_reworks/files/projectile_utils.lua")
+        Shoot_projectile( me, "mods/boss_reworks/files/boss_dragon/dragon_orb_creator.xml", x + x2, y + y2, 0, 0)
     end
     local hpcomp = EntityGetFirstComponent(me, "DamageModelComponent")
     local healthbar = EntityGetFirstComponent(me, "SpriteComponent", "health_bar")

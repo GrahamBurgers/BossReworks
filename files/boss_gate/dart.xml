@@ -1,0 +1,75 @@
+<Entity name="$projectile_default" >
+
+	<Base file="data/entities/base_projectile.xml" >
+    <VelocityComponent
+      gravity_y="0"
+      air_friction="0"
+	    mass="0"
+	  >
+    </VelocityComponent>
+	</Base>
+
+  <ProjectileComponent 
+    _enabled="1" 
+    lob_min="0.5"
+    lob_max="0.7"
+    speed_min="100"
+    speed_max="150"
+    direction_random_rad="0.00"
+    on_death_explode="1"
+    on_death_gfx_leave_sprite="0" 
+    on_lifetime_out_explode="1"
+    explosion_dont_damage_shooter="1"
+    on_collision_die="1"
+    lifetime="130"
+    damage="0.5"
+    velocity_sets_scale="1"
+    velocity_sets_rotation="1"
+    ragdoll_force_multiplier="0.005"
+    hit_particle_force_multiplier="0.1"
+    knockback_force="0"
+    collide_with_world="1"
+    penetrate_world="1"
+    penetrate_world_velocity_coeff="1"
+    collide_with_entities="1"
+    ><config_explosion
+      never_cache="1"
+      explosion_sprite="mods/boss_reworks/files/boss_gate/dart_out.xml"
+      explosion_sprite_emissive="1"
+      explosion_sprite_random_rotation="0"
+      camera_shake="0"
+      explosion_sprite_lifetime="0"
+      explosion_radius="1"
+      damage="0"
+      hole_enabled="0"
+      particle_effect="0" 
+      damage_mortals="0"
+      light_enabled="0" 
+      stains_enabled="0"
+      sparks_enabled="0"
+      audio_enabled="0"
+      create_cell_probability="0"
+    ></config_explosion>
+  </ProjectileComponent>
+  
+  <SpriteComponent 
+    _enabled="1" 
+    alpha="1" 
+    image_file="mods/boss_reworks/files/boss_gate/dart.png"
+    offset_x="5.5"
+    offset_y="3.5"
+	  emissive="1"
+    >
+  </SpriteComponent>
+
+  <LuaComponent
+    script_source_file="mods/boss_reworks/files/boss_gate/orb.lua"
+  ></LuaComponent>
+  
+	<VariableStorageComponent
+		name="projectile_file"
+		value_string="mods/boss_reworks/files/boss_gate/orb.xml"
+		>
+	</VariableStorageComponent>
+
+</Entity>
