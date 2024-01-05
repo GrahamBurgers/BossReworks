@@ -1,0 +1,11 @@
+<Materials>
+	<CellDataChild
+		_parent="rock_box2d_nohit_hard"
+		_inherit_reactions="0"
+		name="boss_reworks_gate_monster_rock"
+		tags="[box2d],[solid],[indestructible],[matter_eater_ignore_list]"
+		wang_color="732fa201"
+		durability="100"
+		hp="10000000"
+		></CellDataChild>
+</Materials>

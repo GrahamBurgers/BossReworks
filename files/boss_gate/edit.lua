@@ -19,5 +19,11 @@ for k, v in ipairs(tree.children) do
           if v2.name == "DamageModelComponent" then v2.children[1].attr.projectile = 0.3 end
         end
     end
+	if v.name == "PhysicsImageShapeComponent" then
+		v.attr.material = "boss_reworks_gate_monster_rock"
+	end
+	if v.name == "CellEaterComponent" then
+		v.attr.ignored_material="boss_reworks_gate_monster_rock"
+	end
 end
 ModTextFileSetContent(path, tostring(tree))
