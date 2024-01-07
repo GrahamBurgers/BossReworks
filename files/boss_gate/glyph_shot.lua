@@ -9,14 +9,5 @@ local count = ((ComponentGetValue2(this, "mTimesExecuted") - 1) % #rocks) + 1
 local spray = (math.sin((GameGetFrameNum() / 30) + GetUpdatedEntityID() * 20) * 200)
 local entity = ShootProjectile( me, "mods/boss_reworks/files/boss_gate/glyph_shot.xml", x, y, spray, -135)
 ComponentSetValue2(EntityGetFirstComponent(entity, "VelocityComponent") or 0, "mVelocity", spray, -135)
-local comps = EntityGetComponent(entity, "SpriteComponent") or {}
-for i = 1, #comps do
-    if ComponentGetValue2(comps[i], "image_file") == "mods/boss_reworks/files/boss_gate/glyphs/rock_a.png" then
-        ComponentSetValue2(comps[i], "image_file", "mods/boss_reworks/files/boss_gate/glyphs/" .. rocks[count] .. ".png")
-    end
-    if ComponentGetValue2(comps[i], "image_file") == "mods/boss_reworks/files/boss_gate/glyphs/rock_glow.png" then
-        -- ComponentSetValue2(comps[i], "image_file", "mods/boss_reworks/files/boss_gate/glyphs/" .. rocks[count] .. "_glow.png")
-        ComponentSetValue2(comps[i], "image_file", "mods/boss_reworks/files/boss_gate/glyphs/rock_glow.png")
-    end
-    EntityRefreshSprite(entity, comps[i])
-end
+local comp = EntityGetFirstComponent(entity, "LuaComponent") or 0
+ComponentSetValue2(comp, "script_material_area_checker_failed", "mods/boss_reworks/files/boss_gate/glyphs/" .. rocks[count] .. ".png")
