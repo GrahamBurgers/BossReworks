@@ -39,7 +39,7 @@
       damage="0"
       camera_shake="2.0"
       explosion_radius="12"
-      explosion_sprite="mods/boss_reworks/files/boss_gate/glyph_out.xml" 
+      explosion_sprite="mods/boss_reworks/files/boss_gate/glyphs/rock_out.xml" 
       explosion_sprite_lifetime="0" 
       explosion_sprite_emissive="1"
       create_cell_probability="0"
@@ -68,7 +68,7 @@
   <SpriteComponent 
     _enabled="1" 
     alpha="1" 
-    image_file="mods/boss_reworks/files/boss_gate/glyphs/rock_a.png" 
+    image_file="mods/boss_reworks/files/boss_gate/glyphs/rock_in.xml" 
     next_rect_animation="fireball"
     rect_animation="fireball"
 	  emissive="1"
@@ -93,10 +93,21 @@
     velocity.x="0" velocity.y="-10"
     gravity.x="0" gravity.y="0"
     use_rotation_from_entity="1"
-    scale.x="1" scale.y="1"
+    scale.x="0.1" scale.y="0.1"
     scale_velocity.x="0" scale_velocity.y="0"
     >
   </SpriteParticleEmitterComponent>
+
+  <LuaComponent
+    script_source_file="mods/boss_reworks/files/boss_gate/glyphs/rock_switch.lua"
+    execute_every_n_frame="17"
+    remove_after_executed="1"
+    script_material_area_checker_failed=""
+  ></LuaComponent>
+
+  <LuaComponent
+    script_source_file="mods/boss_reworks/files/boss_gate/glyphs/rock_scale.lua"
+  ></LuaComponent>
 
   <AudioComponent
       file="data/audio/Desktop/projectiles.bank"

@@ -1,0 +1,19 @@
+<Sprite
+ filename="mods/boss_reworks/files/boss_fish/fish_warn.png"
+ offset_x="7.5"
+ offset_y="7.5"
+ default_animation="fireball" >
+
+ <!-- animation -->
+ <RectAnimation
+  name="fireball"
+  pos_x="0"
+  pos_y="0"
+  frame_count="2"
+  frame_width="16"
+  frame_height="15"
+  frame_wait="0.10"
+  frames_per_row="2"
+  loop="1"   >
+ </RectAnimation>
+</Sprite>

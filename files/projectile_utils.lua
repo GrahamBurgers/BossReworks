@@ -31,3 +31,19 @@ function ShootProjectileAtEntity(who_shot, entity_file, x, y, to_entity, velocit
 	local ex, ey = EntityGetTransform(to_entity)
 	ShootProjectile(who_shot, entity_file, x, y, ex - x, ey - y, velocity_multiplier)
 end
+
+function CircleShot(who_shot, entity_file, how_many, x, y, speed)
+	local angle_inc = (2 * math.pi) / how_many
+	local theta = 0
+	local returns = {}
+
+	for q = 1, how_many do
+		local vel_x = math.cos(theta) * speed
+		local vel_y = math.sin(theta) * speed
+		theta = theta + angle_inc
+		local eid = ShootProjectile(who_shot, entity_file, x + vel_x * 0.1, y + vel_y * 0.1, vel_x, vel_y)
+		returns[#returns+1] = eid
+	end
+
+	return returns or {}
+end
