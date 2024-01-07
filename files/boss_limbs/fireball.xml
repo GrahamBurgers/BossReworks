@@ -1,0 +1,29 @@
+<Entity>
+	<MagicConvertMaterialComponent
+		is_circle="1"
+		radius="32"
+		steps_per_frame="1"
+		from_material_tag="[earth]"
+		to_material="oil"
+		ignite_materials="1"
+		fan_the_flames="1"
+	></MagicConvertMaterialComponent>
+	<ParticleEmitterComponent
+		create_real_particles="1"
+		emit_real_particles="1"
+		area_circle_radius.min="0"
+		area_circle_radius.max="95"
+		count_min="256"
+		count_max="256"
+		emitted_material_name="oil"
+	></ParticleEmitterComponent>
+	<ParticleEmitterComponent
+		create_real_particles="1"
+		emit_real_particles="1"
+		area_circle_radius.min="0"
+		area_circle_radius.max="96"
+		count_min="256"
+		count_max="256"
+		emitted_material_name="fire"
+	></ParticleEmitterComponent>
+</Entity>
