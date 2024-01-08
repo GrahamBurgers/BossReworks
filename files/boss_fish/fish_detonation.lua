@@ -7,4 +7,6 @@ for i = 1, #sprites do
     end
 end
 dofile_once("mods/boss_reworks/files/projectile_utils.lua")
-CircleShot(me, "data/entities/projectiles/deck/tentacle.xml", 8, x, y, 220)
+CircleShot(me, "mods/boss_reworks/files/boss_fish/swirl.xml", 4, x, y, 45, math.pi * 2)
+GameScreenshake(5)
+EntityKill(me)

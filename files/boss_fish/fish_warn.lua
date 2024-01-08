@@ -5,5 +5,6 @@ EntityAddComponent2(me, "SpriteComponent", {
     emissive=true,
     never_ragdollify_on_death=true,
     update_transform_rotation=false,
+    alpha=0.4,
 })
 GamePlaySound( "data/audio/Desktop/animals.bank", "animals/mine/beep", x, y )

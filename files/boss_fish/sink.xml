@@ -1,0 +1,25 @@
+<Entity>
+
+    <InheritTransformComponent>
+    </InheritTransformComponent>
+
+    <LuaComponent
+        script_source_file="mods/boss_reworks/files/boss_fish/sink.lua"
+    ></LuaComponent>
+
+	<UIIconComponent
+		name="$br_status_sink_name"
+		description="$br_status_sink_desc"
+		icon_sprite_file="mods/boss_reworks/files/boss_fish/sink.png"
+		is_perk="0"
+		display_above_head="0"
+		display_in_hud="1"
+		>
+	</UIIconComponent>
+
+    <GameEffectComponent
+        effect="CUSTOM"
+        frames="480"
+    ></GameEffectComponent>
+
+</Entity>

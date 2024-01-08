@@ -32,9 +32,9 @@ function ShootProjectileAtEntity(who_shot, entity_file, x, y, to_entity, velocit
 	ShootProjectile(who_shot, entity_file, x, y, ex - x, ey - y, velocity_multiplier)
 end
 
-function CircleShot(who_shot, entity_file, how_many, x, y, speed)
+function CircleShot(who_shot, entity_file, how_many, x, y, speed, starting_rot)
 	local angle_inc = (2 * math.pi) / how_many
-	local theta = 0
+	local theta = starting_rot or 0
 	local returns = {}
 
 	for q = 1, how_many do
