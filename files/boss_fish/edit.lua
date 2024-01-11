@@ -1,6 +1,7 @@
 local nxml = dofile("mods/boss_reworks/files/lib/nxml.lua")
 local path = "data/entities/animals/boss_fish/fish_giga.xml"
-local tree = nxml.parse(ModTextFileGetContent(path):gsub("hiteffect_enabled", "hiteffect_enabled,boss_reworks_fish"))
+local tree = nxml.parse(ModTextFileGetContent(path))
+tree.attr.tags = tree.attr.tags .. ",boss_reworks_fish"
 table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_armor_init.lua"> </LuaComponent>'))
 table.insert(tree.children,

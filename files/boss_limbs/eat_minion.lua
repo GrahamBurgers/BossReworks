@@ -1,37 +1,18 @@
-local eid = EntityGetWithTag("boss_limbs_minion")[1]
-if eid == nil then return end
-local x, y = EntityGetTransform(eid)
-SetRandomSeed(x, y + GameGetFrameNum())
 local me = GetUpdatedEntityID()
-local damage_model = EntityGetComponent(me, "DamageModelComponent")
-local hp
-local max_hp
-for k, v in ipairs(damage_model or {}) do
-	hp = ComponentGetValue2(v, "hp")
-	max_hp = ComponentGetValue2(v, "max_hp")
-end
+local eid = EntityGetWithTag("boss_limbs_minion")[1]
+local damagemodel = EntityGetFirstComponent(me, "DamageModelComponent")
+if not (eid and damagemodel) then return end
+local x, y = EntityGetTransform(eid)
+SetRandomSeed(x + eid, y + GameGetFrameNum())
+local hp = ComponentGetValue2(damagemodel, "hp")
+local max_hp = ComponentGetValue2(damagemodel, "max_hp")
 
-local heal = function()
-	EntityInflictDamage(me, -5, "DAMAGE_HEALING", "heal", "NONE", 0, 0)
-end
-local fire = function()
-	EntityLoad("mods/boss_reworks/files/boss_limbs/fireball.xml", x, y)
-end
-local slime = function()
-	local player = EntityGetWithTag("player_unit")[1] or EntityGetWithTag("polymorphed_player")[1]
-	if player == nil or not EntityGetIsAlive(player) then return end
-	LoadGameEffectEntityTo(player, "mods/boss_reworks/files/boss_limbs/slimed.xml")
-end
-
-if hp < max_hp / 2 then
-	heal()
-	EntityLoad("mods/boss_reworks/files/boss_limbs/circle_heal.xml", x, y)
+local circle
+if Random(1, 100) > (hp / max_hp) * 100 then
+	circle = EntityLoad("mods/boss_reworks/files/boss_limbs/circle_heal.xml", x, y)
 elseif Random(1, 2) == 1 then
-	fire()
-	EntityLoad("mods/boss_reworks/files/boss_limbs/circle_fire.xml", x, y)
+	circle = EntityLoad("mods/boss_reworks/files/boss_limbs/circle_fire.xml", x, y)
 else
-	slime()
-	EntityLoad("mods/boss_reworks/files/boss_limbs/circle_slime.xml", x, y)
+	circle = EntityLoad("mods/boss_reworks/files/boss_limbs/circle_slime.xml", x, y)
 end
-
-EntityKill(eid)
+if circle then EntityAddChild(eid, circle) end
