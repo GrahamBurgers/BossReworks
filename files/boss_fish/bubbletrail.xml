@@ -1,0 +1,27 @@
+<Entity>
+
+    <ProjectileComponent
+        damage="0.01"
+        on_collision_die="0"
+        collide_with_world="0"
+        collide_with_tag="player_unit"
+        friendly_fire="1">
+    </ProjectileComponent>
+
+    <SpriteComponent 
+        _enabled="1" 
+        alpha="1" 
+        image_file="mods/boss_reworks/files/boss_fish/bubbletrail_anim.xml" 
+        next_rect_animation=""
+        offset_x="0" 
+        offset_y="0" 
+        rect_animation="fireball" 
+        emissive="1"
+        additive="1">
+    </SpriteComponent>
+
+    <LifetimeComponent
+        lifetime="90">
+    </LifetimeComponent>
+
+</Entity>

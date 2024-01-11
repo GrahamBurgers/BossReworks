@@ -4,7 +4,7 @@ local tree = nxml.parse(ModTextFileGetContent(path):gsub("hiteffect_enabled", "h
 table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_armor_init.lua"> </LuaComponent>'))
 table.insert(tree.children,
-	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_fish/fish_targeter_add.lua" execute_every_n_frame="800"> </LuaComponent>'))
+	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_fish/fish_targeter_add.lua" execute_every_n_frame="700"> </LuaComponent>'))
 table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_fish/orb_warning.lua"> </LuaComponent>'))
 for k, v in ipairs(tree.children) do

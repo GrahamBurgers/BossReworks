@@ -8,8 +8,8 @@ local xold, yold = ComponentGetValue2(mine, "mPrevPosition")
 EntitySetTransform(GetUpdatedEntityID(), xold, yold)
 xv = xv * -1
 yv = yv * -1
-local entities = EntityGetInRadiusWithTag(x, y, 8, "hittable") or {}
-local projectiles = EntityGetInRadiusWithTag(x, y, 8, "projectile") or {}
+local entities = EntityGetInRadiusWithTag(x, y, 12, "hittable") or {}
+local projectiles = EntityGetInRadiusWithTag(x, y, 12, "projectile") or {}
 for i = 1, #entities do
     local velco = EntityGetFirstComponent(entities[i], "CharacterDataComponent")
     if velco then
@@ -30,9 +30,9 @@ function calculate_force_for_body( entity, body_mass, body_x, body_y, body_vel_x
 
     return body_x,body_y,xv2,yv2,0 -- forcePosX,forcePosY,forceX,forceY,forceAngular
 end
-PhysicsApplyForceOnArea(calculate_force_for_body, GetUpdatedEntityID(), x - 4, y - 4, x + 4, y + 4)
+PhysicsApplyForceOnArea(calculate_force_for_body, GetUpdatedEntityID(), x - 6, y - 6, x + 6, y + 6)
 local toggle = ComponentGetValue2(GetUpdatedComponentID(), "mTimesExecuted")
-if toggle == 240 then
+if toggle == 60 then
     EntityAddComponent2(GetUpdatedEntityID(), "LifetimeComponent", {
         lifetime=20,
         fade_sprites=true,
