@@ -19,7 +19,7 @@
 		>
 	</ParticleEmitterComponent>
 	<LuaComponent
-		execute_every_n_frame="2"
+		execute_every_n_frame="4"
 		script_source_file="mods/boss_reworks/files/boss_limbs/circle_heal.lua"
 	></LuaComponent>
 </Entity>
