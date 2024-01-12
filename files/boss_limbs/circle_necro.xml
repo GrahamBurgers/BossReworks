@@ -1,0 +1,25 @@
+<Entity>
+	<InheritTransformComponent></InheritTransformComponent>
+	<ParticleEmitterComponent 
+		emitted_material_name="spark_blue"
+		gravity.y="0.0"
+		lifetime_min="0.1"
+		lifetime_max="0.1"
+		count_min="60"
+		count_max="60"
+		render_on_grid="1"
+		fade_based_on_lifetime="1"
+		area_circle_radius.min="64"
+		area_circle_radius.max="64"
+		cosmetic_force_create="0"
+		airflow_force="0"
+		emission_interval_min_frames="1"
+		emission_interval_max_frames="1"
+		emit_cosmetic_particles="1"
+		>
+	</ParticleEmitterComponent>
+	<LuaComponent
+		execute_every_n_frame="4"
+		script_source_file="mods/boss_reworks/files/boss_limbs/circle_necro.lua"
+	></LuaComponent>
+</Entity>
