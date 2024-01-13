@@ -13,7 +13,7 @@ if comp then
             if not damagemodel then return end
             local max_hp = ComponentGetValue2(damagemodel, "max_hp")
             local hp = ComponentGetValue2(damagemodel, "hp")
-            if hp > 1 then
+            if hp > 0 then
                 EntityInflictDamage(boss, max_hp / -8, "DAMAGE_HEALING", "$damage_healing", "NORMAL", 0, 0, parent)
                 EntityConvertToMaterial(parent, "radioactive_gas")
                 EntityKill(parent)
