@@ -1,8 +1,9 @@
 dofile("mods/boss_reworks/files/lib/injection.lua")
 local nxml = dofile("mods/boss_reworks/files/lib/nxml.lua")
 
+inject(args.SS, modes.R, "data/entities/animals/boss_limbs/boss_limbs_update.lua", ">= 2", ">= 7") -- 7 minion is enough
 inject(args.SS, modes.P, "data/entities/animals/boss_limbs/boss_limbs_update.lua", "local slime",
-	"\nfor i = 1,2 do x = x + Random(-5,5)\ny = y + Random(-5,5)\n")                               -- 10 minion is enough
+	"\nfor i = 1,2 do x = x + Random(-5,5)\ny = y + Random(-5,5)\n")                               
 inject(args.SS, modes.P, "data/entities/animals/boss_limbs/boss_limbs_update.lua", "function get_idle_animation_name",
 	"\nend\n")
 
@@ -32,7 +33,6 @@ end
 inject(args.SS, modes.A, "data/entities/animals/boss_limbs/boss_limbs_update.lua", "0,4", "+1")
 inject(args.SS, modes.R, "data/entities/animals/boss_limbs/boss_limbs_update.lua", "else               ", "elseif r == 4 then ")
 inject(args.SS, modes.A, "data/entities/animals/boss_limbs/boss_limbs_update.lua", "state = phase4", " else               state = phase_dark_flames ")
-inject(args.SS, modes.R, "data/entities/animals/boss_limbs/boss_limbs_update.lua", ">= 2", ">= 7")
 
 local content = ModTextFileGetContent("data/entities/animals/boss_limbs/orb_boss_limbs.xml")
 content = content:gsub("die_on_low_velocity", "collide_with_world")
