@@ -42,7 +42,7 @@ for k, v in ipairs(it) do iota[v] = k end
 for k, v in ipairs(vscs) do
 	local alpha = ComponentGetValue2(v, "value_string");
 	if alpha:find("/") or ({ ["x"] = true, ["y"] = true })[alpha] then goto continue2 end
-	print(alpha)
+	-- print(alpha)
 	ComponentSetValue2(v, "value_int", ({ x, y, ring, time })[iota[alpha]])
 	::continue2::
 end

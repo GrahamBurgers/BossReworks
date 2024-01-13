@@ -5,6 +5,9 @@
 			collide_with_world="0"
 			on_collision_die="0"
 		></ProjectileComponent>
+		<LuaComponent
+			script_source_file="mods/boss_reworks/files/boss_limbs/flame.lua"
+		></LuaComponent>
 	</Base>
 	<LuaComponent
 	script_source_file="mods/boss_reworks/files/boss_limbs/darkflames.lua"
