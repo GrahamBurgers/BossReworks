@@ -8,6 +8,7 @@
 	</Base>
 	<LuaComponent
 	script_source_file="mods/boss_reworks/files/boss_limbs/darkflames.lua"
+	execute_on_added="1"
 	></LuaComponent>
 	<VariableStorageComponent></VariableStorageComponent>
 	<VariableStorageComponent></VariableStorageComponent>
