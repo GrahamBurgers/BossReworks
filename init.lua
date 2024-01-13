@@ -9,3 +9,13 @@ local new_translations = ModTextFileGetContent("mods/boss_reworks/translations.c
 translations = translations .. new_translations
 translations = translations:gsub("\r",""):gsub("\n\n","\n")
 ModTextFileSetContent("data/translations/common.csv", translations)
+
+function OnPlayerSpawned(player)
+    if not GameHasFlagRun("boss_reworks_init") then
+        GameAddFlagRun("boss_reworks_init")
+        EntityAddComponent2(player, "LuaComponent", {
+            execute_every_n_frame=-1,
+            script_shot="mods/boss_reworks/files/shot.lua"
+        })
+    end
+end

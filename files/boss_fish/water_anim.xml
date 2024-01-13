@@ -1,0 +1,32 @@
+<Sprite
+ filename="mods/boss_reworks/files/boss_fish/water.png"
+ offset_x="5"
+ offset_y="5"
+ default_animation="in" >
+
+ <!-- animation -->
+ <RectAnimation
+  name="in"
+  pos_x="0"
+  pos_y="0"
+  frame_count="10"
+  frame_width="11"
+  frame_height="10"
+  frame_wait="0.04"
+  frames_per_row="10"
+  next_animation="loop"
+  loop="0"   >
+ </RectAnimation>
+
+ <RectAnimation
+  name="loop"
+  pos_x="0"
+  pos_y="11"
+  frame_count="10"
+  frame_width="11"
+  frame_height="10"
+  frame_wait="0.04"
+  frames_per_row="10"
+  loop="1"   >
+ </RectAnimation>
+</Sprite>

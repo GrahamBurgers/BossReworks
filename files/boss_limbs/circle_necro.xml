@@ -1,7 +1,7 @@
 <Entity>
 	<InheritTransformComponent></InheritTransformComponent>
 	<ParticleEmitterComponent 
-		emitted_material_name="spark_red"
+		emitted_material_name="spark_blue"
 		gravity.y="0.0"
 		lifetime_min="0.1"
 		lifetime_max="0.1"
@@ -20,6 +20,6 @@
 	</ParticleEmitterComponent>
 	<LuaComponent
 		execute_every_n_frame="4"
-		script_source_file="mods/boss_reworks/files/boss_limbs/circle_fire.lua"
+		script_source_file="mods/boss_reworks/files/boss_limbs/circle_necro.lua"
 	></LuaComponent>
 </Entity>

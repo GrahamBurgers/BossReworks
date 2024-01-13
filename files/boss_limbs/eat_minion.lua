@@ -1,37 +1,23 @@
-local eid = EntityGetWithTag("boss_limbs_minion")[1]
-if eid == nil then return end
-local x, y = EntityGetTransform(eid)
-SetRandomSeed(x, y + GameGetFrameNum())
 local me = GetUpdatedEntityID()
-local damage_model = EntityGetComponent(me, "DamageModelComponent")
-local hp
-local max_hp
-for k, v in ipairs(damage_model or {}) do
-	hp = ComponentGetValue2(v, "hp")
-	max_hp = ComponentGetValue2(v, "max_hp")
-end
+local x, y = EntityGetTransform(GetUpdatedEntityID())
+local eid = EntityGetInRadiusWithTag(x, y, 250, "boss_limbs_minion") or {}
+local damagemodel = EntityGetFirstComponent(me, "DamageModelComponent")
+if #eid <= 0 then return end
+if not damagemodel then return end
+SetRandomSeed(damagemodel + #eid, me + GameGetFrameNum())
+if Random(1, 5) > #eid then return end
+local target = eid[Random(1, #eid)]
 
-local heal = function()
-	EntityInflictDamage(me, -5, "DAMAGE_HEALING", "heal", "NONE", 0, 0)
-end
-local fire = function()
-	EntityLoad("mods/boss_reworks/files/boss_limbs/fireball.xml", x, y)
-end
-local slime = function()
-	local player = EntityGetWithTag("player_unit")[1] or EntityGetWithTag("polymorphed_player")[1]
-	if player == nil or not EntityGetIsAlive(player) then return end
-	LoadGameEffectEntityTo(player, "mods/boss_reworks/files/boss_limbs/slimed.xml")
-end
+local hp = ComponentGetValue2(damagemodel, "hp")
+local max_hp = ComponentGetValue2(damagemodel, "max_hp")
 
-if hp < max_hp / 2 then
-	heal()
-	EntityLoad("mods/boss_reworks/files/boss_limbs/circle_heal.xml", x, y)
-elseif Random(1, 2) == 1 then
-	fire()
-	EntityLoad("mods/boss_reworks/files/boss_limbs/circle_fire.xml", x, y)
+local circle
+if Random(1, 100) > (hp / max_hp) * 100 then
+	circle = EntityLoad("mods/boss_reworks/files/boss_limbs/circle_heal.xml", x, y)
+elseif #EntityGetInRadiusWithTag(x, y, 120, "enemy") > Random(2, 4) then
+	circle = EntityLoad("mods/boss_reworks/files/boss_limbs/circle_necro.xml", x, y)
 else
-	slime()
-	EntityLoad("mods/boss_reworks/files/boss_limbs/circle_slime.xml", x, y)
+	circle = EntityLoad("mods/boss_reworks/files/boss_limbs/circle_fire.xml", x, y)
 end
-
-EntityKill(eid)
+if circle then EntityAddChild(target, circle) end
+EntityRemoveTag(target, "boss_limbs_minion")
