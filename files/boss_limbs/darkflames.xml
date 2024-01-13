@@ -1,0 +1,16 @@
+<Entity>
+	<Base file="data/entities/projectiles/darkflame.xml">
+		<ProjectileComponent
+			lifetime="-1"
+			collide_with_world="0"
+			on_collision_die="0"
+		></ProjectileComponent>
+	</Base>
+	<LuaComponent
+	script_source_file="mods/boss_reworks/files/boss_limbs/darkflames.lua"
+	></LuaComponent>
+	<VariableStorageComponent></VariableStorageComponent>
+	<VariableStorageComponent></VariableStorageComponent>
+	<VariableStorageComponent></VariableStorageComponent>
+	<VariableStorageComponent></VariableStorageComponent>
+</Entity>
