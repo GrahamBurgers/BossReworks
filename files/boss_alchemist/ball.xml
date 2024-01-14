@@ -31,7 +31,8 @@
     ragdoll_force_multiplier="0.005"
     hit_particle_force_multiplier="0.1"
     knockback_force="0"
-    collide_with_world="1"
+    collide_with_world="0"
+    collide_with_entities="0"
     penetrate_world="0"
     >
     <config_explosion
@@ -58,12 +59,6 @@
 	  >
     </config_explosion>
   </ProjectileComponent>
-  
-	<GameAreaEffectComponent
-    _enabled="0"
-    collide_with_tag="player_unit"
-		radius="4" >
-	</GameAreaEffectComponent>
 
   <SpriteComponent
     _enabled="0"
@@ -85,7 +80,7 @@
     execute_every_n_frame="-1"
     script_source_file="mods/boss_reworks/files/boss_alchemist/ball_pop.lua"
   ></LuaComponent>
-  
+
 	<VariableStorageComponent
 		name="projectile_file"
 		value_string="mods/boss_reworks/files/boss_alchemist/ball.xml"

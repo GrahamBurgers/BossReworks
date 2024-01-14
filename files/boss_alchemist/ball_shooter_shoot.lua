@@ -19,7 +19,7 @@ end
 x2 = x - (spacing / -2) * count
 x2 = x2 + spacing / -4
 for i = 1, count do
-    local eid = ShootProjectile( me, "mods/boss_reworks/files/boss_alchemist/ball.xml", x2, y, 0, 40, 1)
+    local eid = ShootProjectile( me, "mods/boss_reworks/files/boss_alchemist/ball.xml", x2, y, 0, 70, 1)
     local lua = EntityGetFirstComponent(eid, "LuaComponent")
     if lua then
         ComponentSetValue2(lua, "execute_every_n_frame", ((i * luaspace) + luaspace * count * 2))
