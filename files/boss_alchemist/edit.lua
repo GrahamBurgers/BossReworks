@@ -23,4 +23,20 @@ local path = "data/entities/animals/boss_alchemist/boss_alchemist.xml"
 local tree = nxml.parse(ModTextFileGetContent(path))
 table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_armor_init.lua"> </LuaComponent>'))
+table.insert(tree.children,
+	nxml.parse(
+		'<LuaComponent script_damage_about_to_be_received="mods/boss_reworks/files/boss_alchemist/anticheese.lua"> </LuaComponent>'))
 ModTextFileSetContent(path, tostring(tree))
+
+-- make the parries actually work 
+inject(args.SS, modes.R, "data/entities/animals/boss_alchemist/projectile_counter.lua", "shoot_projectile",
+	"nil\ndofile_once(\"mods/boss_reworks/files/projectile_utils.lua\")\neid = ShootProjectile")
+
+inject(args.SS, modes.P, "data/entities/animals/boss_alchemist/projectile_counter_create.lua", "local entity_id",
+[[local comp = EntityGetFirstComponent(GetUpdatedEntityID(),"HitboxComponent")
+if comp and ComponentGetValue2(comp,"damage_multiplier") <= 0.01 then return end
+]])
+
+inject(args.SS,modes.R,"data/entities/animals/boss_alchemist/projectile_counter_create_damage.lua",
+[[local eid = EntityLoad( "data/entities/animals/boss_alchemist/projectile_counter.xml", x, y )
+		EntityAddChild( entity_id, eid )]],"dofile(\"data/entities/animals/boss_alchemist/projectile_counter_create.lua\")")
