@@ -1,0 +1,32 @@
+<Sprite
+ filename="mods/boss_reworks/files/boss_alchemist/ball.png"
+ offset_x="5"
+ offset_y="5"
+ default_animation="spawn" >
+
+ <!-- animation -->
+ <RectAnimation
+  name="fireball"
+  pos_x="0"
+  pos_y="11"
+  frame_count="4"
+  frame_width="11"
+  frame_height="11"
+  frame_wait="0.06"
+  frames_per_row="4"
+  loop="1"   >
+ </RectAnimation>
+
+ <RectAnimation 
+ frame_count="4"
+ frame_height="11" 
+ frame_wait="0.06"
+ frame_width="11"
+ frames_per_row="4"
+ loop="0"
+ name="spawn"
+ next_animation="fireball" 
+ pos_x="0"
+ pos_y="0" >
+</RectAnimation>
+</Sprite>
