@@ -39,7 +39,7 @@ table.insert(tree.children,
 
 ModTextFileSetContent(path, tostring(tree))
 
-inject(args.SS, modes.R, "data/entities/animals/boss_alchemist/projectile_counter.lua", "shoot_projectile",
+inject(args.SS, modes.R, "data/entities/animals/boss_alchemist/projectile_counter.lua", "local eid",
 	"nil\ndofile_once(\"mods/boss_reworks/files/projectile_utils.lua\")\neid = ShootProjectile")
 
 inject(args.SS, modes.P, "data/entities/animals/boss_alchemist/projectile_counter_create.lua", "local entity_id",
