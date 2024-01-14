@@ -23,12 +23,22 @@ local path = "data/entities/animals/boss_alchemist/boss_alchemist.xml"
 local tree = nxml.parse(ModTextFileGetContent(path))
 table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_armor_init.lua"> </LuaComponent>'))
+
+-- blood
+for k, v in ipairs(tree.children) do
+	if v.name == "DamageModelComponent" then
+		v.attr.blood_multipier = 0.3
+	end
+end
+
+-- make the parries actually work 
+
 table.insert(tree.children,
 	nxml.parse(
 		'<LuaComponent script_damage_about_to_be_received="mods/boss_reworks/files/boss_alchemist/anticheese.lua"> </LuaComponent>'))
+
 ModTextFileSetContent(path, tostring(tree))
 
--- make the parries actually work 
 inject(args.SS, modes.R, "data/entities/animals/boss_alchemist/projectile_counter.lua", "shoot_projectile",
 	"nil\ndofile_once(\"mods/boss_reworks/files/projectile_utils.lua\")\neid = ShootProjectile")
 
