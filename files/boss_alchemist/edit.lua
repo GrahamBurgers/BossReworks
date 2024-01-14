@@ -50,9 +50,13 @@ table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_armor_init.lua"> </LuaComponent>'))
 table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_alchemist/ball_shooter_shoot.lua" execute_every_n_frame="300"> </LuaComponent>'))
+
+-- make the parries actually work 
+
 table.insert(tree.children,
 	nxml.parse(
 		'<LuaComponent script_damage_about_to_be_received="mods/boss_reworks/files/boss_alchemist/anticheese.lua"> </LuaComponent>'))
+
 ModTextFileSetContent(path, tostring(tree))
 
 inject(args.SS, modes.P, "data/entities/animals/boss_alchemist/projectile_counter_create.lua", "local entity_id",
