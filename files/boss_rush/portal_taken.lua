@@ -2,10 +2,18 @@ local function steal_player_stuff()
 
 end
 
+local function load_scene(x, y, size_x, size_y, room_name, amount)
+    local y2 = y + size_y * -0.5
+    for i = 1, amount do
+        LoadPixelScene(table.concat({"mods/boss_reworks/files/boss_rush/rooms/", room_name, "_", i, ".png"}), "", x + size_x * -0.5, y2, "", true, false, {}, 50, true)
+        y2 = y2 + size_y
+    end
+end
+
 function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x, to_y )
     local funcs = {
         ["$br_boss_rush_portal_in"] = function()
-            EntityLoad("mods/boss_reworks/files/boss_rush/rooms/intro_room.xml", to_x, to_y)
+            load_scene(to_x, to_y, 346, 232, "intro_room", 1)
             if not GameHasFlagRun("br_boss_rush_intro") then
                 GameAddFlagRun("br_boss_rush_intro")
                 EntityLoad("mods/boss_reworks/files/boss_rush/boss_rush_book.xml", to_x, to_y + 20)
@@ -15,7 +23,7 @@ function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x,
         end,
         ["$br_boss_rush_portal_01"] = function()
             GlobalsSetValue("BR_BOSS_RUSH_HP_LEFT", "200")
-            EntityLoad("mods/boss_reworks/files/boss_rush/rooms/boss_limbs.xml", to_x, to_y)
+            load_scene(to_x, to_y, 432, 264, "boss_limbs", 1)
         end,
     }
 
