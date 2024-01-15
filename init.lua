@@ -11,6 +11,13 @@ translations = translations .. new_translations
 translations = translations:gsub("\r", ""):gsub("\n\n", "\n")
 ModTextFileSetContent("data/translations/common.csv", translations)
 
+local content = ModTextFileGetContent("data/biome/_pixel_scenes.xml")
+content = content:gsub("<mBufferedPixelScenes>", [[<mBufferedPixelScenes>
+  <PixelScene pos_x="10496" pos_y="4352" just_load_an_entity="mods/boss_reworks/files/boss_rush/rooms/portal_space.xml" />
+  <PixelScene pos_x="10496" pos_y="4352" just_load_an_entity="mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_in.xml" />
+]])
+ModTextFileSetContent("data/biome/_pixel_scenes.xml", content)
+
 function OnPlayerSpawned(player)
 	if GameHasFlagRun("boss_reworks_init") then return end
 	GameAddFlagRun("boss_reworks_init")

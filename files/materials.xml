@@ -7,5 +7,15 @@
 		wang_color="732fa201"
 		durability="100"
 		hp="10000000"
-		></CellDataChild>
+	></CellDataChild>
+	<CellDataChild
+		_parent="templebrick_static"
+		_inherit_reactions="0"
+		name="boss_reworks_templebrick_indestructible"
+		tags="[box2d],[solid],[indestructible],[matter_eater_ignore_list]"
+		wang_color="ff787342"
+		durability="100"
+		hp="10000000"
+		convert_to_box2d_material="boss_reworks_templebrick_indestructible"
+	></CellDataChild>
 </Materials>

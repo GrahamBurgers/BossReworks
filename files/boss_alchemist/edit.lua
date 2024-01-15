@@ -59,21 +59,6 @@ table.insert(tree.children,
 
 ModTextFileSetContent(path, tostring(tree))
 
-
--- 2\vec{n}(\vec{v} \cdot \vec{n})-\vec{v}
-inject(args.SS,modes.R,"data/entities/animals/boss_alchemist/projectile_counter.lua","local eid",[[
-local nx, ny = px - x, py - y
-local mag = (nx * nx + ny * ny) ^ 0.5
-nx, ny = nx / mag, ny / mag
-local vmag = (vel_x * vel_x + vel_y * vel_y) ^ 0.5
-vel_x, vel_y = vel_x / vmag, vel_y / vmag
-local dot = nx * vel_x + ny * vel_y
-local rx, ry = 2 * nx * dot, 2 * ny * dot
-rx, ry = rx - vel_x, ry - vel_y
-rx, ry = rx * vmag, ry * vmag
-local eid = shoot_projectile( entity_id, projectile, px, py, rx, ry )
---]])
-
 inject(args.SS, modes.P, "data/entities/animals/boss_alchemist/projectile_counter_create.lua", "local entity_id",
 [[local comp = EntityGetFirstComponent(GetUpdatedEntityID(),"HitboxComponent")
 if comp and ComponentGetValue2(comp,"damage_multiplier") <= 0.01 then return end

@@ -1,0 +1,13 @@
+<Entity>
+	<PixelSceneComponent
+		pixel_scene="mods/boss_reworks/files/boss_rush/rooms/portal_space.png"
+		offset_x="-62"
+		offset_y="-62"
+		skip_biome_checks="1"
+		>
+	</PixelSceneComponent>
+	<LifetimeComponent
+		lifetime="3"
+		>
+	</LifetimeComponent>
+</Entity>

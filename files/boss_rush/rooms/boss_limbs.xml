@@ -1,0 +1,13 @@
+<Entity>
+	<PixelSceneComponent
+		pixel_scene="mods/boss_reworks/files/boss_rush/rooms/boss_limbs.png"
+		offset_x="-216"
+		offset_y="-132"
+		skip_biome_checks="1"
+		>
+	</PixelSceneComponent>
+	<LifetimeComponent
+		lifetime="3"
+		>
+	</LifetimeComponent>
+</Entity>
