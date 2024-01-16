@@ -3,6 +3,7 @@ dofile_once("mods/boss_reworks/files/boss_gate/edit.lua")
 dofile_once("mods/boss_reworks/files/boss_limbs/edit.lua")
 dofile_once("mods/boss_reworks/files/boss_fish/edit.lua")
 dofile_once("mods/boss_reworks/files/boss_alchemist/edit.lua")
+dofile_once("mods/boss_reworks/files/boss_ghost/edit.lua")
 ModMaterialsFileAdd("mods/boss_reworks/files/materials.xml")
 
 local translations = ModTextFileGetContent("data/translations/common.csv")
