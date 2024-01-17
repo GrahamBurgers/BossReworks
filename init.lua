@@ -24,6 +24,7 @@ function OnPlayerSpawned(player)
 	GameAddFlagRun("boss_reworks_init")
 	EntityAddComponent2(player, "LuaComponent", {
 		execute_every_n_frame = -1,
-		script_shot = "mods/boss_reworks/files/shot.lua"
+		script_shot = "mods/boss_reworks/files/shot.lua",
+		script_damage_received = "mods/boss_reworks/files/damage_taken.lua",
 	})
 end

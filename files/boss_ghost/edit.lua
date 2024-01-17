@@ -31,6 +31,7 @@ for k, v in ipairs(tree.children) do
 end
 ModTextFileSetContent(path, tostring(tree))
 
+inject(args.SS,modes.R,"data/entities/animals/boss_ghost/boss_ghost_polyp.xml", 'polyp_shot.xml', 'boss_ghost_polyp.xml')
 inject(args.SS,modes.R,"data/entities/animals/boss_ghost/boss_ghost_polyp.xml", 'damage="3"', 'damage="0"')
 inject(args.SS,modes.R,"data/entities/animals/boss_ghost/boss_ghost_polyp.xml", 'holy="3.0"', 'holy="1.6"')
 inject(args.SS,modes.A,"data/entities/animals/boss_ghost/boss_ghost_polyp.xml", 'penetrate_world="1"', 'collide_with_tag="player_unit"')
