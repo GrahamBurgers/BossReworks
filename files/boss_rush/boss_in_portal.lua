@@ -15,6 +15,11 @@ if comp then
             ComponentSetValue2(comps[i], "ragdoll_material", "blood_fungi")
             ComponentSetValue2(comps[i], "materials_damage", false)
         end
+        if ComponentHasTag(comps[i], "magic_eye") then
+            EntitySetComponentIsEnabled(eid, comps[i], true)
+            ComponentRemoveTag(comps[i], "magic_eye")
+        end
+        -- put this at the bottom, else it errors after removed
         if ComponentGetTypeName(comps[i]) == "LuaComponent" then
             if ComponentGetValue2(comps[i], "script_death") and string.len(ComponentGetValue2(comps[i], "script_death")) > 0 then
                 EntityRemoveComponent(eid, comps[i])

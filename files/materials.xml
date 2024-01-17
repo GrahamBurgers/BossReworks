@@ -17,4 +17,15 @@
 		durability="100"
 		hp="10000000"
 	></CellDataChild>
+	<CellDataChild
+		_parent="blood_worm"
+		_inherit_reactions="0"
+		wang_color="ff8b3d87"
+		name="boss_reworks_unstainer"
+		liquid_stains="1"
+		>
+		<Graphics
+		color="00000000" >
+		</Graphics>
+	</CellDataChild>
 </Materials>

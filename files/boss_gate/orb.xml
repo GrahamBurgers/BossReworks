@@ -67,7 +67,17 @@
   <SpriteComponent 
     _enabled="1" 
     alpha="1" 
-    image_file="mods/boss_reworks/files/boss_gate/orb_anim.xml" 
+    image_file="mods/boss_reworks/files/boss_gate/tringle1.xml" 
+    next_rect_animation="fireball"
+    rect_animation="fireball"
+	  emissive="1"
+    >
+  </SpriteComponent>
+
+  <SpriteComponent 
+    _enabled="0" 
+    alpha="0" 
+    image_file="mods/boss_reworks/files/boss_gate/tringle2.xml" 
     next_rect_animation="fireball"
     rect_animation="fireball"
 	  emissive="1"
