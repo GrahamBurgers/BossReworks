@@ -2,7 +2,7 @@ local multiplier = 100 -- multiply it before storing cause shoving a float into 
 local max = 400 * multiplier
 
 local function aaaaaa(entity)
-    if EntityGetComponentIncludingDisabled(entity, "ItemComponent") ~= nil then
+    if EntityGetComponentIncludingDisabled(entity, "ItemComponent") ~= nil and not EntityHasTag(entity, "card_action") then
         EntityRemoveFromParent(entity)
         EntitySetComponentsWithTagEnabled(entity, "enabled_in_hand", false)
         EntitySetComponentsWithTagEnabled(entity, "enabled_in_inventory", false)
@@ -11,39 +11,32 @@ local function aaaaaa(entity)
         if vel then EntitySetComponentIsEnabled(entity, vel, false) end
         local isphysics = false
         local phys = EntityGetFirstComponentIncludingDisabled(entity, "PhysicsBodyComponent")
-        if phys and ComponentGetValue2(phys, "is_static") == false then
-            ComponentSetValue2(phys, "is_static", true)
-            EntityAddComponent2(entity, "LuaComponent", {
-                execute_every_n_frame=-1,
-                script_item_picked_up="mods/boss_reworks/files/phys.lua"
-            })
+        if phys then
             isphysics = true
+            EntitySetComponentIsEnabled(entity, phys, false)
         end
         local phys2 = EntityGetFirstComponentIncludingDisabled(entity, "PhysicsBody2Component")
-        if phys2 and ComponentGetValue2(phys2, "is_static") == false then
-            ComponentSetValue2(phys2, "is_static", true)
-            EntityAddComponent2(entity, "LuaComponent", {
-                execute_every_n_frame=-1,
-                script_item_picked_up="mods/boss_reworks/files/phys2.lua"
-            })
+        if phys2 then
             isphysics = true
+            EntitySetComponentIsEnabled(entity, phys2, false)
         end
+        local what = EntityGetFirstComponentIncludingDisabled(entity, "SpriteOffsetAnimatorComponent")
+        if what then EntityRemoveComponent(entity, what) end
         local item = EntityGetFirstComponentIncludingDisabled(entity, "ItemComponent")
+        if item then
+            ComponentSetValue2(item, "play_hover_animation", false)
+            ComponentSetValue2(item, "play_spinning_animation", false)
+        end
+        local sprite = EntityGetFirstComponentIncludingDisabled(entity, "SpriteComponent", "enabled_in_hand")
+        if sprite then EntitySetComponentIsEnabled(entity, sprite, true) end
         if isphysics then
-            EntitySetTransform(entity, Shelf2, 50082, 0)
-            EntityApplyTransform(entity, Shelf2, 50082, 0)
-            if item and ComponentGetValue2(item, "play_spinning_animation") then
-                ComponentSetValue2(item, "play_spinning_animation", false)
-            end
-            Shelf2 = Shelf2 + 14
+            EntitySetTransform(entity, Shelf2, 50084, 0)
+            EntityApplyTransform(entity, Shelf2, 50084, 0)
+            Shelf2 = Shelf2 + 18
         else
             EntitySetTransform(entity, Shelf1, 50055, math.pi / -2)
             EntityApplyTransform(entity, Shelf1, 50055, math.pi / -2)
-            if item and ComponentGetValue2(item, "play_spinning_animation") then
-                ComponentSetValue2(item, "play_hover_animation", true)
-                ComponentSetValue2(item, "play_spinning_animation", false)
-            end
-            Shelf1 = Shelf1 + 14
+            Shelf1 = Shelf1 + 18
         end
     end
 end
@@ -72,6 +65,26 @@ function steal_player_stuff(player)
             end
         end
     end
+    dofile_once("data/scripts/perks/perk.lua")
+    local perks_to_spawn = {}
+	
+	for i,perk_data in ipairs(perk_list) do
+		local perk_id = perk_data.id
+		
+        -- TODO
+		if ( perk_data.one_off_effect == nil ) or ( perk_data.one_off_effect == false ) then
+			local flag_name = get_perk_picked_flag_name( perk_id )
+			local pickup_count = tonumber( GlobalsGetValue( flag_name .. "_PICKUP_COUNT", "0" ) ) or 1
+			
+			if GameHasFlagRun( flag_name ) or ( pickup_count > 0 ) then
+                for j = 1, pickup_count do
+				    perks_to_spawn[#perks_to_spawn+1] = perk_id
+                end
+			end
+		end
+
+        
+	end
 end
 
 local function boss_portal(to_x, to_y, entity, x_off, y_off)
@@ -108,7 +121,7 @@ function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x,
     local funcs = {
         ["$br_boss_rush_portal_in"] = function()
             if not GameHasFlagRun("br_boss_rush_intro") then
-                load_scene(to_x, to_y, 346, 232, "intro_room", 1)
+                load_scene(to_x, to_y, 346, 262, "intro_room", 1)
                 GameAddFlagRun("br_boss_rush_intro")
                 EntityLoad("mods/boss_reworks/files/boss_rush/boss_rush_book.xml", to_x, to_y + 30)
                 EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_pyramid.xml", to_x + 130, to_y - 60)

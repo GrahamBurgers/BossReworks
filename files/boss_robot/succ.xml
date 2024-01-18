@@ -1,4 +1,4 @@
-<Entity name="$projectile_default">
+<Entity name="boss_reworks_succ">
 
 	<Base file="data/entities/base_projectile.xml" >
 		<VelocityComponent
@@ -41,13 +41,13 @@
 	</ProjectileComponent>
 
     <LuaComponent
-        script_source_file="mods/boss_reworks/files/boss_fish/water.lua"
+        script_source_file="mods/boss_reworks/files/boss_robot/succ.lua"
     ></LuaComponent>
 	
 	<SpriteComponent 
 		_enabled="1" 
 		alpha="1" 
-		image_file="mods/boss_reworks/files/boss_fish/water_anim.xml"
+		image_file="mods/boss_reworks/files/boss_robot/succ_anim.xml"
 		offset_x="0" 
 		offset_y="0" 
 		emissive="1"

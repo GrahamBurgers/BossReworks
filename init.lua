@@ -4,6 +4,7 @@ dofile_once("mods/boss_reworks/files/boss_limbs/edit.lua")
 dofile_once("mods/boss_reworks/files/boss_fish/edit.lua")
 dofile_once("mods/boss_reworks/files/boss_alchemist/edit.lua")
 dofile_once("mods/boss_reworks/files/boss_ghost/edit.lua")
+dofile_once("mods/boss_reworks/files/boss_robot/edit.lua")
 ModMaterialsFileAdd("mods/boss_reworks/files/materials.xml")
 
 local translations = ModTextFileGetContent("data/translations/common.csv")
@@ -17,7 +18,7 @@ content = content:gsub("<mBufferedPixelScenes>", [[<mBufferedPixelScenes>
   <PixelScene pos_x="10496" pos_y="4352" just_load_an_entity="mods/boss_reworks/files/boss_rush/rooms/portal_space.xml" />
   <PixelScene pos_x="10496" pos_y="4352" just_load_an_entity="mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_in.xml" />
 ]])
-ModTextFileSetContent("data/biome/_pixel_scenes.xml", content)
+-- ModTextFileSetContent("data/biome/_pixel_scenes.xml", content) -- wait until functional
 
 function OnPlayerSpawned(player)
 	if GameHasFlagRun("boss_reworks_init") then return end

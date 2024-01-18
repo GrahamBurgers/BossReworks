@@ -7,6 +7,7 @@
 		wang_color="732fa201"
 		durability="100"
 		hp="10000000"
+		density="30"
 	></CellDataChild>
 	<CellDataChild
 		_parent="templebrick_static"
@@ -16,6 +17,7 @@
 		wang_color="ff787342"
 		durability="100"
 		hp="10000000"
+		density="30"
 	></CellDataChild>
 	<CellDataChild
 		_parent="blood_worm"
