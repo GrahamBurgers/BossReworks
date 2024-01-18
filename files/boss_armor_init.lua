@@ -6,7 +6,6 @@ if comp == nil then
     EntityAddComponent2(me, "VariableStorageComponent", {
         _tags="boss_reworks_armor",
         value_float=0,
-        value_int=ComponentGetValue2(health, "max_hp"),
     })
     EntityAddComponent2(me, "LuaComponent", {
         script_damage_about_to_be_received="mods/boss_reworks/files/boss_armor.lua",

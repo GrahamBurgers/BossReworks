@@ -1,0 +1,27 @@
+<Entity tags="tablet,normal_tablet">
+	<!-- in the tree  -->
+
+	<Base file="data/entities/items/books/base_book.xml">
+
+	<ParticleEmitterComponent 
+		emitted_material_name="spark_blue"
+		>
+	</ParticleEmitterComponent>
+
+		<UIInfoComponent
+			name="$br_boss_rush_bookname"
+			>
+		</UIInfoComponent>
+		
+		<ItemComponent
+			item_name="$br_boss_rush_bookname"
+			ui_description="$br_boss_rush_bookdesc"
+			>
+		</ItemComponent>
+		
+		<AbilityComponent
+			ui_name="$br_boss_rush_bookname"
+			>
+		</AbilityComponent>
+	</Base>
+</Entity>

@@ -7,5 +7,25 @@
 		wang_color="732fa201"
 		durability="100"
 		hp="10000000"
-		></CellDataChild>
+	></CellDataChild>
+	<CellDataChild
+		_parent="templebrick_static"
+		_inherit_reactions="0"
+		name="boss_reworks_templebrick_indestructible"
+		tags="[indestructible],[matter_eater_ignore_list]"
+		wang_color="ff787342"
+		durability="100"
+		hp="10000000"
+	></CellDataChild>
+	<CellDataChild
+		_parent="blood_worm"
+		_inherit_reactions="0"
+		wang_color="ff8b3d87"
+		name="boss_reworks_unstainer"
+		liquid_stains="1"
+		>
+		<Graphics
+		color="00000000" >
+		</Graphics>
+	</CellDataChild>
 </Materials>
