@@ -22,6 +22,7 @@ function damage_received( damage, message, entity_thats_responsible, is_fatal, p
             EntityAddRandomStains(me, CellFactory_GetType("boss_reworks_unstainer"), 2000)
             EntitySetTransform(me, 6400, 50000)
             EntityApplyTransform(me, 6400, 50000)
+            GameSetCameraPos(6400, 50000)
             SetTimeOut(0.08, "mods/boss_reworks/files/damage_taken.lua", "turn_off_the_thingy")
             SetRandomSeed(GameGetFrameNum() + damage, GameGetFrameNum() + 24085)
             GamePrintImportant("$br_boss_rush_death_0", "$br_boss_rush_death_" .. Random(1, 9))
@@ -30,6 +31,12 @@ function damage_received( damage, message, entity_thats_responsible, is_fatal, p
                 EntitySetComponentsWithTagEnabled(entities[i], "boss_reworks_rush_remove", false)
                 EntityKill(entities[i])
             end
+            local effect = EntityCreateNew()
+            EntityAddComponent2(effect, "GameEffectComponent", {
+                effect="BLINDNESS",
+                frames=180,
+            })
+            EntityAddChild(me, effect)
             return
         end
         if damage > 0 then

@@ -36,9 +36,9 @@ function OnWorldPreUpdate()
 			-- disable % based damage effects since those use the player's real HP
 			local comp = 0
 			comp = GameGetGameEffect( players[i], "POISON" )
-			if comp > 0 then ComponentSetValue2(comp, "effect", "NONE") ComponentSetValue2(comp, "frames", "0") end
+			if comp > 0 then ComponentSetValue2(comp, "effect", "NONE") ComponentSetValue2(comp, "frames", 0) end
 			comp = GameGetGameEffect( players[i], "RADIOACTIVE" )
-			if comp > 0 then ComponentSetValue2(comp, "effect", "NONE") ComponentSetValue2(comp, "frames", "0") end
+			if comp > 0 then ComponentSetValue2(comp, "effect", "NONE") ComponentSetValue2(comp, "frames", 0) end
 			comp = EntityGetFirstComponent(players[i], "DamageModelComponent") or 0
 			if comp > 0 then ComponentSetValue2(comp, "mFireDamageBufferedNextDeliveryFrame", GameGetFrameNum() + 999) ComponentSetValue2(comp, "mFireFramesLeft", 0) ComponentSetValue2(comp, "mFireDamageBuffered", 0) end
 		end

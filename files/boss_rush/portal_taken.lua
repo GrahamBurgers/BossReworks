@@ -1,8 +1,77 @@
 local multiplier = 100 -- multiply it before storing cause shoving a float into an int scares me
 local max = 400 * multiplier
 
-local function steal_player_stuff()
+local function aaaaaa(entity)
+    if EntityGetComponentIncludingDisabled(entity, "ItemComponent") ~= nil then
+        EntityRemoveFromParent(entity)
+        EntitySetComponentsWithTagEnabled(entity, "enabled_in_hand", false)
+        EntitySetComponentsWithTagEnabled(entity, "enabled_in_inventory", false)
+        EntitySetComponentsWithTagEnabled(entity, "enabled_in_world", true)
+        local vel = EntityGetFirstComponentIncludingDisabled(entity, "VelocityComponent")
+        if vel then EntitySetComponentIsEnabled(entity, vel, false) end
+        local isphysics = false
+        local phys = EntityGetFirstComponentIncludingDisabled(entity, "PhysicsBodyComponent")
+        if phys and ComponentGetValue2(phys, "is_static") == false then
+            ComponentSetValue2(phys, "is_static", true)
+            EntityAddComponent2(entity, "LuaComponent", {
+                execute_every_n_frame=-1,
+                script_item_picked_up="mods/boss_reworks/files/phys.lua"
+            })
+            isphysics = true
+        end
+        local phys2 = EntityGetFirstComponentIncludingDisabled(entity, "PhysicsBody2Component")
+        if phys2 and ComponentGetValue2(phys2, "is_static") == false then
+            ComponentSetValue2(phys2, "is_static", true)
+            EntityAddComponent2(entity, "LuaComponent", {
+                execute_every_n_frame=-1,
+                script_item_picked_up="mods/boss_reworks/files/phys2.lua"
+            })
+            isphysics = true
+        end
+        local item = EntityGetFirstComponentIncludingDisabled(entity, "ItemComponent")
+        if isphysics then
+            EntitySetTransform(entity, Shelf2, 50082, 0)
+            EntityApplyTransform(entity, Shelf2, 50082, 0)
+            if item and ComponentGetValue2(item, "play_spinning_animation") then
+                ComponentSetValue2(item, "play_spinning_animation", false)
+            end
+            Shelf2 = Shelf2 + 14
+        else
+            EntitySetTransform(entity, Shelf1, 50055, math.pi / -2)
+            EntityApplyTransform(entity, Shelf1, 50055, math.pi / -2)
+            if item and ComponentGetValue2(item, "play_spinning_animation") then
+                ComponentSetValue2(item, "play_hover_animation", true)
+                ComponentSetValue2(item, "play_spinning_animation", false)
+            end
+            Shelf1 = Shelf1 + 14
+        end
+    end
+end
 
+function steal_player_stuff(player)
+    local inv2 = EntityGetFirstComponent(player, "Inventory2Component")
+    if inv2 then
+        ComponentSetValue2(inv2, "mActiveItem", 0)
+        ComponentSetValue2(inv2, "mActualActiveItem", 0)
+        ComponentSetValue2(inv2, "mForceRefresh", true)
+    end
+    Shelf1 = 6280
+    Shelf2 = 6280
+    local children = EntityGetAllChildren(player) or {}
+    for i = 1, #children do
+        if EntityGetName(children[i]) == "inventory_quick" then
+            local items = EntityGetAllChildren(children[i]) or {}
+            for j = 1, #items do
+                aaaaaa(items[j])
+            end
+        end
+        if EntityGetName(children[i]) == "inventory_full" then
+            local items = EntityGetAllChildren(children[i]) or {}
+            for j = 1, #items do
+                aaaaaa(items[j])
+            end
+        end
+    end
 end
 
 local function boss_portal(to_x, to_y, entity, x_off, y_off)
@@ -56,6 +125,7 @@ function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x,
             GlobalsSetValue("BR_BOSS_RUSH_PORTAL_NEXT", "dragon")
             load_scene(to_x, to_y, 408, 264, "arena_pyramid", 1)
             boss_portal(to_x, to_y, "data/entities/animals/boss_limbs/boss_limbs.xml", 130, -60)
+            steal_player_stuff(entity_that_was_teleported)
         end,
         ["$br_boss_rush_portal_dragon"] = function()
             nohit()
