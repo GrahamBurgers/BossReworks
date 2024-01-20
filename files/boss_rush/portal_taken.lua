@@ -23,20 +23,24 @@ local function aaaaaa(entity)
         local what = EntityGetFirstComponentIncludingDisabled(entity, "SpriteOffsetAnimatorComponent")
         if what then EntityRemoveComponent(entity, what) end
         local item = EntityGetFirstComponentIncludingDisabled(entity, "ItemComponent")
-        if item then
-            ComponentSetValue2(item, "play_hover_animation", false)
-            ComponentSetValue2(item, "play_spinning_animation", false)
-        end
         local sprite = EntityGetFirstComponentIncludingDisabled(entity, "SpriteComponent", "enabled_in_hand")
         if sprite then EntitySetComponentIsEnabled(entity, sprite, true) end
         if isphysics then
             EntitySetTransform(entity, Shelf2, 50084, 0)
             EntityApplyTransform(entity, Shelf2, 50084, 0)
             Shelf2 = Shelf2 + 18
+            if item then
+                ComponentSetValue2(item, "play_hover_animation", false)
+                ComponentSetValue2(item, "play_spinning_animation", false)
+            end
         else
             EntitySetTransform(entity, Shelf1, 50055, math.pi / -2)
             EntityApplyTransform(entity, Shelf1, 50055, math.pi / -2)
             Shelf1 = Shelf1 + 18
+            if item then
+                ComponentSetValue2(item, "play_hover_animation", true)
+                ComponentSetValue2(item, "play_spinning_animation", false)
+            end
         end
     end
 end
@@ -67,14 +71,12 @@ function steal_player_stuff(player)
     end
     dofile_once("data/scripts/perks/perk.lua")
     local perks_to_spawn = {}
-	
+
 	for i,perk_data in ipairs(perk_list) do
 		local perk_id = perk_data.id
-		
-        -- TODO
 		if ( perk_data.one_off_effect == nil ) or ( perk_data.one_off_effect == false ) then
 			local flag_name = get_perk_picked_flag_name( perk_id )
-			local pickup_count = tonumber( GlobalsGetValue( flag_name .. "_PICKUP_COUNT", "0" ) ) or 1
+			local pickup_count = tonumber( GlobalsGetValue( flag_name .. "_PICKUP_COUNT", "0" ) ) or 0
 			
 			if GameHasFlagRun( flag_name ) or ( pickup_count > 0 ) then
                 for j = 1, pickup_count do
@@ -82,9 +84,53 @@ function steal_player_stuff(player)
                 end
 			end
 		end
-
-        
 	end
+
+    if #perks_to_spawn > 0 then
+        local storage = EntityCreateNew()
+        EntitySetTransform(storage, 6482.5, 50065)
+        EntityAddComponent2(storage, "SpriteComponent", {
+            image_file="mods/boss_reworks/files/boss_rush/perks/perk_storage.png",
+            offset_x=7,
+            offset_y=7,
+            z_index=2,
+            update_transform_rotation=false,
+        })
+        local thing = tostring(#perks_to_spawn)
+        local offset = 2.5
+        if string.len(thing) > 1 then offset = 5.5 end
+        for i = 1, string.len(thing) do
+            EntityAddComponent2(storage, "SpriteComponent", {
+                image_file="mods/boss_reworks/files/boss_rush/perks/" .. string.sub(thing, i, i) .. ".png",
+                offset_x=offset,
+                offset_y=3,
+                update_transform_rotation=false,
+            })
+            offset = offset - 6
+        end
+        EntityAddComponent2( storage, "ItemComponent",
+        {
+            item_name = "$br_boss_rush_perks_name",
+            ui_description = "$br_boss_rush_perks_desc",
+            ui_display_description_on_pick_up_hint = true,
+            play_spinning_animation = false,
+            play_hover_animation = true,
+            play_pick_sound = true,
+        } )
+        EntityAddComponent2(storage, "LuaComponent", {
+            execute_every_n_frame=-1,
+            script_item_picked_up="mods/boss_reworks/files/boss_rush/perks/perkful_pickup.lua"
+        })
+        for i = 1, #perks_to_spawn do
+            EntityAddComponent2(storage, "VariableStorageComponent", {
+                _tags="br_boss_rush_storage",
+                value_string=perks_to_spawn[i]
+            })
+        end
+    end
+    remove_all_perks()
+    local exits = EntityGetWithName("$br_boss_rush_portal_out")
+    if exits ~= nil then EntityKill(exits) end
 end
 
 local function boss_portal(to_x, to_y, entity, x_off, y_off)
