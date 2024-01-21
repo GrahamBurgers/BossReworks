@@ -49,6 +49,8 @@ end
 table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_armor_init.lua"> </LuaComponent>'))
 table.insert(tree.children,
+	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/healthbar_counter.lua" </LuaComponent>'))
+table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_alchemist/ball_shooter_shoot.lua" execute_every_n_frame="300"> </LuaComponent>'))
 
 -- make the parries actually work 

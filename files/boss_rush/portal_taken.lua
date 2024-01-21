@@ -162,6 +162,17 @@ local function nohit()
     GamePrint("$br_boss_rush_healed")
     GlobalsSetValue("BR_BOSS_RUSH_HP_LEFT", tostring(math.min(hpmax + multiplier * 40, multiplier * 40 + tonumber(GlobalsGetValue("BR_BOSS_RUSH_HP_LEFT", "0")))))
     GlobalsSetValue("BR_BOSS_RUSH_NOHIT", "1")
+
+    -- maybe a good idea?
+    local entities = EntityGetWithTag("boss_reworks_boss_rush") or {}
+    for i = 1, #entities do
+        EntitySetComponentsWithTagEnabled(entities[i], "boss_reworks_rush_remove", false)
+        local children = EntityGetAllChildren(entities[i]) or {}
+        for j = 1, #children do
+            EntityKill(children[j])
+        end
+        EntityKill(entities[i])
+    end
 end
 
 local function spawn_wands(name, entity)
@@ -211,7 +222,6 @@ function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x,
         end,
         ["$br_boss_rush_portal_dragon"] = function()
             nohit()
-            EntityKill(GetUpdatedEntityID())
             GlobalsSetValue("BR_BOSS_RUSH_PORTAL_NEXT", "forgotten")
             load_scene(to_x, to_y, 432, 432, "arena_dragon", 1)
             boss_portal(to_x, to_y, "data/entities/animals/boss_dragon.xml", 0, 80)
@@ -219,7 +229,6 @@ function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x,
         end,
         ["$br_boss_rush_portal_forgotten"] = function()
             nohit()
-            EntityKill(GetUpdatedEntityID())
             GlobalsSetValue("BR_BOSS_RUSH_PORTAL_NEXT", "forgotten")
             load_scene(to_x, to_y, 460, 337, "arena_forgotten", 1)
             boss_portal(to_x, to_y, "data/entities/animals/boss_ghost/boss_ghost.xml", 0, -80)
@@ -229,10 +238,21 @@ function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x,
     }
 
     local name = EntityGetName(GetUpdatedEntityID())
-    if funcs[name] and EntityHasTag(entity_that_was_teleported, "player_unit") then funcs[name]() end
-    local players = EntityGetWithTag("player_unit")
+    if funcs[name] and (EntityHasTag(entity_that_was_teleported, "player_unit") or EntityHasTag(entity_that_was_teleported, "polymorphed_player")) then funcs[name]() end
+    local players = EntityGetWithTag("player_unit") or EntityGetWithTag("polymorphed_player") or {}
     for i = 1, #players do
         EntityAddRandomStains(players[i], CellFactory_GetType("boss_reworks_unstainer"), 2000)
+    end
+    local projectiles = EntityGetWithTag("projectile") or {} -- this will cause no issues
+    for i = 1, #projectiles do
+        local comps = EntityGetComponent(projectiles[i], "ProjectileComponent") or {}
+        for j = 1, #comps do
+            ComponentSetValue2(comps[j], "on_death_explode", false)
+            ComponentSetValue2(comps[j], "on_lifetime_out_explode", false)
+        end
+        EntitySetTransform(projectiles[i], to_x, to_y)
+        EntityApplyTransform(projectiles[i], to_x, to_y)
+        EntityKill(projectiles[i])
     end
     GlobalsSetValue("BR_BOSS_RUSH_PORTAL_X", tostring(to_x))
     GlobalsSetValue("BR_BOSS_RUSH_PORTAL_Y", tostring(to_y))

@@ -75,6 +75,8 @@ table.insert(tree.children,
 table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_armor_init.lua"> </LuaComponent>'))
 table.insert(tree.children,
+	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/healthbar_counter.lua" </LuaComponent>'))
+table.insert(tree.children,
 	nxml.parse('<LuaComponent execute_every_n_frame="-1" script_damage_about_to_be_received="mods/boss_reworks/files/boss_limbs/anticheese.lua">'))
 table.insert(tree.children,
 	nxml.parse(

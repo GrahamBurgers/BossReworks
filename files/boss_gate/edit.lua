@@ -4,6 +4,8 @@ local tree = nxml.parse(ModTextFileGetContent(path))
 table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_armor_init.lua"> </LuaComponent>'))
 table.insert(tree.children,
+	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/healthbar_counter.lua" </LuaComponent>'))
+table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_gate/glyph_shot.lua"> </LuaComponent>'))
 table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_gate/damage_scale.lua"> </LuaComponent>'))

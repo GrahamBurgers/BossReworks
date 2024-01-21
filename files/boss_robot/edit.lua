@@ -5,6 +5,10 @@ local tree = nxml.parse(ModTextFileGetContent(path))
 table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_armor_init.lua"> </LuaComponent>'))
 table.insert(tree.children,
+	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/healthbar_counter.lua" </LuaComponent>'))
+table.insert(tree.children,
+	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/healthbar_counter.lua" </LuaComponent>'))
+table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_robot/beam.lua"> </LuaComponent>'))
 for k, v in ipairs(tree.children) do
 	if v.name == "DamageModelComponent" then

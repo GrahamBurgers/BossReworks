@@ -6,6 +6,8 @@ tree.attr.tags = tree.attr.tags .. ",boss_ghost"
 table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_armor_init.lua"> </LuaComponent>'))
 table.insert(tree.children,
+	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/healthbar_counter.lua" </LuaComponent>'))
+table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_ghost/alt.lua" remove_after_executed="1"> </LuaComponent>'))
 table.insert(tree.children,
 	nxml.parse('<LuaComponent _tags="magic_eye" script_source_file="mods/boss_reworks/files/boss_ghost/teleport_create.lua" execute_every_n_frame="480"> </LuaComponent>'))

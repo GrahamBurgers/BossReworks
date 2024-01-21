@@ -20,7 +20,7 @@ if GameGetFrameNum() % 150 == 0 then
 	local hpcomp = EntityGetFirstComponent(me, "DamageModelComponent")
 	local healthbar = EntityGetFirstComponent(me, "SpriteComponent", "health_bar")
 	if hpcomp ~= nil and healthbar ~= nil then
-		if ComponentGetValue2(hpcomp, "hp") <= ComponentGetValue2(hpcomp, "max_hp") * 0.35 then
+		if ComponentGetValue2(hpcomp, "hp") <= ComponentGetValue2(hpcomp, "max_hp") * 0.35 and false then -- not very interesting
 			ComponentSetValue2(comp, "direction_adjust_speed", 0.005)
 			ComponentSetValue2(comp, "direction_adjust_speed_hunt", 0.06)
 			ComponentSetValue2(comp, "projectile_1_count", 4)

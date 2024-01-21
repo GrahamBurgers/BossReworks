@@ -32,21 +32,6 @@ end
 
 function OnWorldPreUpdate()
 	if GlobalsGetValue("BR_BOSS_RUSH_ACTIVE", "0") == "1" then
-		local players = EntityGetWithTag("player_unit") or {}
-		for i = 1, #players do
-			-- disable % based damage effects since those use the player's real HP
-			local comp = 0
-			comp = GameGetGameEffect( players[i], "POISON" )
-			if comp > 0 then ComponentSetValue2(comp, "effect", "NONE") ComponentSetValue2(comp, "frames", 0) end
-			comp = GameGetGameEffect( players[i], "RADIOACTIVE" )
-			if comp > 0 then ComponentSetValue2(comp, "effect", "NONE") ComponentSetValue2(comp, "frames", 0) end
-			comp = EntityGetFirstComponent(players[i], "DamageModelComponent") or 0
-			if comp > 0 then ComponentSetValue2(comp, "mFireDamageBufferedNextDeliveryFrame", GameGetFrameNum() + 1) ComponentSetValue2(comp, "mFireDamageBuffered", 0) end
-			if GameGetGameEffectCount(players[i], "ON_FIRE") > 0 then
-				-- fire does flat damage in boss rush
-				EntityInflictDamage(players[i], 5 / 25 / 25, "DAMAGE_FIRE", "$damage_fire", "NONE", 0, 0)
-			end
-		end
 		-- i stole this code from lap 2 and modified it
 		Gui = Gui or GuiCreate()
 		GuiIdPushString(Gui, "br_healthbar")
@@ -91,5 +76,21 @@ function OnWorldPreUpdate()
 		GuiText(Gui, (screen_w - text_w) / 2, screen_h / 1.2 - text_h / 2, text)
 
 		GuiIdPop(Gui)
+
+		local players = EntityGetWithTag("player_unit") or {}
+		for i = 1, #players do
+			-- disable % based damage effects since those use the player's real HP
+			local comp = 0
+			comp = GameGetGameEffect( players[i], "POISON" )
+			if comp > 0 then ComponentSetValue2(comp, "effect", "NONE") ComponentSetValue2(comp, "frames", 0) end
+			comp = GameGetGameEffect( players[i], "RADIOACTIVE" )
+			if comp > 0 then ComponentSetValue2(comp, "effect", "NONE") ComponentSetValue2(comp, "frames", 0) end
+			comp = EntityGetFirstComponent(players[i], "DamageModelComponent") or 0
+			if comp > 0 then ComponentSetValue2(comp, "mFireDamageBufferedNextDeliveryFrame", GameGetFrameNum() + 3) ComponentSetValue2(comp, "mFireDamageBuffered", 0) end
+			if GameGetGameEffectCount(players[i], "ON_FIRE") > 0 then
+				local dmg = max / multiplier / 50 / 60 / 25
+				EntityInflictDamage(players[i], dmg, "DAMAGE_FIRE", "$damage_fire", "NONE", 0, 0)
+			end
+		end
 	end
 end
