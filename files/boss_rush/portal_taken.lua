@@ -116,6 +116,7 @@ function steal_player_stuff(player)
             play_spinning_animation = false,
             play_hover_animation = true,
             play_pick_sound = true,
+            ui_sprite = "mods/boss_reworks/files/boss_rush/perks/eye_spook.png" -- just in case sprite appears for a frame or two
         } )
         EntityAddComponent2(storage, "LuaComponent", {
             execute_every_n_frame=-1,
@@ -127,10 +128,10 @@ function steal_player_stuff(player)
                 value_string=perks_to_spawn[i]
             })
         end
+        local exits = EntityGetWithName("$br_boss_rush_portal_out")
+        if exits ~= nil then EntityKill(exits) end
     end
     remove_all_perks()
-    local exits = EntityGetWithName("$br_boss_rush_portal_out")
-    if exits ~= nil then EntityKill(exits) end
 end
 
 local function boss_portal(to_x, to_y, entity, x_off, y_off)
@@ -163,6 +164,27 @@ local function nohit()
     GlobalsSetValue("BR_BOSS_RUSH_NOHIT", "1")
 end
 
+local function spawn_wands(name, entity)
+    local inv2 = EntityGetFirstComponent(entity, "Inventory2Component")
+    if inv2 then
+        ComponentSetValue2(inv2, "mActiveItem", 0)
+        ComponentSetValue2(inv2, "mActualActiveItem", 0)
+        ComponentSetValue2(inv2, "mForceRefresh", true)
+    end
+    local x, y = EntityGetTransform(entity)
+    local children = EntityGetAllChildren(entity) or {}
+    for i = 1, #children do
+        if EntityGetName(children[i]) == "inventory_quick" then
+            local items = EntityGetAllChildren(children[i]) or {}
+            for j = 1, #items do
+                EntityKill(items[j])
+            end
+        end
+    end
+    EntityLoad("mods/boss_reworks/files/boss_rush/wands/" .. name .. "_01.xml", x - 12, y)
+    EntityLoad("mods/boss_reworks/files/boss_rush/wands/" .. name .. "_02.xml", x + 12, y)
+end
+
 function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x, to_y )
     local funcs = {
         ["$br_boss_rush_portal_in"] = function()
@@ -185,6 +207,7 @@ function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x,
             load_scene(to_x, to_y, 408, 264, "arena_pyramid", 1)
             boss_portal(to_x, to_y, "data/entities/animals/boss_limbs/boss_limbs.xml", 130, -60)
             steal_player_stuff(entity_that_was_teleported)
+            spawn_wands("limbs", entity_that_was_teleported)
         end,
         ["$br_boss_rush_portal_dragon"] = function()
             nohit()
@@ -192,6 +215,7 @@ function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x,
             GlobalsSetValue("BR_BOSS_RUSH_PORTAL_NEXT", "forgotten")
             load_scene(to_x, to_y, 432, 432, "arena_dragon", 1)
             boss_portal(to_x, to_y, "data/entities/animals/boss_dragon.xml", 0, 80)
+            spawn_wands("dragon", entity_that_was_teleported)
         end,
         ["$br_boss_rush_portal_forgotten"] = function()
             nohit()
@@ -200,6 +224,7 @@ function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x,
             load_scene(to_x, to_y, 460, 337, "arena_forgotten", 1)
             boss_portal(to_x, to_y, "data/entities/animals/boss_ghost/boss_ghost.xml", 0, -80)
             EntityLoad("data/entities/items/pickup/evil_eye.xml", to_x, to_y)
+            spawn_wands("forgotten", entity_that_was_teleported)
         end,
     }
 

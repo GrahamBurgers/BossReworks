@@ -10,7 +10,7 @@ function damage_received( damage, message, entity_thats_responsible, is_fatal, p
         -- EntityInflictDamage(me, 0 - damage, "DAMAGE_HEALING", "$br_boss_rush_test", "NONE", 0, 0)
         local health = EntityGetFirstComponent(me, "DamageModelComponent") or 0
         ComponentSetValue2(health, "hp", ComponentGetValue2(health, "hp") + damage)
-        local max = tonumber(GlobalsGetValue("BR_BOSS_RUSH_HP_MAX") or "0")
+        local max = tonumber(GlobalsGetValue("BR_BOSS_RUSH_HP_MAX") or "0") or 0
         local multiplier = tonumber(GlobalsGetValue("BR_BOSS_RUSH_HP_MULTIPLIER") or "0")
 
         local old_fake_hp = tonumber(GlobalsGetValue("BR_BOSS_RUSH_HP_LEFT", "0"))
@@ -26,9 +26,14 @@ function damage_received( damage, message, entity_thats_responsible, is_fatal, p
             SetTimeOut(0.08, "mods/boss_reworks/files/damage_taken.lua", "turn_off_the_thingy")
             SetRandomSeed(GameGetFrameNum() + damage, GameGetFrameNum() + 24085)
             GamePrintImportant("$br_boss_rush_death_0", "$br_boss_rush_death_" .. Random(1, 9))
+            ComponentSetValue2(health, "mFireFramesLeft", 0)
             local entities = EntityGetWithTag("boss_reworks_boss_rush") or {}
             for i = 1, #entities do
                 EntitySetComponentsWithTagEnabled(entities[i], "boss_reworks_rush_remove", false)
+                local children = EntityGetAllChildren(entities[i]) or {}
+                for j = 1, #children do
+                    EntityKill(children[j])
+                end
                 EntityKill(entities[i])
             end
             local effect = EntityCreateNew()

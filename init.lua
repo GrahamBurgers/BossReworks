@@ -18,7 +18,7 @@ content = content:gsub("<mBufferedPixelScenes>", [[<mBufferedPixelScenes>
   <PixelScene pos_x="10496" pos_y="4352" just_load_an_entity="mods/boss_reworks/files/boss_rush/rooms/portal_space.xml" />
   <PixelScene pos_x="10496" pos_y="4352" just_load_an_entity="mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_in.xml" />
 ]])
--- ModTextFileSetContent("data/biome/_pixel_scenes.xml", content) -- wait until functional
+ModTextFileSetContent("data/biome/_pixel_scenes.xml", content) -- mostly functional
 
 function OnPlayerSpawned(player)
 	if GameHasFlagRun("boss_reworks_init") then return end
@@ -41,7 +41,11 @@ function OnWorldPreUpdate()
 			comp = GameGetGameEffect( players[i], "RADIOACTIVE" )
 			if comp > 0 then ComponentSetValue2(comp, "effect", "NONE") ComponentSetValue2(comp, "frames", 0) end
 			comp = EntityGetFirstComponent(players[i], "DamageModelComponent") or 0
-			if comp > 0 then ComponentSetValue2(comp, "mFireDamageBufferedNextDeliveryFrame", GameGetFrameNum() + 999) ComponentSetValue2(comp, "mFireFramesLeft", 0) ComponentSetValue2(comp, "mFireDamageBuffered", 0) end
+			if comp > 0 then ComponentSetValue2(comp, "mFireDamageBufferedNextDeliveryFrame", GameGetFrameNum() + 1) ComponentSetValue2(comp, "mFireDamageBuffered", 0) end
+			if GameGetGameEffectCount(players[i], "ON_FIRE") > 0 then
+				-- fire does flat damage in boss rush
+				EntityInflictDamage(players[i], 5 / 25 / 25, "DAMAGE_FIRE", "$damage_fire", "NONE", 0, 0)
+			end
 		end
 		-- i stole this code from lap 2 and modified it
 		Gui = Gui or GuiCreate()

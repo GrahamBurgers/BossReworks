@@ -80,3 +80,6 @@ table.insert(tree.children,
 	nxml.parse(
 		'<Entity> <InheritTransformComponent/> <GameEffectComponent effect="STUN_PROTECTION_FREEZE" frames="-1"> </GameEffectComponent>'))
 ModTextFileSetContent("data/entities/animals/boss_limbs/boss_limbs.xml", tostring(tree))
+
+inject(args.SS,modes.R,"data/entities/animals/boss_limbs/slime_boss_limbs.xml", 'speed_min="150"', 'speed_min="80"')
+inject(args.SS,modes.R,"data/entities/animals/boss_limbs/slime_boss_limbs.xml", 'speed_max="155"', 'speed_max="80"')

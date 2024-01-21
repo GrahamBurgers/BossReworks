@@ -8,6 +8,8 @@ if comp then
         ComponentAddTag(comps[i], "boss_reworks_rush_remove")
         if ComponentGetTypeName(comps[i]) == "CellEaterComponent" then
             ComponentSetValue2(comps[i], "ignored_material", CellFactory_GetType("boss_reworks_templebrick_indestructible"))
+            ComponentSetValue2(comps[i], "radius", 0)
+            ComponentSetValue2(comps[i], "eat_probability", 0)
         end
         if ComponentGetTypeName(comps[i]) == "DamageModelComponent" then
             ComponentSetValue2(comps[i], "blood_material", "plasma_fading")
