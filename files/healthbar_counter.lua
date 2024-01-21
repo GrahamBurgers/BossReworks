@@ -1,11 +1,11 @@
 local me = EntityGetRootEntity(GetUpdatedEntityID())
-local bar = EntityGetFirstComponent(me, "SpriteComponent", "health_bar")
+local bar = EntityGetFirstComponentIncludingDisabled(me, "SpriteComponent", "health_bar")
 if not bar then return end -- todo: add mod settings
 local whatx, whaty = ComponentGetValue2(bar, "transform_offset")
-local offset_y = (ComponentGetValue2(bar, "offset_y") + whaty * -1.5) + 32
+local offset_y = (ComponentGetValue2(bar, "offset_y")) + 32
 local sprite = EntityGetFirstComponentIncludingDisabled(GetUpdatedEntityID(), "SpriteComponent", "br_boss_rush_health_counter")
 if not sprite then
-    EntityAddComponent2(me, "SpriteComponent", {
+    sprite = EntityAddComponent2(me, "SpriteComponent", {
         _tags = "br_boss_rush_health_counter",
         image_file = "data/fonts/font_pixel_white.xml",
         emissive = true,
@@ -22,6 +22,7 @@ if not sprite then
         z_index = -9000,
         never_ragdollify_on_death = true
     })
+    ComponentSetValue2(sprite, "transform_offset", whatx, whaty)
 else
     local comp = EntityGetFirstComponentIncludingDisabled(me, "DamageModelComponent")
     if not comp or not sprite then return end

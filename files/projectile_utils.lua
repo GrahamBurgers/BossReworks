@@ -13,11 +13,13 @@ function ShootProjectile(who_shot, entity_file, x, y, vel_x, vel_y, velocity_mul
 		end
 	end
 	GameShootProjectile(who_shot, x, y, x + vel_x, y + vel_y, entity_id, true, who_shot)
-	local comp = EntityGetFirstComponentIncludingDisabled(entity_id, "VelocityComponent") or 0
-	local vx, vy = ComponentGetValue2(comp, "mVelocity")
-	vx = vx * velocity_multiplier
-	vy = vy * velocity_multiplier
-	ComponentSetValue2(comp, "mVelocity", vx, vy)
+	local comp = EntityGetFirstComponentIncludingDisabled(entity_id, "VelocityComponent")
+	if comp then
+		local vx, vy = ComponentGetValue2(comp, "mVelocity")
+		vx = vx * velocity_multiplier
+		vy = vy * velocity_multiplier
+		ComponentSetValue2(comp, "mVelocity", vx, vy)
+	end
 	local comps = EntityGetComponentIncludingDisabled(entity_id, "ProjectileComponent") or {}
 	for i = 1, #comps do
 		ComponentSetValue2(comps[i], "mShooterHerdId", herd)
