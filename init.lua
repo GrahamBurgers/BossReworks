@@ -22,13 +22,16 @@ content = content:gsub("<mBufferedPixelScenes>", [[<mBufferedPixelScenes>
 ModTextFileSetContent("data/biome/_pixel_scenes.xml", content) -- mostly functional
 
 function OnPlayerSpawned(player)
-	if GameHasFlagRun("boss_reworks_init") then return end
-	GameAddFlagRun("boss_reworks_init")
-	EntityAddComponent2(player, "LuaComponent", {
-		execute_every_n_frame = -1,
-		script_shot = "mods/boss_reworks/files/shot.lua",
-		script_damage_received = "mods/boss_reworks/files/damage_taken.lua",
-	})
+	if not GameHasFlagRun("boss_reworks_init") then
+		GameAddFlagRun("boss_reworks_init")
+		EntityAddComponent2(player, "LuaComponent", {
+			execute_every_n_frame = -1,
+			script_shot = "mods/boss_reworks/files/shot.lua",
+			script_damage_received = "mods/boss_reworks/files/damage_taken.lua",
+		})
+		local eid = EntityLoad("mods/boss_reworks/files/boss_wizard/effect_timer.xml")
+		EntityAddChild(player, eid)
+	end
 end
 
 function OnWorldPreUpdate()
@@ -38,10 +41,13 @@ function OnWorldPreUpdate()
 		GuiIdPushString(Gui, "br_healthbar")
 		GuiStartFrame(Gui)
 
-		local amount = tonumber(GlobalsGetValue("BR_BOSS_RUSH_HP_LEFT", "0") or "0")
-		local max = tonumber(GlobalsGetValue("BR_BOSS_RUSH_HP_MAX") or "0")
-		local multiplier = tonumber(GlobalsGetValue("BR_BOSS_RUSH_HP_MULTIPLIER") or "0")
-		local thing = tonumber(GlobalsGetValue("BR_BOSS_RUSH_HP_TWEEN") or "0")
+		local amount = tonumber(GlobalsGetValue("BR_BOSS_RUSH_HP_LEFT", "0")) or 0
+		local max = tonumber(GlobalsGetValue("BR_BOSS_RUSH_HP_MAX", "0")) or 0
+		local multiplier = tonumber(GlobalsGetValue("BR_BOSS_RUSH_HP_MULTIPLIER", "0")) or 0
+		local thing = tonumber(GlobalsGetValue("BR_BOSS_RUSH_HP_TWEEN", "0")) or 0
+		amount = math.min(max, math.max(multiplier, amount))
+		thing = math.min(max, math.max(multiplier, thing))
+		GlobalsSetValue("BR_BOSS_RUSH_HP_LEFT", tostring(amount))
 		if thing <= amount then
 			thing = amount
 		else
@@ -91,6 +97,19 @@ function OnWorldPreUpdate()
 			if GameGetGameEffectCount(players[i], "ON_FIRE") > 0 then
 				local dmg = max / multiplier / 50 / 60 / 25
 				EntityInflictDamage(players[i], dmg, "DAMAGE_FIRE", "$damage_fire", "NONE", 0, 0)
+			end
+		end
+		local poly = EntityGetWithTag("polymorphed_player") or {}
+		for i = 1, #poly do
+			local comp_poly = GameGetGameEffect(poly[i], "POLYMORPH")
+			if( comp_poly == 0 or comp_poly == nil ) then comp_poly = GameGetGameEffect(poly[i], "POLYMORPH_RANDOM") end
+			if( comp_poly == 0 or comp_poly == nil ) then comp_poly = GameGetGameEffect(poly[i], "POLYMORPH_UNSTABLE") end
+
+			-- forever polymorph!
+			if comp_poly then
+				ComponentSetValue2(comp_poly, "frames", 1)
+				GamePrint("$br_boss_rush_polymorphed")
+				GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(math.max(multiplier, multiplier * -80 + max)))
 			end
 		end
 	end

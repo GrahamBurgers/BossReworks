@@ -1,4 +1,8 @@
-<Entity>
+<Entity name="br_effect_timer">
+
+    <InheritTransformComponent
+        only_position="1"
+    ></InheritTransformComponent>
 
     <ParticleEmitterComponent
         area_circle_radius.min="25"
@@ -12,16 +16,18 @@
         create_real_particles="0"
         custom_alpha="-1"
         draw_as_long="0"
+        render_back="0"
         emission_interval_min_frames="1"
         emission_interval_max_frames="1"
         emit_cosmetic_particles="1"
         emit_only_if_there_is_space="0"
         emit_real_particles="0"
-        emitted_material_name="magic_liquid_polymorph"
+        emitted_material_name="material_confusion"
         emitter_lifetime_frames="-1"
         lifetime_min="0.01"
         lifetime_max="0.01"
         velocity_always_away_from_center="-60"
+        render_on_grid="1"
     ></ParticleEmitterComponent>
 
     <LuaComponent
@@ -30,6 +36,8 @@
 
     <VariableStorageComponent
         value_float="0"
+        value_int="0"
+        value_string="CONFUSION"
     ></VariableStorageComponent>
 
 </Entity>
