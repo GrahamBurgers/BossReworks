@@ -1,0 +1,35 @@
+<Entity>
+
+    <ParticleEmitterComponent
+        area_circle_radius.min="25"
+        area_circle_radius.max="30"
+        area_circle_sector_degrees="0"
+        collide_with_gas_and_fire="0"
+        collide_with_grid="0"
+        cosmetic_force_create="1"
+        count_min="0"
+        count_max="0"
+        create_real_particles="0"
+        custom_alpha="-1"
+        draw_as_long="0"
+        emission_interval_min_frames="1"
+        emission_interval_max_frames="1"
+        emit_cosmetic_particles="1"
+        emit_only_if_there_is_space="0"
+        emit_real_particles="0"
+        emitted_material_name="magic_liquid_polymorph"
+        emitter_lifetime_frames="-1"
+        lifetime_min="0.01"
+        lifetime_max="0.01"
+        velocity_always_away_from_center="-60"
+    ></ParticleEmitterComponent>
+
+    <LuaComponent
+        script_source_file="mods/boss_reworks/files/boss_wizard/effect_timer.lua"
+    ></LuaComponent>
+
+    <VariableStorageComponent
+        value_float="0"
+    ></VariableStorageComponent>
+
+</Entity>

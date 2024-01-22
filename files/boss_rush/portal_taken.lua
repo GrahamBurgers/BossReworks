@@ -232,7 +232,8 @@ function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x,
             GlobalsSetValue("BR_BOSS_RUSH_PORTAL_NEXT", "forgotten")
             load_scene(to_x, to_y, 460, 337, "arena_forgotten", 1)
             boss_portal(to_x, to_y, "data/entities/animals/boss_ghost/boss_ghost.xml", 0, -80)
-            EntityLoad("data/entities/items/pickup/evil_eye.xml", to_x, to_y)
+            local eid = EntityLoad("data/entities/items/pickup/evil_eye.xml", to_x, to_y)
+            EntityAddTag(eid, "boss_reworks_boss_rush")
             spawn_wands("forgotten", entity_that_was_teleported)
         end,
     }
