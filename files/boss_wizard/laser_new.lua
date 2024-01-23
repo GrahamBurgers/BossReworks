@@ -1,0 +1,7 @@
+dofile_once("mods/boss_reworks/files/projectile_utils.lua")
+local me = GetUpdatedEntityID()
+local x, y = EntityGetTransform(me)
+ShootProjectile(me, "mods/boss_reworks/files/boss_wizard/effect_orb.xml", x, y, -10, -10)
+ShootProjectile(me, "mods/boss_reworks/files/boss_wizard/effect_orb.xml", x, y, 10, 10)
+ShootProjectile(me, "mods/boss_reworks/files/boss_wizard/effect_orb.xml", x, y, -10, 10)
+ShootProjectile(me, "mods/boss_reworks/files/boss_wizard/effect_orb.xml", x, y, 10, -10)

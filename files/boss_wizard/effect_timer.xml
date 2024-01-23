@@ -14,7 +14,7 @@
         count_min="0"
         count_max="0"
         create_real_particles="0"
-        custom_alpha="-1"
+        custom_alpha="1"
         draw_as_long="0"
         render_back="0"
         emission_interval_min_frames="1"
