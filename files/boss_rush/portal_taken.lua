@@ -144,10 +144,10 @@ end
 local function load_scene(x, y, size_x, size_y, room_name, amount)
     local y2 = y + size_y * -0.5
     if amount == 1 then
-        LoadPixelScene(table.concat({"mods/boss_reworks/files/boss_rush/rooms/", room_name, ".png"}), "", x + size_x * -0.5, y2, "", true, false, {}, 50, true)
+        LoadPixelScene(table.concat({room_name, ".png"}), "", x + size_x * -0.5, y2, "", true, false, {}, 50, true)
     else
         for i = 1, amount do
-            LoadPixelScene(table.concat({"mods/boss_reworks/files/boss_rush/rooms/", room_name, "_", i, ".png"}), "", x + size_x * -0.5, y2, "", true, false, {}, 50, true)
+            LoadPixelScene(table.concat({room_name, "_", i, ".png"}), "", x + size_x * -0.5, y2, "", true, false, {}, 50, true)
             y2 = y2 + size_y
         end
     end
@@ -192,57 +192,66 @@ local function spawn_wands(name, entity)
             end
         end
     end
-    EntityLoad("mods/boss_reworks/files/boss_rush/wands/" .. name .. "_01.xml", x - 12, y)
-    EntityLoad("mods/boss_reworks/files/boss_rush/wands/" .. name .. "_02.xml", x + 12, y)
+    EntityLoad(name .. "_01.xml", x - 12, y)
+    EntityLoad(name .. "_02.xml", x + 12, y)
 end
 
-function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x, to_y )
-    local funcs = {
-        ["$br_boss_rush_portal_in"] = function()
-            if not GameHasFlagRun("br_boss_rush_intro") then
-                load_scene(to_x, to_y, 346, 262, "intro_room", 1)
-                GameAddFlagRun("br_boss_rush_intro")
-                EntityLoad("mods/boss_reworks/files/boss_rush/boss_rush_book.xml", to_x, to_y + 30)
-                EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_pyramid.xml", to_x + 130, to_y - 60)
-                EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_out.xml", to_x - 130, to_y - 60)
+Bosses = {
+    {"$br_boss_rush_portal_in", function(x, y, player)
+        if not GameHasFlagRun("br_boss_rush_intro") then
+            load_scene(x, y, 346, 262, "mods/boss_reworks/files/boss_rush/rooms/intro_room", 1)
+            GameAddFlagRun("br_boss_rush_intro")
+            EntityLoad("mods/boss_reworks/files/boss_rush/boss_rush_book.xml", x, y + 30)
+            local entity = EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_base.xml", x + 130, y - 60)
+            local name = "$br_boss_rush_portal_pyramid"
+            EntitySetName(entity, name)
+            EntityRemoveTag(entity, "boss_reworks_boss_rush")
+            local ui = EntityGetFirstComponent(entity, "UIInfoComponent")
+            if ui then
+                ComponentSetValue2(ui, "name", name)
             end
-        end,
-        ["$br_boss_rush_portal_pyramid"] = function()
-            GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(max))
-            GlobalsSetValue("BR_BOSS_RUSH_HP_MULTIPLIER", tostring(multiplier))
-            GlobalsSetValue("BR_BOSS_RUSH_NOHIT", "1")
-            GlobalsSetValue("BR_BOSS_RUSH_ACTIVE", "1")
-            GlobalsSetValue("BR_BOSS_RUSH_HP_LEFT", tostring(max))
-            GlobalsSetValue("BR_BOSS_RUSH_HP_TWEEN", tostring(max))
-            GlobalsSetValue("BR_BOSS_RUSH_PORTAL_NEXT", "dragon")
-            load_scene(to_x, to_y, 408, 264, "arena_pyramid", 1)
-            boss_portal(to_x, to_y, "data/entities/animals/boss_limbs/boss_limbs.xml", 130, -60)
-            steal_player_stuff(entity_that_was_teleported)
-            spawn_wands("limbs", entity_that_was_teleported)
-        end,
-        ["$br_boss_rush_portal_dragon"] = function()
-            nohit()
-            GlobalsSetValue("BR_BOSS_RUSH_PORTAL_NEXT", "forgotten")
-            load_scene(to_x, to_y, 432, 432, "arena_dragon", 1)
-            boss_portal(to_x, to_y, "data/entities/animals/boss_dragon.xml", 0, 80)
-            spawn_wands("dragon", entity_that_was_teleported)
-        end,
-        ["$br_boss_rush_portal_forgotten"] = function()
-            nohit()
-            GlobalsSetValue("BR_BOSS_RUSH_PORTAL_NEXT", "forgotten")
-            load_scene(to_x, to_y, 460, 337, "arena_forgotten", 1)
-            boss_portal(to_x, to_y, "data/entities/animals/boss_ghost/boss_ghost.xml", 0, -80)
-            local eid = EntityLoad("data/entities/items/pickup/evil_eye.xml", to_x, to_y)
-            EntityAddTag(eid, "boss_reworks_boss_rush")
-            spawn_wands("forgotten", entity_that_was_teleported)
-        end,
-    }
+            EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_out.xml", x - 130, y - 60)
+        end
+    end},
+    {"$br_boss_rush_portal_pyramid", function(x, y, player)
+        GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(max))
+        GlobalsSetValue("BR_BOSS_RUSH_HP_MULTIPLIER", tostring(multiplier))
+        GlobalsSetValue("BR_BOSS_RUSH_NOHIT", "1")
+        GlobalsSetValue("BR_BOSS_RUSH_ACTIVE", "1")
+        GlobalsSetValue("BR_BOSS_RUSH_HP_LEFT", tostring(max))
+        GlobalsSetValue("BR_BOSS_RUSH_HP_TWEEN", tostring(max))
+        load_scene(x, y, 408, 264, "mods/boss_reworks/files/boss_rush/rooms/arena_pyramid", 1)
+        boss_portal(x, y, "data/entities/animals/boss_limbs/boss_limbs.xml", 130, -60)
+        steal_player_stuff(player)
+        spawn_wands("mods/boss_reworks/files/boss_rush/wands/limbs", player)
+    end},
+    {"$br_boss_rush_portal_dragon", function(x, y, player)
+        nohit()
+        load_scene(x, y, 432, 432, "mods/boss_reworks/files/boss_rush/rooms/arena_dragon", 1)
+        boss_portal(x, y, "data/entities/animals/boss_dragon.xml", 0, 80)
+        spawn_wands("mods/boss_reworks/files/boss_rush/wands/dragon", player)
+    end},
+    {"$br_boss_rush_portal_forgotten", function(x, y, player)
+        nohit()
+        GlobalsSetValue("BR_BOSS_RUSH_PORTAL_NEXT", "forgotten")
+        load_scene(x, y, 460, 337, "mods/boss_reworks/files/boss_rush/rooms/arena_forgotten", 1)
+        boss_portal(x, y, "data/entities/animals/boss_ghost/boss_ghost.xml", 0, -80)
+        local eid = EntityLoad("data/entities/items/pickup/evil_eye.xml", x, y)
+        EntityAddTag(eid, "boss_reworks_boss_rush")
+        spawn_wands("mods/boss_reworks/files/boss_rush/wands/forgotten", player)
+    end},
+}
 
+function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x, to_y )
     local name = EntityGetName(GetUpdatedEntityID())
-    if funcs[name] and (EntityHasTag(entity_that_was_teleported, "player_unit") or EntityHasTag(entity_that_was_teleported, "polymorphed_player")) then funcs[name]() end
-    local players = EntityGetWithTag("player_unit") or EntityGetWithTag("polymorphed_player") or {}
-    for i = 1, #players do
-        EntityAddRandomStains(players[i], CellFactory_GetType("boss_reworks_unstainer"), 2000)
+    if (EntityHasTag(entity_that_was_teleported, "player_unit") or EntityHasTag(entity_that_was_teleported, "polymorphed_player")) then
+        EntityAddRandomStains(entity_that_was_teleported, CellFactory_GetType("boss_reworks_unstainer"), 2000)
+        for i = 1, #Bosses do
+            if Bosses[i][1] == name then
+                Bosses[i][2](to_x, to_y, entity_that_was_teleported)
+                GlobalsSetValue("BR_BOSS_RUSH_PORTAL_NEXT", Bosses[i + 1][1] or "")
+            end
+        end
     end
     local projectiles = EntityGetWithTag("projectile") or {} -- this will cause no issues
     for i = 1, #projectiles do
@@ -258,3 +267,12 @@ function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x,
     GlobalsSetValue("BR_BOSS_RUSH_PORTAL_X", tostring(to_x))
     GlobalsSetValue("BR_BOSS_RUSH_PORTAL_Y", tostring(to_y))
 end
+
+function Insert_boss(after_who, name, func)
+    for i = 1, #Bosses do
+        if Bosses[i][1] == after_who then
+            table.insert(Bosses, i + 1, {name, func})
+        end
+    end
+end
+-- TODO: write instructions on how to add a modded boss to boss rush (blehhhhhh)

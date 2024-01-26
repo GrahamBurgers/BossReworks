@@ -1,4 +1,4 @@
-<Entity name="$br_boss_rush_portal_pyramid" tags="br_boss_rush_portal">
+<Entity name="$br_boss_rush_portal_pyramid" tags="boss_reworks_boss_rush">
 
 	<Base file="mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_in.xml" >
 		<UIInfoComponent
