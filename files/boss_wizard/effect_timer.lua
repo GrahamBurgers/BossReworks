@@ -6,12 +6,21 @@ if not comp or not var then return end
 local amount = ComponentGetValue2(var, "value_float")
 local effect = ComponentGetValue2(var, "value_string")
 
+local pips = 360 / 7
 local entities = EntityGetInRadiusWithTag(x, y, 6, "br_effect_projectile") or {}
 for i = 1, #entities do
-    GamePlaySound( "data/audio/Desktop/animals.bank", "animals/mine/beep", x, y )
-    amount = amount + 360 / 7
-    EntityKill(entities[i])
-    ComponentSetValue2(var, "value_int", GameGetFrameNum())
+    local proj = EntityGetFirstComponentIncludingDisabled(entities[i], "ProjectileComponent")
+    local count = 0
+    if proj then
+        -- use damage value as the pips added since projectile can't hit directly
+        count = ComponentGetValue2(proj, "damage")
+    end
+    if count > 0 then
+        GamePlaySound( "data/audio/Desktop/animals.bank", "animals/mine/beep", x, y )
+        amount = amount + pips * count
+        EntityKill(entities[i])
+        ComponentSetValue2(var, "value_int", GameGetFrameNum())
+    end
 end
 
 local old_effect = effect
