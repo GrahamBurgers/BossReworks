@@ -12,8 +12,8 @@ for i = 1, #players do
         vx, vy = ComponentGetValue2(velco, "mVelocity")
         if ComponentGetValue2(velco, "is_on_ground") then vy = 0 end
     end
-    x = x + 0.65 * (vx or 0)
-    y = y + 0.65 * (vy or 0)
+    x = x + 0.35 * (vx or 0)
+    y = y + 0.35 * (vy or 0)
     local xc, yc, x2, y2
     local count = 11
     if amount % 2 == 0 then
