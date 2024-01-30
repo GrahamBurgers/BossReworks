@@ -24,6 +24,7 @@ function ShootProjectile(who_shot, entity_file, x, y, vel_x, vel_y, velocity_mul
 	for i = 1, #comps do
 		ComponentSetValue2(comps[i], "mShooterHerdId", herd)
 		ComponentSetValue2(comps[i], "mWhoShot", who_shot)
+		ComponentSetValue2(comps[i], "mEntityThatShot", GetUpdatedEntityID())
 	end
 
 	return entity_id

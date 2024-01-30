@@ -46,10 +46,15 @@ ModTextFileSetContent(path, tostring(tree))
 
 inject(args.SS,modes.R,"data/entities/animals/boss_wizard/wizard_orb_death.xml", 'blood_material="blood"', 'blood_material="smoke"')
 inject(args.SS,modes.R,"data/entities/animals/boss_wizard/wizard_orb_death.xml", 'blood_spray_material="blood"', 'blood_spray_material="smoke"')
+inject(args.SS,modes.R,"data/entities/animals/boss_wizard/wizard_orb_death.xml", '101', '100')
 inject(args.SS,modes.R,"data/entities/animals/boss_wizard/wizard_orb_blood.xml", 'polymorphable_NOT', 'wizard_orb_blood,polymorphable_NOT')
 inject(args.SS,modes.A,"data/entities/animals/boss_wizard/wizard_orb_blood.xml", 'physics_objects_damage="0"', 'wait_for_kill_flag_on_death="1"')
 inject(args.SS,modes.R,"data/entities/animals/boss_wizard/statusburst.xml", 'data/entities/animals/boss_wizard/statusburst.lua', 'mods/boss_reworks/files/boss_wizard/statusburst_new.lua')
 inject(args.SS,modes.R,"data/entities/animals/boss_wizard/statusburst.xml", 'execute_every_n_frame="2"', 'execute_every_n_frame="4"')
+inject(args.SS,modes.P,"data/entities/animals/boss_wizard/state.lua", 'if ( mode == 0 ) then', [[
+	-- HAX, projectiles fired from projectiles advance his state for some reason
+	if EntityHasTag(pid, "br_effect_projectile") then return end
+	]])
 inject(args.SS,modes.A,"data/entities/animals/boss_wizard/wizard_nullify.lua", 'mode = 1', [[
 
 	local children = EntityGetAllChildren(entity_id)
