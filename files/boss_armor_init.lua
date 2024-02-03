@@ -1,4 +1,8 @@
 local me = GetUpdatedEntityID()
+if ModSettingGet("boss_reworks.boss_armor") == false then
+    EntityRemoveComponent(me, GetUpdatedComponentID())
+    return
+end
 local comp = EntityGetFirstComponent(me, "VariableStorageComponent", "boss_reworks_armor")
 if comp == nil then
     local health = EntityGetFirstComponent(me, "DamageModelComponent")

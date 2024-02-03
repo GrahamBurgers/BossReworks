@@ -1,11 +1,9 @@
-dofile_once("mods/boss_reworks/files/boss_dragon/edit.lua")
-dofile_once("mods/boss_reworks/files/boss_gate/edit.lua")
-dofile_once("mods/boss_reworks/files/boss_limbs/edit.lua")
-dofile_once("mods/boss_reworks/files/boss_fish/edit.lua")
-dofile_once("mods/boss_reworks/files/boss_alchemist/edit.lua")
-dofile_once("mods/boss_reworks/files/boss_ghost/edit.lua")
-dofile_once("mods/boss_reworks/files/boss_robot/edit.lua")
-dofile_once("mods/boss_reworks/files/boss_wizard/edit.lua")
+local list = {"dragon", "gate", "limbs", "fish", "alchemist", "ghost", "robot", "wizard"}
+for i = 1, #list do
+	if ModSettingGet("boss_reworks.rework_" .. list[i]) then
+		dofile_once("mods/boss_reworks/files/boss_" .. list[i] .. "/edit.lua")
+	end
+end
 ModMaterialsFileAdd("mods/boss_reworks/files/materials.xml")
 
 local translations = ModTextFileGetContent("data/translations/common.csv")
