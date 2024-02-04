@@ -1,3 +1,8 @@
+local comp2 = EntityGetFirstComponent(GetUpdatedEntityID(), "VariableStorageComponent", "boss_wizard_mode")
+local mode = 1
+if comp2 then mode = ComponentGetValue2(comp2, "value_int") + 1 end
+if mode < 2 then return end
+
 local comp = EntityGetFirstComponentIncludingDisabled(GetUpdatedEntityID(), "ParticleEmitterComponent", "effect_radius")
 if not comp then
     comp = EntityAddComponent2(GetUpdatedEntityID(), "ParticleEmitterComponent", {
@@ -25,11 +30,17 @@ if not comp then
         render_on_grid=false,
         fade_based_on_lifetime=true,
     })
-    ComponentSetValue2(comp, "area_circle_radius", 400, 400)
+    ComponentSetValue2(comp, "area_circle_radius", 350, 350)
 end
 local x, y = EntityGetTransform(GetUpdatedEntityID())
 local radius, _ = ComponentGetValue2(comp, "area_circle_radius")
-radius = math.max(100, radius - 0.3)
+local add = 1
+if mode < 3 then
+    radius = math.max(200, radius - 0.3)
+else
+    radius = math.max(100, radius - 0.6)
+    add = 4
+end
 local entities = EntityGetWithTag("br_effect_timer") or {}
 for i = 1, #entities do
     local x2, y2 = EntityGetTransform(entities[i])
@@ -37,7 +48,7 @@ for i = 1, #entities do
     if distance > radius ^ 2 then
         local counter = EntityGetFirstComponent(entities[i], "VariableStorageComponent")
         if counter then
-            local amount = ComponentGetValue2(counter, "value_float") + 2
+            local amount = ComponentGetValue2(counter, "value_float") + add
             ComponentSetValue2(counter, "value_float", amount)
             ComponentSetValue2(counter, "value_int", GameGetFrameNum() + 120)
             GamePlaySound( "data/audio/Desktop/misc.bank", "game_effect/poison/tick", x2, y2 )
