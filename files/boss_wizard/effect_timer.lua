@@ -19,7 +19,7 @@ for i = 1, #entities do
         GamePlaySound( "data/audio/Desktop/animals.bank", "animals/mine/beep", x, y )
         amount = amount + pips * count
         EntityKill(entities[i])
-        ComponentSetValue2(var, "value_int", GameGetFrameNum())
+        ComponentSetValue2(var, "value_int", GameGetFrameNum() + 300)
     end
 end
 
@@ -46,6 +46,7 @@ if amount >= 359 then
         name = "drunk_ui"
         message = "$br_boss_wizard_3"
         effect = "BLINDNESS"
+        -- TODO: this is still way too dark
         material = "skullrock"
     elseif effect == "BLINDNESS" then
         name = "blindness"
@@ -77,7 +78,7 @@ if amount >= 359 then
 end
 
 ComponentSetValue2(comp, "custom_alpha", 1)
-if GameGetFrameNum() > ComponentGetValue2(var, "value_int") + 300 then
+if GameGetFrameNum() > ComponentGetValue2(var, "value_int") then
     amount = amount - 0.5
     ComponentSetValue2(comp, "custom_alpha", 0.5)
 end

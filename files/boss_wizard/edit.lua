@@ -7,6 +7,8 @@ table.insert(tree.children,
 table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/healthbar_counter.lua" </LuaComponent>'))
 table.insert(tree.children,
+	nxml.parse('<LuaComponent _enabled="1" _tags="end" script_source_file="mods/boss_reworks/files/boss_wizard/phase3.lua" </LuaComponent>'))
+table.insert(tree.children,
 	nxml.parse('<CellEaterComponent radius="40" eat_probability="35" ignored_material="swamp" ></CellEaterComponent>'))
 ModTextFileSetContent(path, tostring(tree))
 
