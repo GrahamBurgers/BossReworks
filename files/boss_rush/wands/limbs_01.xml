@@ -13,18 +13,18 @@
         drop_as_item_on_death="0"
         use_gun_script="1"
 
-        add_these_child_actions="DAMAGE,SPREAD_REDUCE,SPITTER_TIER_2"
+        add_these_child_actions="DAMAGE,SPITTER_TIER_2"
 		mana_charge_speed="60"
 		mana_max="200"
         >
         <gun_config 
             shuffle_deck_when_empty="0"
             reload_time="24"
-            deck_capacity="3"
+            deck_capacity="2"
             actions_per_round="1"
         ></gun_config>
         <gunaction_config
-            spread_degrees="4"
+            spread_degrees="-10"
             fire_rate_wait="0"
             speed_multiplier="1"
         ></gunaction_config>
