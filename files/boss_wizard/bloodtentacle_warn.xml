@@ -1,0 +1,40 @@
+<Entity name="$projectile_default">
+
+	<Base file="data/entities/base_projectile.xml" >
+      <VelocityComponent
+        gravity_y="0.0"
+		mass="0.08"
+		air_friction="0"
+		>
+      </VelocityComponent>
+	</Base>
+
+	<InheritTransformComponent
+		only_position="1"
+	></InheritTransformComponent>
+
+	<ProjectileComponent
+		speed_min="8"
+		speed_max="8"
+		die_on_low_velocity="0"
+		on_death_explode="0"
+		on_death_gfx_leave_sprite="0" 
+		on_lifetime_out_explode="0"
+		on_collision_die="0"
+		penetrate_entities="1"
+		damage="0"
+		lifetime="-1" 
+		knockback_force="2.0"
+		>
+	</ProjectileComponent>
+
+    <SpriteComponent
+		alpha="0"
+        image_file="mods/boss_reworks/files/boss_wizard/bloodtentacle_warn.png"
+    ></SpriteComponent>
+
+	<LuaComponent
+		script_source_file="mods/boss_reworks/files/boss_wizard/bloodtentacle_warn.lua"
+	></LuaComponent>
+
+</Entity>

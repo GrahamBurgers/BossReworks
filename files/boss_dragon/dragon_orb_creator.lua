@@ -17,7 +17,8 @@ if vel and ComponentGetValue2(vel, "mVelocity") == 0 and player ~= nil then
 	ComponentSetValue2(vel, "mVelocity", newx, newy)
 end
 
-if GameGetFrameNum() % 25 == 0 then
+local toggle = ComponentGetValue2(GetUpdatedComponentID(), "mTimesExecuted")
+if (toggle + 1) % 25 == 0 then
 	if player ~= nil then
 		dofile_once("mods/boss_reworks/files/projectile_utils.lua")
 		local px, py = EntityGetTransform(player)
