@@ -30,6 +30,9 @@ for k, v in ipairs(tree.children) do
 			end
 		end
     end
+    if v.name == "DamageModelComponent" then
+        v.attr.materials_damage = "0"
+    end
 end
 ModTextFileSetContent(path, tostring(tree))
 

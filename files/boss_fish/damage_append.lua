@@ -5,7 +5,7 @@ function damage_received( damage, desc, entity_who_caused, is_fatal )
     if damagemodel then
         local max_hp = ComponentGetValue2(damagemodel, "max_hp")
         local hp = ComponentGetValue2(damagemodel, "hp")
-        local threshold = 100
+        local threshold = 150
 
         for i = 1, threshold do
             if hp >= max_hp / (threshold / i) and hp - damage < max_hp / (threshold / i) then

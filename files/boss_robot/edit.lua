@@ -8,6 +8,8 @@ table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/healthbar_counter.lua" </LuaComponent>'))
 table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_robot/beam.lua"> </LuaComponent>'))
+table.insert(tree.children,
+	nxml.parse('<GameEffectComponent frames="-1" effect="PROTECTION_FREEZE" </GameEffectComponent>'))
 for k, v in ipairs(tree.children) do
 	if v.name == "DamageModelComponent" then
 		v.children[1].attr.projectile = 0.1
