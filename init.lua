@@ -1,4 +1,4 @@
-local list = {"dragon", "gate", "limbs", "fish", "alchemist", "ghost", "robot", "wizard"}
+local list = {"dragon", "gate", "limbs", "fish", "alchemist", "ghost", "robot", "wizard", "pit"}
 for i = 1, #list do
 	if ModSettingGet("boss_reworks.rework_" .. list[i]) then
 		dofile_once("mods/boss_reworks/files/boss_" .. list[i] .. "/edit.lua")

@@ -32,6 +32,7 @@ mod_settings =
 		ui_description = "Toggle reworks for specific bosses.\nThese descriptions will spoil the rework, so beware if you're trying to go in blind.\nTurning off a boss's rework will also prevent them from gaining boss armor and healthbar numbers.\nTry not to change these mid-run if you've already encountered the boss.\nPlease don't disable a boss's rework before you've fought the reworked boss at least once, OK?",
 		settings = {
 			-- todo: what order do we put these in? boss rush order?
+			-- also todo: is it even worth explaining the reworks here? might be better off linking to a wiki page
 			{
 				id = "rework_limbs",
 				ui_name = "Pyramid Boss",
@@ -85,6 +86,13 @@ mod_settings =
 				id = "rework_wizard",
 				ui_name = "Master of Masters",
 				ui_description = "Rework the Master of Masters (Mestarien mestari).\nThis makes the boss's status effects more fair and interesting, and grants\nthe boss some new abilities in all 3 phases.\nAnti-cheese: The boss no longer takes damage from acid, and ambrosia is less effective.",
+				value_default = true,
+				scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
+			},
+			{
+				id = "rework_pit",
+				ui_name = "Squidward",
+				ui_description = "Rework Squidward (Sauvojen Tuntija).\nThis hrrnggngngng",
 				value_default = true,
 				scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
 			},
