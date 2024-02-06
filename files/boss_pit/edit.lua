@@ -16,7 +16,7 @@ for k, v in ipairs(tree.children) do
 		v.children[1].attr.projectile = 1
 		v.children[1].attr.explosion = 1
 		v.children[1].attr.holy = 0
-		v.attr.ragdoll_fx_forced = "NONE"
+		-- v.attr.ragdoll_fx_forced = "NONE" -- causes issues with tentacle segments
 		v.attr.ragdoll_material = "meat_slime_green"
 	end
 end

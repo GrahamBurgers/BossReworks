@@ -8,7 +8,7 @@ function damage_about_to_be_received( damage, x, y, entity_thats_responsible, cr
     local phase = ComponentGetValue2(varsto, "value_int")
     if phase == 1 then damage = damage * 2.5 end
     if phase == -1 then return damage, critical_hit_chance end
-    local allowance = 234 -- how much more you're able to damage him in each phase: 1 = 10%
+    local allowance = 2 -- how much more you're able to damage him in each phase: 1 = 10%
 
     local acceptable_hp = max_hp * ((10 - phase * allowance) / 10)
     if acceptable_hp < 0.04 then
