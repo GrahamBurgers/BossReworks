@@ -12,7 +12,7 @@ function damage_about_to_be_received( damage, x, y, entity_thats_responsible, cr
 
     local acceptable_hp = max_hp * ((10 - phase * allowance) / 10)
     if acceptable_hp < 0.04 then
-        acceptable_hp = 0.04
+        acceptable_hp = 0.039
     end
     local new_damage = math.min(damage, hp - acceptable_hp)
     if (acceptable_hp > 0 and hp - damage <= acceptable_hp) then
@@ -22,7 +22,9 @@ function damage_about_to_be_received( damage, x, y, entity_thats_responsible, cr
                 return new_damage, critical_hit_chance
             end
         end
-        ComponentSetValue2(damagemodel, "hp", acceptable_hp)
+        if hp ~= acceptable_hp then
+            ComponentSetValue2(damagemodel, "hp", acceptable_hp)
+        end
         local eid = EntityLoad("mods/boss_reworks/files/boss_pit/squid_shield.xml", x, y)
         EntityAddChild(me, eid)
         local duration = 10 + 5 * (phase - 1) -- X seconds + Y more for each time squid has been shielded previously; tweak numbers as needed
