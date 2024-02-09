@@ -1,3 +1,4 @@
+--[[ beta branch changed healthbars for bosses so this isn't necessary anymore
 local me = EntityGetRootEntity(GetUpdatedEntityID())
 local bar = EntityGetFirstComponentIncludingDisabled(me, "SpriteComponent", "health_bar")
 if not bar then return end -- todo: add mod settings
@@ -39,3 +40,4 @@ ComponentSetValue2(sprite, "offset_x", offset_x)
 ComponentSetValue2(sprite, "offset_y", 0)
 ComponentSetValue2(sprite, "transform_offset", whatx, whaty - offset_y - 7.25)
 EntityRefreshSprite(me, sprite)
+]]--

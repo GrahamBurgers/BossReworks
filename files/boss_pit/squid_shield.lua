@@ -20,3 +20,23 @@ local turn = (math.pi / -2) - ((amount / maxamount) * math.pi)
 EntitySetTransform(me, x, y, turn)
 
 ComponentSetValue2(comp, "is_emitting", true)
+
+if GameGetFrameNum() % 30 == 0 then
+    dofile_once("mods/boss_reworks/files/projectile_utils.lua")
+    SetRandomSeed(me + x, y + GameGetFrameNum())
+    local count = 6 + Random(0, 4) * 2
+    local angle_inc = math.pi / count
+	local theta = 0
+    local speed = Random(-10, 10)
+
+	for q = 1, count do
+		theta = theta + angle_inc / 2
+		local eid = ShootProjectile(parent, "mods/boss_reworks/files/boss_pit/bubble.xml", x or 0, y or 0, 0, 0)
+		local store = EntityGetFirstComponent(eid, "VariableStorageComponent")
+        if store then
+            ComponentSetValue2(store, "value_string", theta * 100)
+            ComponentSetValue2(store, "value_int", speed)
+        end
+	end
+    GamePrint("circle: " .. tostring(count))
+end

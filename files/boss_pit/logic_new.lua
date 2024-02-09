@@ -1,3 +1,4 @@
+do return end
 local me = GetUpdatedEntityID()
 local x, y = EntityGetTransform(me)
 local varsto = EntityGetFirstComponentIncludingDisabled(me, "VariableStorageComponent", "squid_shield_trigger")
