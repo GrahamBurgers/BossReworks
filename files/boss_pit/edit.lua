@@ -7,6 +7,8 @@ table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/healthbar_counter.lua" </LuaComponent>'))
 table.insert(tree.children,
 	nxml.parse('<VariableStorageComponent _tags="squid_shield_trigger" value_int="1" ></VariableStorageComponent>'))
+table.insert(tree.children,
+	nxml.parse('<VariableStorageComponent _tags="squid_last_attack_frame" value_int="0" ></VariableStorageComponent>'))
 for k, v in ipairs(tree.children) do
 	if v.name == "LuaComponent" and v.attr.script_damage_received == "data/entities/animals/boss_pit/boss_pit_damage.lua" then
 		v.attr.script_damage_received = ""
@@ -22,6 +24,9 @@ for k, v in ipairs(tree.children) do
 		v.children[1].attr.holy = 0
 		-- v.attr.ragdoll_fx_forced = "NONE" -- causes issues with tentacle segments
 		v.attr.ragdoll_material = "meat_slime_green"
+	end
+	if v.name == "HitboxComponent" then
+		v.attr.damage_multiplier = "1"
 	end
 end
 ModTextFileSetContent(path, tostring(tree))

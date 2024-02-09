@@ -67,7 +67,7 @@
 
 	<LuaComponent
 		script_source_file="mods/boss_reworks/files/boss_fish/swirl_enable.lua"
-		execute_every_n_frame="30"
+		execute_every_n_frame="35"
 		remove_after_executed="1"
 	></LuaComponent>
 
