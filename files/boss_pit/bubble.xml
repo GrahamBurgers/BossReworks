@@ -85,7 +85,7 @@
 
   <VariableStorageComponent
     value_float="0"
-    value_int="0"
+    value_int="1"
     value_string="0"
   ></VariableStorageComponent>
   

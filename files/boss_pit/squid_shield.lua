@@ -35,7 +35,7 @@ if GameGetFrameNum() % 30 == 0 then
 		local store = EntityGetFirstComponent(eid, "VariableStorageComponent")
         if store then
             ComponentSetValue2(store, "value_string", theta * 100)
-            ComponentSetValue2(store, "value_int", speed)
+            ComponentSetValue2(store, "value_float", speed)
         end
 	end
     GamePrint("circle: " .. tostring(count))
