@@ -47,6 +47,7 @@
       explosion_radius="4" 
       explosion_sprite="data/particles/explosion_008_pink.xml" 
       explosion_sprite_lifetime="0" 
+      explosion_sprite_emissive="1" 
       create_cell_probability="0" 
       hole_destroy_liquid="1" 
       hole_enabled="1" 

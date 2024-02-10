@@ -28,6 +28,8 @@ dofile_once("mods/boss_reworks/files/projectile_utils.lua")
 SetRandomSeed(GameGetFrameNum() + player + x, y + phase + 24598)
 
 local function modify_wand(entity_id, projectile_file, delay_frames, sprite_file, lifetime, air_friction, shot_speed_multiplier)
+	local x2, y2 = EntityGetTransform(entity_id)
+	EntityLoad("data/entities/particles/poof_blue.xml", x2, y2)
 	local var = EntityGetFirstComponent(entity_id, "VariableStorageComponent") or 0
 	ComponentSetValue2(var, "value_string", projectile_file)
 	local lua = EntityGetFirstComponent(entity_id, "LuaComponent")
@@ -113,13 +115,12 @@ local function effectorbs()
 end
 
 local function chainsaw()
-	local wand = ShootProjectile(me, "mods/boss_reworks/files/boss_pit/wand.xml", x, y, 0, 40, 0.8)
+	local wand = ShootProjectile(me, "mods/boss_reworks/files/boss_pit/wand.xml", x, y, 0, 40, 0.3)
 	modify_wand(wand, "data/entities/projectiles/deck/chainsaw.xml", 2, "data/items_gfx/wands/custom/chainsaw.xml", 500, 0, 3)
-	EntityAddComponent2(wand, "HomingComponent", {
-		target_tag="player_unit",
-		detect_distance=500,
-		homing_targeting_coeff=9,
-		homing_velocity_multiplier=0.98
+	EntityAddComponent2(wand, "LuaComponent", {
+		remove_after_executed=true,
+		execute_every_n_frame=40,
+		script_source_file="mods/boss_reworks/files/boss_pit/wand_homing.lua"
 	})
 end
 
