@@ -10,6 +10,11 @@ if parent ~= me then
     y = y - 1
 end
 local amount = ComponentGetValue2(var, "frames")
+local player = EntityGetInRadiusWithTag(x, y, 300, "player_unit") or {}
+if #player <= 0 then
+    amount = amount + 1
+    ComponentSetValue2(var, "frames", amount)
+end
 local maxamount = ComponentGetValue2(var, "teleportation_radius_max")
 
 amount = math.min(maxamount, math.max(0, amount))
