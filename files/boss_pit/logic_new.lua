@@ -1,4 +1,3 @@
-do return end
 local me = GetUpdatedEntityID()
 local x, y = EntityGetTransform(me)
 local varsto = EntityGetFirstComponentIncludingDisabled(me, "VariableStorageComponent", "squid_shield_trigger")
@@ -18,12 +17,12 @@ for i = 1, #children do
 		shield_is_up = true
 	end
 end
-local wait = {5, 5, 4, 3, 3, 2} -- how long he waits between attacks for each phase
+local wait = {6, 6, 5, 4, 4, 3} -- how long he waits between attacks for each phase
 wait = wait[phase] * 60
 if shield_is_up then wait = wait * (2/3) end
 if GameGetFrameNum() <= last + wait then return end
 ComponentSetValue2(clock, "value_int", GameGetFrameNum())
-GamePrint("ATTACKING, WAITED " .. tostring(wait))
+-- GamePrint("ATTACKING, WAITED " .. tostring(wait))
 
 dofile_once("mods/boss_reworks/files/projectile_utils.lua")
 SetRandomSeed(GameGetFrameNum() + player + x, y + phase + 24598)
@@ -38,9 +37,9 @@ local function modify_wand(entity_id, projectile_file, delay_frames, sprite_file
 		local gui = GuiCreate()
 		local img_x, img_y = GuiGetImageDimensions(gui, sprite_file)
 		GuiDestroy(gui)
-		ComponentSetValue2(sprite, "image_file", sprite_file)
 		ComponentSetValue2(sprite, "offset_x", img_x / 2)
 		ComponentSetValue2(sprite, "offset_y", img_y / 2)
+		ComponentSetValue2(sprite, "image_file", sprite_file)
 		EntityRefreshSprite(entity_id, sprite)
 	end
 	if lifetime then
@@ -51,7 +50,7 @@ local function modify_wand(entity_id, projectile_file, delay_frames, sprite_file
 		local vel = EntityGetFirstComponent(entity_id, "VelocityComponent") or 0
 		ComponentSetValue2(vel, "air_friction", air_friction)
 	end
-	ComponentSetValue2(var, "value_int", shot_speed_multiplier or 1)
+	ComponentSetValue2(var, "value_float", shot_speed_multiplier or 1)
 end
 
 local function spheres()
@@ -63,10 +62,10 @@ local function spheres()
 		theta1 = theta1 + math.pi
 		theta2 = theta2 + math.pi
 	end
-	local wand1 = ShootProjectile(me, "mods/boss_reworks/files/boss_pit/wand.xml", x, y, math.cos(theta1), math.sin(theta1), 1.1)
-	local wand2 = ShootProjectile(me, "mods/boss_reworks/files/boss_pit/wand.xml", x, y, math.cos(theta2), math.sin(theta2), 1.1)
-	modify_wand(wand1, "data/entities/projectiles/orb_expanding.xml", 30, "data/items_gfx/wands/wand_0320.png", 200, 0.3, 2)
-	modify_wand(wand2, "data/entities/projectiles/orb_expanding.xml", 30, "data/items_gfx/wands/wand_0320.png", 200, 0.3, 2)
+	local wand1 = ShootProjectile(me, "mods/boss_reworks/files/boss_pit/wand.xml", x, y, math.cos(theta1), math.sin(theta1), 0.9)
+	local wand2 = ShootProjectile(me, "mods/boss_reworks/files/boss_pit/wand.xml", x, y, math.cos(theta2), math.sin(theta2), 0.9)
+	modify_wand(wand1, "data/entities/projectiles/orb_expanding.xml", 35, "data/items_gfx/wands/wand_0320.png", 200, 0.3, 1.5)
+	modify_wand(wand2, "data/entities/projectiles/orb_expanding.xml", 35, "data/items_gfx/wands/wand_0320.png", 200, 0.3, 1.5)
 end
 
 local function chaingun()
@@ -82,11 +81,23 @@ local function bb()
 	local theta = math.atan((py - y) / (px - x))
 	if px < x then theta = theta + math.pi end
 	local wand = ShootProjectile(me, "mods/boss_reworks/files/boss_pit/wand.xml", x, y, math.cos(theta), math.sin(theta), 2)
-	-- todo: why does <= 0.5 shot speed multiplier act like 0?
-	modify_wand(wand, "data/entities/projectiles/deck/rubber_ball.xml", 40, "data/entities/animals/boss_pit/wand_07.png", 180, 4, 0.51)
+	modify_wand(wand, "data/entities/projectiles/deck/rubber_ball.xml", 40, "data/entities/animals/boss_pit/wand_07.png", 180, 4, 0.4)
 end
 
 local function thundercharge()
+	local wand = ShootProjectile(me, "mods/boss_reworks/files/boss_pit/wand.xml", x, y, 0, 20, 1)
+	modify_wand(wand, "data/entities/projectiles/thunderball.xml", 60, "data/items_gfx/wands/wand_0521.png", 200, 0.6, 0.8)
+end
+
+local function gigasaws()
+	local px, py = EntityGetTransform(player)
+	local theta = math.atan((py - y) / (px - x))
+	if px < x then theta = theta + math.pi end
+	local wand = ShootProjectile(me, "mods/boss_reworks/files/boss_pit/wand.xml", x, y, math.cos(theta), math.sin(theta), 0.8)
+	modify_wand(wand, "data/entities/projectiles/deck/disc_bullet_big.xml", 100, "data/items_gfx/wands/wand_0141.png", 300, 0, 0.6)
+end
+
+local function effectorbs()
 	local px, py = EntityGetTransform(player)
 	local theta = math.atan((py - y) / (px - x))
 	local theta1 = theta + math.pi / 2
@@ -95,17 +106,29 @@ local function thundercharge()
 		theta1 = theta1 + math.pi
 		theta2 = theta2 + math.pi
 	end
-	local wand = ShootProjectile(me, "mods/boss_reworks/files/boss_pit/wand.xml", x, y, 0, 20, 1)
-	modify_wand(wand, "data/entities/projectiles/thunderball.xml", 120, "data/items_gfx/wands/wand_0521.png", 320, 0.6, 0.9)
+	local wand1 = ShootProjectile(me, "mods/boss_reworks/files/boss_pit/wand.xml", x, y, math.cos(theta2), math.sin(theta2), -2)
+	modify_wand(wand1, "mods/boss_reworks/files/boss_wizard/effect_orb.xml", 1, "data/items_gfx/wands/wand_0447.png", 55, 3, 0.4)
+	local wand2 = ShootProjectile(me, "mods/boss_reworks/files/boss_pit/wand.xml", x, y, math.cos(theta1), math.sin(theta1), -1)
+	modify_wand(wand2, "mods/boss_reworks/files/boss_wizard/effect_orb.xml", 10, "data/items_gfx/wands/wand_0447.png", 120, 1, 0.4)
+end
+
+local function chainsaw()
+	local wand = ShootProjectile(me, "mods/boss_reworks/files/boss_pit/wand.xml", x, y, 0, 40, 0.8)
+	modify_wand(wand, "data/entities/projectiles/deck/chainsaw.xml", 2, "data/items_gfx/wands/custom/chainsaw.xml", 500, 0, 3)
+	EntityAddComponent2(wand, "HomingComponent", {
+		target_tag="player_unit",
+		detect_distance=500,
+		homing_targeting_coeff=9,
+		homing_velocity_multiplier=0.98
+	})
 end
 
 -- how many attacks is reasonable to have? some should probably not involve wands
--- todo: chainsaw, black hole (if stuck), sawblades, earthquake?, burst of air?
 local attacks = {}
 if phase == 1 then attacks = {bb} end
 if phase == 2 then attacks = {spheres, thundercharge} end
-if phase == 3 then attacks = {bb, spheres} end
-if phase == 4 then attacks = {thundercharge, bb, spheres} end
-if phase == 5 then attacks = {chaingun} end
-if phase == 6 then attacks = {bb, chaingun, spheres, thundercharge} end
+if phase == 3 then attacks = {gigasaws, effectorbs, chainsaw} end
+if phase == 4 then attacks = {thundercharge, effectorbs, gigasaws, chainsaw} end
+if phase == 5 then attacks = {spheres, thundercharge, gigasaws, chainsaw} end
+if phase == 6 then attacks = {effectorbs, chaingun, spheres, thundercharge, gigasaws, chainsaw} end
 attacks[Random(1, #attacks)]()
