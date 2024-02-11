@@ -37,15 +37,6 @@ function damage_about_to_be_received( damage, x, y, entity_thats_responsible, cr
         ComponentSetValue2(varsto, "value_int", phase)
         local clock = EntityGetFirstComponentIncludingDisabled(me, "VariableStorageComponent", "squid_last_attack_frame")
         if clock then ComponentSetValue2(clock, "value_int", -1) end
-
-        dofile_once("mods/boss_reworks/files/projectile_utils.lua")
-        local entities = CircleShot(me, "mods/boss_reworks/files/boss_wizard/effect_orb.xml", 5 + phase, x, y, 45)
-        for i = 1, #entities do
-            local homing = EntityGetComponent(entities[i], "HomingComponent") or {}
-            for j = 1, #homing do
-                EntityRemoveComponent(entities[i], homing[j])
-            end
-        end
     end
     return new_damage, critical_hit_chance
 end

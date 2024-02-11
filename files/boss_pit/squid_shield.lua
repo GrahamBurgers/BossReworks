@@ -34,19 +34,24 @@ if GameGetFrameNum() % 50 == 0 then
     end
     dofile_once("mods/boss_reworks/files/projectile_utils.lua")
     SetRandomSeed(me + x, y + GameGetFrameNum())
-    local count = 5 + phase
+    local count = 6 + phase
     local angle_inc = (2 * math.pi) / count
 	local theta = 0
     local speed = Random(2, 3)
     if Random(1, 2) == 1 then speed = speed * -1 end
 
 	for q = 1, count do
-		theta = theta + angle_inc * 2
-		local eid = ShootProjectile(parent, "mods/boss_reworks/files/boss_pit/bubble.xml", x or 0, y or 0, 0, 0)
+		theta = theta + angle_inc
+		local eid = ShootProjectile(parent, "mods/boss_reworks/files/boss_pit/bubble.xml", x, y, 0, 0)
 		local store = EntityGetFirstComponent(eid, "VariableStorageComponent")
         if store then
             ComponentSetValue2(store, "value_string", theta)
             ComponentSetValue2(store, "value_float", speed)
+        end
+        local proj = EntityGetFirstComponent(eid, "ProjectileComponent")
+        if proj then
+            ComponentSetValue2(proj, "bounce_energy", x)
+            ComponentSetValue2(proj, "die_on_low_velocity_limit", y)
         end
 	end
 end

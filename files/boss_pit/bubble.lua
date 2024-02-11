@@ -1,13 +1,9 @@
 local me = GetUpdatedEntityID()
 local comp = EntityGetFirstComponentIncludingDisabled(me, "ProjectileComponent")
-local who_shot = 0
-if comp then
-    who_shot = ComponentGetValue2(comp, "mWhoShot") or 0
-end
 local var = EntityGetFirstComponentIncludingDisabled(me, "VariableStorageComponent")
-if who_shot == 0 or not var then return end
-local x2, y2 = EntityGetTransform(who_shot)
-if x2 == nil or y2 == nil then return end
+if not var or not comp then return end
+local x2 = ComponentGetValue2(comp, "bounce_energy")
+local y2 = ComponentGetValue2(comp, "die_on_low_velocity_limit")
 local distance = ComponentGetValue2(var, "value_int")
 local theta = tonumber(ComponentGetValue2(var, "value_string")) or 0
 local rotate = ComponentGetValue2(var, "value_float")

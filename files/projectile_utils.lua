@@ -44,7 +44,7 @@ function CircleShot(who_shot, entity_file, how_many, x, y, speed, starting_rot)
 		local vel_x = math.cos(theta) * speed
 		local vel_y = math.sin(theta) * speed
 		theta = theta + angle_inc
-		local eid = ShootProjectile(who_shot, entity_file, x + vel_x * 0.1, y + vel_y * 0.1, vel_x, vel_y)
+		local eid = ShootProjectile(who_shot, entity_file, x + vel_x * 0, y + vel_y * 0, vel_x, vel_y)
 		returns[#returns+1] = eid
 	end
 
