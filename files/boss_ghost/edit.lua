@@ -11,8 +11,10 @@ table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_ghost/alt.lua" remove_after_executed="1"> </LuaComponent>'))
 table.insert(tree.children,
 	nxml.parse('<LuaComponent _tags="magic_eye" script_source_file="mods/boss_reworks/files/boss_ghost/teleport_create.lua" execute_every_n_frame="480"> </LuaComponent>'))
+--[[
 table.insert(tree.children,
 	nxml.parse('<CellEaterComponent radius="4" eat_probability="100" eat_dynamic_physics_bodies="0" ignored_material_tag="[box2d]"> </CellEaterComponent>'))
+]]--
 for k, v in ipairs(tree.children) do
     if v.name == "AnimalAIComponent" then
         v.attr.attack_ranged_frames_between = 40

@@ -12,9 +12,9 @@ local hp = ComponentGetValue2(damagemodel, "hp")
 local max_hp = ComponentGetValue2(damagemodel, "max_hp")
 
 local circle
-if Random(1, 100) > (hp / max_hp) * 100 then
+if Random(1, 100) > (hp / max_hp) * 80 then
 	circle = EntityLoad("mods/boss_reworks/files/boss_limbs/circle_heal.xml", x, y)
-elseif #EntityGetInRadiusWithTag(x, y, 120, "enemy") > Random(2, 4) then
+elseif #EntityGetInRadiusWithTag(x, y, 120, "enemy") > Random(2, 5) then
 	circle = EntityLoad("mods/boss_reworks/files/boss_limbs/circle_necro.xml", x, y)
 else
 	circle = EntityLoad("mods/boss_reworks/files/boss_limbs/circle_fire.xml", x, y)

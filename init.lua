@@ -66,19 +66,19 @@ function OnWorldPreUpdate()
 		-- Red bar
 		GuiOptionsAddForNextWidget(Gui, 2) -- Make non interactive
 		GuiZSetForNextWidget(Gui, -1000)
-		GuiImage(Gui, 1, (screen_w - frame_w) / 2, screen_h / 1.2 - tween_h / 2, tween, 1, frame_w * thing / max, 1)
+		GuiImage(Gui, 1, (screen_w - frame_w) / 2, screen_h / 1.3 - tween_h / 2, tween, 1, frame_w * thing / max, 1)
 		-- Bar
 		GuiOptionsAddForNextWidget(Gui, 2) -- Make non interactive
 		GuiZSetForNextWidget(Gui, -1001)
-		GuiImage(Gui, 2, (screen_w - frame_w) / 2, screen_h / 1.2 - bar_h / 2, bar, 1, frame_w * amount / max, 1)
+		GuiImage(Gui, 2, (screen_w - frame_w) / 2, screen_h / 1.3 - bar_h / 2, bar, 1, frame_w * amount / max, 1)
 		-- Frame
 		GuiOptionsAddForNextWidget(Gui, 2) -- Make non interactive
 		GuiZSetForNextWidget(Gui, -1002)
-		GuiImage(Gui, 3, (screen_w - frame_w) / 2, screen_h / 1.2 - frame_h / 2, frame, 1, 1, 1)
+		GuiImage(Gui, 3, (screen_w - frame_w) / 2, screen_h / 1.3 - frame_h / 2, frame, 1, 1, 1)
 		-- Countdown
 		GuiOptionsAddForNextWidget(Gui, 2) -- Make non interactive
 		GuiZSetForNextWidget(Gui, -1003)
-		GuiText(Gui, (screen_w - text_w) / 2, screen_h / 1.2 - text_h / 2, text)
+		GuiText(Gui, (screen_w - text_w) / 2, screen_h / 1.3 - text_h / 2, text)
 
 		GuiIdPop(Gui)
 

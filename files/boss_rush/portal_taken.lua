@@ -139,6 +139,7 @@ local function boss_portal(to_x, to_y, entity, x_off, y_off)
     EntityAddComponent2(eid, "VariableStorageComponent", {
         value_string=entity
     })
+    return eid
 end
 
 local function load_scene(x, y, size_x, size_y, room_name, amount)
@@ -259,6 +260,22 @@ function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x,
         for j = 1, #comps do
             ComponentSetValue2(comps[j], "on_death_explode", false)
             ComponentSetValue2(comps[j], "on_lifetime_out_explode", false)
+            ComponentObjectSetValue2(comps[j], "config_explosion", "damage", 0)
+            ComponentObjectSetValue2(comps[j], "config_explosion", "hole_enabled", false)
+            ComponentObjectSetValue2(comps[j], "config_explosion", "explosion_radius", 0)
+        end
+        local what = EntityGetComponent(projectiles[i], "ExplodeOnDamageComponent") or {}
+        for j = 1, #what do
+            ComponentSetValue2(what[j], "explode_on_death_percent", 0)
+            ComponentObjectSetValue2(what[j], "config_explosion", "damage", 0)
+            ComponentObjectSetValue2(what[j], "config_explosion", "hole_enabled", false)
+            ComponentObjectSetValue2(what[j], "config_explosion", "explosion_radius", 0)
+        end
+        local why = EntityGetComponent(projectiles[i], "ExplosionComponent") or {}
+        for j = 1, #why do
+            ComponentObjectSetValue2(why[j], "config_explosion", "damage", 0)
+            ComponentObjectSetValue2(why[j], "config_explosion", "hole_enabled", false)
+            ComponentObjectSetValue2(why[j], "config_explosion", "explosion_radius", 0)
         end
         EntitySetTransform(projectiles[i], to_x, to_y)
         EntityApplyTransform(projectiles[i], to_x, to_y)

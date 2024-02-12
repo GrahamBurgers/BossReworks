@@ -3,7 +3,7 @@ local parent = EntityGetRootEntity(me)
 local comp = EntityGetFirstComponent(me, "ParticleEmitterComponent")
 if comp then
     local cx, cy = ComponentGetValue2(comp, "area_circle_radius")
-    cx = cx - 1
+    cx = cx - 1.2
     ComponentSetValue2(comp, "area_circle_radius", cx, cx)
     if cx < 1 then
         local x, y = EntityGetTransform(parent)

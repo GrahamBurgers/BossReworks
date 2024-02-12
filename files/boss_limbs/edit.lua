@@ -1,6 +1,7 @@
 dofile("mods/boss_reworks/files/lib/injection.lua")
 local nxml = dofile("mods/boss_reworks/files/lib/nxml.lua")
 
+inject(args.SS, modes.R, "data/entities/animals/boss_limbs/body.xml", "hurt", "") -- hurt animation is problematic so remove it
 inject(args.SS, modes.R, "data/entities/animals/boss_limbs/boss_limbs_update.lua", ">= 2", ">= 7") -- 7 minion is enough
 inject(args.SS, modes.P, "data/entities/animals/boss_limbs/boss_limbs_update.lua", "local slime",
 	"\nfor i = 1,2 do x = x + Random(-5,5)\ny = y + Random(-5,5)\n")                               
