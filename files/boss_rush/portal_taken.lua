@@ -1,5 +1,5 @@
 local multiplier = 100 -- multiply it before storing cause shoving a float into an int scares me
-local max = 400 * multiplier
+local max = 800 * multiplier -- make this very high for now until we know how long/hard boss rush will be
 
 local function aaaaaa(entity)
     if EntityGetComponentIncludingDisabled(entity, "ItemComponent") ~= nil and not EntityHasTag(entity, "card_action") then

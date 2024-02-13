@@ -41,6 +41,12 @@
 		target_tag="player_unit">
 	</HomingComponent>
 
+	<HomingComponent
+		target_tag="player_unit"
+		homing_targeting_coeff="-5.0"
+		homing_velocity_multiplier="1"
+	></HomingComponent>
+
     <VelocityComponent
         gravity_x="0"
         gravity_y="0"

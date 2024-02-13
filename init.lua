@@ -78,6 +78,7 @@ function OnWorldPreUpdate()
 		-- Countdown
 		GuiOptionsAddForNextWidget(Gui, 2) -- Make non interactive
 		GuiZSetForNextWidget(Gui, -1003)
+		GuiColorSetForNextWidget(Gui, 0, 0, 0, 1)
 		GuiText(Gui, (screen_w - text_w) / 2, screen_h / 1.3 - text_h / 2, text)
 
 		GuiIdPop(Gui)

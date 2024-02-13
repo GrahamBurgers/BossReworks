@@ -1,8 +1,8 @@
 local comp = EntityGetFirstComponent(GetUpdatedEntityID(), "VariableStorageComponent")
 local x, y = EntityGetTransform(GetUpdatedEntityID())
 if comp then
-    local string = ComponentGetValue2(comp, "value_string")
-    local eid = EntityLoad(string, x, y)
+    local thing = ComponentGetValue2(comp, "value_string")
+    local eid = EntityLoad(thing, x, y)
     local comps = EntityGetAllComponents(eid) or {}
     for i = 1, #comps do
         ComponentAddTag(comps[i], "boss_reworks_rush_remove")
@@ -16,6 +16,12 @@ if comp then
             ComponentSetValue2(comps[i], "blood_multiplier", 0)
             ComponentSetValue2(comps[i], "ragdoll_material", "blood_fungi")
             ComponentSetValue2(comps[i], "materials_damage", false)
+
+            local name = string.gsub(EntityGetName(eid), "%$", "") -- format like GameAddFlagRun("br_killed_animal_boss_pit")
+            if not GameHasFlagRun("br_killed_" .. name) then
+                ComponentSetValue2(comps[i], "hp", ComponentGetValue2(comps[i], "hp") * 1.2)
+                ComponentSetValue2(comps[i], "max_hp", ComponentGetValue2(comps[i], "max_hp") * 1.2)
+            end
         end
         if ComponentHasTag(comps[i], "magic_eye") then
             EntitySetComponentIsEnabled(eid, comps[i], true)
@@ -29,6 +35,7 @@ if comp then
         end
     end
     EntityAddTag(eid, "boss_reworks_boss_rush")
+    EntityAddTag(eid, "boss_reworks_this_is_boss")
     EntityAddComponent2(eid, "LuaComponent", {
         execute_every_n_frame=-1,
         script_death="mods/boss_reworks/files/boss_rush/boss_death.lua"
