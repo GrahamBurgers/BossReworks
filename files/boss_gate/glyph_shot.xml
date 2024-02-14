@@ -2,7 +2,7 @@
 
 	<Base file="data/entities/base_projectile.xml" >
     <VelocityComponent
-      gravity_y="300"
+      gravity_y="0"
       air_friction="0"
 	    mass="0"
       liquid_drag="0"
@@ -108,6 +108,9 @@
   <LuaComponent
     script_source_file="mods/boss_reworks/files/boss_gate/glyphs/rock_scale.lua"
   ></LuaComponent>
+
+  <LuaComponent script_source_file="mods/boss_reworks/files/velocity_apply.lua" ></LuaComponent>
+  <VariableStorageComponent name="velocity_add_y" value_float="6" ></VariableStorageComponent>
 
   <AudioComponent
       file="data/audio/Desktop/projectiles.bank"

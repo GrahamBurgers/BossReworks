@@ -21,8 +21,8 @@ end
 local wait = {7, 6, 5, 4, 4, 3} -- how long he waits between attacks for each phase
 wait = wait[phase] * 60
 if shield_is_up then wait = wait * (2/3) end
-if GameGetFrameNum() == last + wait / 2 and phase <= 3 then
-	local entities = CircleShot(me, "mods/boss_reworks/files/boss_wizard/effect_orb.xml", 7, x, y, 300)
+if GameGetFrameNum() == last + math.ceil(wait / 2) and phase <= 3 then
+	local entities = CircleShot(me, "mods/boss_reworks/files/boss_wizard/effect_orb.xml", 7, x, y, 180, 0, true)
 	for i = 1, #entities do
 		local homing = EntityGetComponent(entities[i], "HomingComponent") or {}
 		for j = 1, #homing do

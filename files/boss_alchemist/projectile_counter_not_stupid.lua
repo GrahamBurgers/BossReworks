@@ -9,7 +9,7 @@ for i,projectile_id in ipairs(projectiles) do
     local who_shot, herd
 
     if not EntityHasTag( projectile_id, "boss_alchemist" ) then
-        local projs = EntityGetComponent( projectile_id, "ProjectileComponent" ) or {}
+        local projs = EntityGetComponentIncludingDisabled( projectile_id, "ProjectileComponent" ) or {}
         for j = 1, #projs do
             ComponentSetValue( projs[j], "on_death_explode", "0" )
             ComponentSetValue( projs[j], "on_lifetime_out_explode", "0" )

@@ -25,6 +25,8 @@ for k, v in ipairs(tree.children) do
         end
     end
     if v.name == "Entity" then
+        table.insert(v.children,
+            nxml.parse('<LuaComponent remove_after_executed="1" script_source_file="mods/boss_reworks/files/boss_ghost/stinky_laser.lua"> </LuaComponent>'))
         for k2, v2 in ipairs(v.children) do
 			if v2.name == "LaserEmitterComponent" then
 				v2.children[1].attr.max_cell_durability_to_destroy = 1

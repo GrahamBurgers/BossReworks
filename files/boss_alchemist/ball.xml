@@ -3,7 +3,7 @@
 	<Base file="data/entities/base_projectile.xml" >
     <VelocityComponent
       _enabled="0"
-      gravity_y="700"
+      gravity_y="0"
       air_friction="0"
 	    mass="0"
       liquid_drag="0"
@@ -33,7 +33,8 @@
     knockback_force="0"
     collide_with_world="0"
     collide_with_entities="0"
-    penetrate_world="0"
+    penetrate_world="1"
+    penetrate_world_velocity_coeff="1"
     >
     <config_explosion
       never_cache="1"
@@ -63,7 +64,8 @@
   <SpriteComponent
     _enabled="0"
     alpha="0.7" 
-    image_file="mods/boss_reworks/files/boss_alchemist/ball_anim.xml" 
+    image_file="mods/boss_reworks/files/boss_alchemist/ball_anim.xml"
+    emissive="1"
     rect_animation=""
     next_rect_animation=""
     >
@@ -74,6 +76,9 @@
     execute_every_n_frame="1"
     remove_after_executed="1"
   ></LuaComponent>
+
+  <LuaComponent _enabled="0" script_source_file="mods/boss_reworks/files/velocity_apply.lua" ></LuaComponent>
+  <VariableStorageComponent name="velocity_add_y" value_float="18" ></VariableStorageComponent>
 
   <LuaComponent
     execute_on_removed="1"

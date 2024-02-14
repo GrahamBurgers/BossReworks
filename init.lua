@@ -62,7 +62,12 @@ function OnWorldPreUpdate()
 		local tween_w, tween_h = GuiGetImageDimensions(Gui, bar)
 		local frame = "mods/boss_reworks/files/boss_rush/health_frame.png"
 		local frame_w, frame_h = GuiGetImageDimensions(Gui, frame)
+		local back = "mods/boss_reworks/files/boss_rush/health_back.png"
 
+		-- Back
+		GuiOptionsAddForNextWidget(Gui, 2) -- Make non interactive
+		GuiZSetForNextWidget(Gui, -999)
+		GuiImage(Gui, 0, (screen_w - frame_w) / 2, screen_h / 1.3 - frame_h / 2, back, 1, 1, 1)
 		-- Red bar
 		GuiOptionsAddForNextWidget(Gui, 2) -- Make non interactive
 		GuiZSetForNextWidget(Gui, -1000)
@@ -86,13 +91,12 @@ function OnWorldPreUpdate()
 		local players = EntityGetWithTag("player_unit") or {}
 		for i = 1, #players do
 			-- disable % based damage effects since those use the player's real HP
-			local comp = 0
-			comp = GameGetGameEffect( players[i], "POISON" )
-			if comp > 0 then ComponentSetValue2(comp, "effect", "NONE") ComponentSetValue2(comp, "frames", 0) end
+			local comp = GameGetGameEffect( players[i], "POISON" )
+			if comp then ComponentSetValue2(comp, "effect", "NONE") ComponentSetValue2(comp, "frames", 0) end
 			comp = GameGetGameEffect( players[i], "RADIOACTIVE" )
-			if comp > 0 then ComponentSetValue2(comp, "effect", "NONE") ComponentSetValue2(comp, "frames", 0) end
-			comp = EntityGetFirstComponent(players[i], "DamageModelComponent") or 0
-			if comp > 0 then ComponentSetValue2(comp, "mFireDamageBufferedNextDeliveryFrame", GameGetFrameNum() + 3) ComponentSetValue2(comp, "mFireDamageBuffered", 0) end
+			if comp then ComponentSetValue2(comp, "effect", "NONE") ComponentSetValue2(comp, "frames", 0) end
+			comp = EntityGetFirstComponent(players[i], "DamageModelComponent")
+			if comp then ComponentSetValue2(comp, "mFireDamageBufferedNextDeliveryFrame", GameGetFrameNum() + 3) ComponentSetValue2(comp, "mFireDamageBuffered", 0) end
 			if GameGetGameEffectCount(players[i], "ON_FIRE") > 0 then
 				local dmg = max / multiplier / 50 / 60 / 25
 				EntityInflictDamage(players[i], dmg, "DAMAGE_FIRE", "$damage_fire", "NONE", 0, 0)

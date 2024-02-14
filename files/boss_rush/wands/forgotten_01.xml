@@ -8,7 +8,7 @@
 	<UIInfoComponent _tags="enabled_in_world" name="$item_wand"></UIInfoComponent>
 
 	<AbilityComponent
-        sprite_file="data/items_gfx/wands/wand_0154.png"
+        sprite_file="data/items_gfx/wands/wand_0015.png"
         ui_name="$item_wand"
         drop_as_item_on_death="0"
         use_gun_script="1"

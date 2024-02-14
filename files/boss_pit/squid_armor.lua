@@ -37,6 +37,7 @@ function damage_about_to_be_received( damage, x, y, entity_thats_responsible, cr
         ComponentSetValue2(varsto, "value_int", phase)
         local clock = EntityGetFirstComponentIncludingDisabled(me, "VariableStorageComponent", "squid_last_attack_frame")
         if clock then ComponentSetValue2(clock, "value_int", -1) end
+        GameScreenshake(15)
     end
     return new_damage, critical_hit_chance
 end
