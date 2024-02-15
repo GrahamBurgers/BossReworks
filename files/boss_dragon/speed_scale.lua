@@ -4,9 +4,10 @@ if comp == nil then return end
 local xs, ys = ComponentGetValue2(comp, "mTargetVec")
 if xs and ys then
 	local scale = (math.abs(xs) + math.abs(ys)) -- probably deals more damage diagonally?
-	ComponentSetValue2(comp, "bite_damage", scale)
+	ComponentSetValue2(comp, "bite_damage", scale * 0.8)
 end
-if GameGetFrameNum() % 150 == 0 then
+local toggle = ComponentGetValue2(GetUpdatedComponentID(), "mTimesExecuted")
+if (toggle + 1) % 150 == 0 then
 	local hitboxes = EntityGetComponent(me, "HitboxComponent")
 	if hitboxes ~= nil then
 		local hitbox = hitboxes[#hitboxes]
@@ -19,8 +20,8 @@ if GameGetFrameNum() % 150 == 0 then
 	end
 	local hpcomp = EntityGetFirstComponent(me, "DamageModelComponent")
 	local healthbar = EntityGetFirstComponent(me, "SpriteComponent", "health_bar")
-	if hpcomp ~= nil and healthbar ~= nil then
-		if ComponentGetValue2(hpcomp, "hp") <= ComponentGetValue2(hpcomp, "max_hp") * 0.35 and false then -- not very interesting
+	if hpcomp ~= nil and healthbar ~= nil and false then -- not very interesting
+		if ComponentGetValue2(hpcomp, "hp") <= ComponentGetValue2(hpcomp, "max_hp") * 0.35 then
 			ComponentSetValue2(comp, "direction_adjust_speed", 0.005)
 			ComponentSetValue2(comp, "direction_adjust_speed_hunt", 0.06)
 			ComponentSetValue2(comp, "projectile_1_count", 4)

@@ -8,20 +8,20 @@
 	<UIInfoComponent _tags="enabled_in_world" name="$item_wand"></UIInfoComponent>
 
 	<AbilityComponent
-        sprite_file="data/items_gfx/wands/wand_0463.png"
+        sprite_file="data/items_gfx/wands/wand_0030.png"
         ui_name="$item_wand"
         drop_as_item_on_death="0"
         use_gun_script="1"
 
-        add_these_child_actions="ENERGY_SHIELD,MAGIC_SHIELD"
-		mana_charge_speed="50"
-		mana_max="140"
+        add_these_child_actions="ENERGY_SHIELD_SECTOR,HORIZONTAL_ARC,PIERCING_SHOT,TELEPORT_PROJECTILE"
+		mana_charge_speed="440"
+		mana_max="280"
         >
         <gun_config 
             shuffle_deck_when_empty="0"
-            reload_time="40"
-            deck_capacity="2"
-            actions_per_round="2"
+            reload_time="160"
+            deck_capacity="4"
+            actions_per_round="1"
         ></gun_config>
         <gunaction_config
             spread_degrees="24"

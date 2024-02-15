@@ -64,27 +64,28 @@ function OnWorldPreUpdate()
 		local frame_w, frame_h = GuiGetImageDimensions(Gui, frame)
 		local back = "mods/boss_reworks/files/boss_rush/health_back.png"
 
+		-- these overlap with the pickup prompt but there's not much I can do without making the healthbar very obtrusive
 		-- Back
 		GuiOptionsAddForNextWidget(Gui, 2) -- Make non interactive
 		GuiZSetForNextWidget(Gui, -999)
-		GuiImage(Gui, 0, (screen_w - frame_w) / 2, screen_h / 1.3 - frame_h / 2, back, 1, 1, 1)
+		GuiImage(Gui, 0, (screen_w - frame_w) / 2, screen_h / 1.1 - frame_h / 2, back, 1, 1, 1)
 		-- Red bar
 		GuiOptionsAddForNextWidget(Gui, 2) -- Make non interactive
 		GuiZSetForNextWidget(Gui, -1000)
-		GuiImage(Gui, 1, (screen_w - frame_w) / 2, screen_h / 1.3 - tween_h / 2, tween, 1, frame_w * thing / max, 1)
+		GuiImage(Gui, 1, (screen_w - frame_w) / 2, screen_h / 1.1 - tween_h / 2, tween, 1, frame_w * thing / max, 1)
 		-- Bar
 		GuiOptionsAddForNextWidget(Gui, 2) -- Make non interactive
 		GuiZSetForNextWidget(Gui, -1001)
-		GuiImage(Gui, 2, (screen_w - frame_w) / 2, screen_h / 1.3 - bar_h / 2, bar, 1, frame_w * amount / max, 1)
+		GuiImage(Gui, 2, (screen_w - frame_w) / 2, screen_h / 1.1 - bar_h / 2, bar, 1, frame_w * amount / max, 1)
 		-- Frame
 		GuiOptionsAddForNextWidget(Gui, 2) -- Make non interactive
 		GuiZSetForNextWidget(Gui, -1002)
-		GuiImage(Gui, 3, (screen_w - frame_w) / 2, screen_h / 1.3 - frame_h / 2, frame, 1, 1, 1)
+		GuiImage(Gui, 3, (screen_w - frame_w) / 2, screen_h / 1.1 - frame_h / 2, frame, 1, 1, 1)
 		-- Countdown
 		GuiOptionsAddForNextWidget(Gui, 2) -- Make non interactive
 		GuiZSetForNextWidget(Gui, -1003)
 		GuiColorSetForNextWidget(Gui, 0, 0, 0, 1)
-		GuiText(Gui, (screen_w - text_w) / 2, screen_h / 1.3 - text_h / 2, text)
+		GuiText(Gui, (screen_w - text_w) / 2, screen_h / 1.1 - text_h / 2, text)
 
 		GuiIdPop(Gui)
 
@@ -92,11 +93,20 @@ function OnWorldPreUpdate()
 		for i = 1, #players do
 			-- disable % based damage effects since those use the player's real HP
 			local comp = GameGetGameEffect( players[i], "POISON" )
-			if comp then ComponentSetValue2(comp, "effect", "NONE") ComponentSetValue2(comp, "frames", 0) end
-			comp = GameGetGameEffect( players[i], "RADIOACTIVE" )
-			if comp then ComponentSetValue2(comp, "effect", "NONE") ComponentSetValue2(comp, "frames", 0) end
-			comp = EntityGetFirstComponent(players[i], "DamageModelComponent")
-			if comp then ComponentSetValue2(comp, "mFireDamageBufferedNextDeliveryFrame", GameGetFrameNum() + 3) ComponentSetValue2(comp, "mFireDamageBuffered", 0) end
+			local comp2 = GameGetGameEffect( players[i], "RADIOACTIVE" )
+			local comp3 = EntityGetFirstComponent(players[i], "DamageModelComponent")
+			if comp and comp ~= 0 then
+				ComponentSetValue2(comp, "effect", "NONE")
+				ComponentSetValue2(comp, "frames", 0)
+			end
+			if comp2 and comp2 ~= 0 then
+				ComponentSetValue2(comp2, "effect", "NONE")
+				ComponentSetValue2(comp2, "frames", 0)
+			end
+			if comp3 and comp3 ~= 0 then
+				ComponentSetValue2(comp3, "mFireDamageBufferedNextDeliveryFrame", GameGetFrameNum() + 3)
+				ComponentSetValue2(comp3, "mFireDamageBuffered", 0)
+			end
 			if GameGetGameEffectCount(players[i], "ON_FIRE") > 0 then
 				local dmg = max / multiplier / 50 / 60 / 25
 				EntityInflictDamage(players[i], dmg, "DAMAGE_FIRE", "$damage_fire", "NONE", 0, 0)

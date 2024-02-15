@@ -39,7 +39,7 @@ local function aaaaaa(entity)
             Shelf1 = Shelf1 + 18
             if item then
                 ComponentSetValue2(item, "play_hover_animation", true)
-                ComponentSetValue2(item, "play_spinning_animation", false)
+                ComponentSetValue2(item, "play_spinning_animation", true)
             end
         end
     end
@@ -142,16 +142,11 @@ local function boss_portal(to_x, to_y, entity, x_off, y_off)
     return eid
 end
 
-local function load_scene(x, y, size_x, size_y, room_name, amount)
-    local y2 = y + size_y * -0.5
-    if amount == 1 then
-        LoadPixelScene(table.concat({room_name, ".png"}), "", x + size_x * -0.5, y2, "", true, false, {}, 50, true)
-    else
-        for i = 1, amount do
-            LoadPixelScene(table.concat({room_name, "_", i, ".png"}), "", x + size_x * -0.5, y2, "", true, false, {}, 50, true)
-            y2 = y2 + size_y
-        end
-    end
+local function load_scene(x, y, room_name, background_name)
+    local gui = GuiCreate()
+    local size_x, size_y = GuiGetImageDimensions(gui, room_name)
+    GuiDestroy(gui)
+    LoadPixelScene(room_name, background_name or "", x + size_x * -0.5, y + size_y * -0.5, "", true, false, {}, 50, true)
 end
 
 local function nohit()
@@ -200,7 +195,7 @@ end
 Bosses = {
     {"$br_boss_rush_portal_in", function(x, y, player)
         if not GameHasFlagRun("br_boss_rush_intro") then
-            load_scene(x, y, 346, 262, "mods/boss_reworks/files/boss_rush/rooms/intro_room", 1)
+            load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/intro_room.png")
             GameAddFlagRun("br_boss_rush_intro")
             EntityLoad("mods/boss_reworks/files/boss_rush/boss_rush_book.xml", x, y + 30)
             local entity = EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_base.xml", x + 130, y - 60)
@@ -221,25 +216,34 @@ Bosses = {
         GlobalsSetValue("BR_BOSS_RUSH_ACTIVE", "1")
         GlobalsSetValue("BR_BOSS_RUSH_HP_LEFT", tostring(max))
         GlobalsSetValue("BR_BOSS_RUSH_HP_TWEEN", tostring(max))
-        load_scene(x, y, 408, 264, "mods/boss_reworks/files/boss_rush/rooms/arena_pyramid", 1)
+        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_pyramid.png")
         boss_portal(x, y, "data/entities/animals/boss_limbs/boss_limbs.xml", 130, -60)
         steal_player_stuff(player)
         spawn_wands("mods/boss_reworks/files/boss_rush/wands/limbs", player)
     end},
     {"$br_boss_rush_portal_dragon", function(x, y, player)
         nohit()
-        load_scene(x, y, 432, 432, "mods/boss_reworks/files/boss_rush/rooms/arena_dragon", 1)
+        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_dragon.png")
         boss_portal(x, y, "data/entities/animals/boss_dragon.xml", 0, 80)
         spawn_wands("mods/boss_reworks/files/boss_rush/wands/dragon", player)
     end},
     {"$br_boss_rush_portal_forgotten", function(x, y, player)
         nohit()
-        GlobalsSetValue("BR_BOSS_RUSH_PORTAL_NEXT", "forgotten")
-        load_scene(x, y, 460, 337, "mods/boss_reworks/files/boss_rush/rooms/arena_forgotten", 1)
+        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_forgotten.png")
         boss_portal(x, y, "data/entities/animals/boss_ghost/boss_ghost.xml", 0, -80)
         local eid = EntityLoad("data/entities/items/pickup/evil_eye.xml", x, y)
         EntityAddTag(eid, "boss_reworks_boss_rush")
         spawn_wands("mods/boss_reworks/files/boss_rush/wands/forgotten", player)
+    end},
+    {"$br_boss_rush_portal_gate", function(x, y, player)
+        -- todo todo todo
+        nohit()
+        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_forgotten.png")
+        boss_portal(x, y, "data/entities/animals/boss_gate/gate_monster_a.xml", 0, 80)
+        boss_portal(x, y, "data/entities/animals/boss_gate/gate_monster_b.xml", -52, 72)
+        boss_portal(x, y, "data/entities/animals/boss_gate/gate_monster_c.xml", 52, 72)
+        boss_portal(x, y, "data/entities/animals/boss_gate/gate_monster_d.xml", 0, 20)
+        spawn_wands("mods/boss_reworks/files/boss_rush/wands/gate", player)
     end},
 }
 
