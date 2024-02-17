@@ -52,13 +52,6 @@ local to_insert = {
 		mana                = 5,
 		max_uses            = -1,
 		action              = function()
-			if true then
-				local entity = EntityGetWithName("$br_spellname_limbs")
-				while entity ~= nil and entity ~= 0 do
-					EntityKill(entity)
-					entity = EntityGetWithName("$br_spellname_limbs")
-				end
-			end
 			add_projectile("mods/boss_reworks/files/spells/reward_limbs.xml")
 		end,
 	},
