@@ -33,6 +33,9 @@ if comp then
                 EntityRemoveComponent(eid, comps[i])
             end
         end
+        if ComponentGetTypeName(comps[i]) == "PhysicsBodyComponent" then
+            ComponentSetValue2(comps[i], "on_death_leave_physics_body", false)
+        end
     end
     EntityAddTag(eid, "boss_reworks_boss_rush")
     EntityAddTag(eid, "boss_reworks_this_is_boss")

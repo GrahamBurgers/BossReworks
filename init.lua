@@ -5,6 +5,7 @@ for i = 1, #list do
 	end
 end
 ModMaterialsFileAdd("mods/boss_reworks/files/materials.xml")
+ModLuaFileAppend("data/scripts/gun/gun_actions.lua", "mods/boss_reworks/files/spells/actions.lua")
 
 local translations = ModTextFileGetContent("data/translations/common.csv")
 local new_translations = ModTextFileGetContent("mods/boss_reworks/translations.csv")

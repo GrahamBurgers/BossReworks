@@ -86,3 +86,6 @@ ModTextFileSetContent("data/entities/animals/boss_limbs/boss_limbs.xml", tostrin
 
 inject(args.SS,modes.R,"data/entities/animals/boss_limbs/slime_boss_limbs.xml", 'speed_min="150"', 'speed_min="80"')
 inject(args.SS,modes.R,"data/entities/animals/boss_limbs/slime_boss_limbs.xml", 'speed_max="155"', 'speed_max="80"')
+
+-- DROPS
+inject(args.SS,modes.R,"data/entities/animals/boss_limbs/boss_limbs_death.lua", "data/entities/items/wand_unshuffle_04.xml", "mods/boss_reworks/files/boss_limbs/wand_reward.xml")

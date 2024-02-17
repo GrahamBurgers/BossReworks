@@ -10,4 +10,7 @@ function death( damage_type_bit_field, damage_message, entity_thats_responsible,
             ComponentSetValue2(ui, "name", next)
         end
     end
+    if true or EntityGetComponent(GetUpdatedEntityID(), "PhysicsBodyComponent") or EntityGetComponent(GetUpdatedEntityID(), "PhysicsBodyComponent2") then
+        EntityConvertToMaterial(GetUpdatedEntityID(), "spark_blue")
+    end
 end

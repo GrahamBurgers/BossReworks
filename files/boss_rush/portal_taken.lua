@@ -238,17 +238,19 @@ Bosses = {
     {"$br_boss_rush_portal_gate", function(x, y, player)
         -- todo todo todo
         nohit()
-        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_forgotten.png")
-        boss_portal(x, y, "data/entities/animals/boss_gate/gate_monster_a.xml", 0, 80)
-        boss_portal(x, y, "data/entities/animals/boss_gate/gate_monster_b.xml", -52, 72)
-        boss_portal(x, y, "data/entities/animals/boss_gate/gate_monster_c.xml", 52, 72)
-        boss_portal(x, y, "data/entities/animals/boss_gate/gate_monster_d.xml", 0, 20)
+        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_gate.png")
+        boss_portal(x, y, "data/entities/animals/boss_gate/gate_monster_a.xml", 0, -80)
+        boss_portal(x, y, "data/entities/animals/boss_gate/gate_monster_b.xml", -52, -88)
+        boss_portal(x, y, "data/entities/animals/boss_gate/gate_monster_c.xml", 52, -88)
+        boss_portal(x, y, "data/entities/animals/boss_gate/gate_monster_d.xml", 0, -110)
         spawn_wands("mods/boss_reworks/files/boss_rush/wands/gate", player)
     end},
 }
+local debug_load_specific_room = nil
 
 function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x, to_y )
     local name = EntityGetName(GetUpdatedEntityID())
+    name = debug_load_specific_room or name
     if (EntityHasTag(entity_that_was_teleported, "player_unit") or EntityHasTag(entity_that_was_teleported, "polymorphed_player")) then
         EntityAddRandomStains(entity_that_was_teleported, CellFactory_GetType("boss_reworks_unstainer"), 2000)
         for i = 1, #Bosses do
