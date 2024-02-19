@@ -44,4 +44,7 @@ inject(args.SS,modes.R,"data/entities/animals/boss_ghost/boss_ghost_polyp.xml", 
 inject(args.SS,modes.R,"data/entities/animals/boss_ghost/boss_ghost_polyp.xml", 'damage="3"', 'damage="0"')
 inject(args.SS,modes.R,"data/entities/animals/boss_ghost/boss_ghost_polyp.xml", 'holy="3.0"', 'holy="1.6"')
 inject(args.SS,modes.A,"data/entities/animals/boss_ghost/boss_ghost_polyp.xml", 'penetrate_world="1"', 'collide_with_tag="player_unit"')
+inject(args.SS,modes.R,"data/entities/animals/boss_ghost/death.lua", 'EntityLoad( "data/entities/items/pickup/heart_fullhp.xml",  x, y )', [[
+    EntityLoad( "data/entities/items/pickup/heart_fullhp.xml", x + 8, y )    
+    CreateItemActionEntity("BR_REWARD_FORGOTTEN", x - 8, y)]])
 inject(args.SS,modes.R,"data/entities/animals/boss_ghost/damage.lua", 'status = status + 1.0', 'status = status + damage * 3\nstatus = math.min( 100, status )')
