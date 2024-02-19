@@ -55,6 +55,22 @@ local to_insert = {
 			add_projectile("mods/boss_reworks/files/spells/reward_limbs.xml")
 		end,
 	},
+	{
+		id                  = "BR_REWARD_FORGOTTEN",
+		name                = "$br_spellname_forgotten",
+		description         = "$br_spelldesc_forgotten",
+		sprite              = "mods/boss_reworks/files/spells/reward_limbs.png",
+		related_projectiles = {"mods/boss_reworks/files/spells/reward_limbs.xml"},
+		type                = ACTION_TYPE_UTILITY,
+		spawn_level         = "10",
+		spawn_probability   = "0",
+		price               = 80,
+		mana                = 5,
+		max_uses            = -1,
+		action              = function()
+			add_projectile("mods/boss_reworks/files/spells/reward_forgotten.xml")
+		end,
+	},
 }
 
 local len = #actions

@@ -36,7 +36,7 @@ end
 
 function ShootProjectileAtEntity(who_shot, entity_file, x, y, to_entity, velocity_multiplier, set_velocity_directly)
 	local ex, ey = EntityGetTransform(to_entity)
-	ShootProjectile(who_shot, entity_file, x, y, ex - x, ey - y, velocity_multiplier, set_velocity_directly)
+	return ShootProjectile(who_shot, entity_file, x, y, ex - x, ey - y, velocity_multiplier, set_velocity_directly)
 end
 
 function CircleShot(who_shot, entity_file, how_many, x, y, speed, starting_rot, set_velocity_directly)
