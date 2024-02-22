@@ -1,8 +1,8 @@
 <Entity>
 
     <ParticleEmitterComponent
-        area_circle_radius.min="60"
-        area_circle_radius.max="60"
+        area_circle_radius.min="40"
+        area_circle_radius.max="40"
         area_circle_sector_degrees="360"
         collide_with_gas_and_fire="0"
         collide_with_grid="0"

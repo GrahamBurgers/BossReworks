@@ -1,7 +1,7 @@
 local me = GetUpdatedEntityID()
 local x, y = EntityGetTransform(me)
 local spells_needed = 3
-local radius = 60
+local radius = 40
 
 local spells = EntityGetInRadiusWithTag(x, y, radius, "card_action") or {}
 local valid = {}
@@ -14,9 +14,10 @@ for i = 1, #spells do
         if itemcomp then name = ComponentGetValue2(itemcomp, "action_id") end
         if #valid == 0 then
             table.insert(valid, {spells[i], distance, name})
+            table.insert(valid, {spells[i], distance, name})
         else
             for j = 1, #valid do
-                if name == valid[j][3] then break end -- no duplicate spells
+                -- if name == valid[j][3] then break end -- no duplicate spells
                 if (valid[j][2] > distance or j == #valid) then
                     table.insert(valid, j, {spells[i], distance, name})
                     break
@@ -25,9 +26,9 @@ for i = 1, #spells do
         end
     end
 end
+table.remove(valid, #valid) -- hax?
 if #valid >= spells_needed then
     local totalx, totaly = 0, 0
-    SetRandomSeed(x, y)
     for i = 1, #valid do
         local entity = valid[i][1]
         local x2, y2 = EntityGetTransform(entity)
@@ -39,6 +40,7 @@ if #valid >= spells_needed then
     end
     dofile_once("data/scripts/items/chest_random.lua")
     EntityLoad("data/entities/particles/poof_green.xml", totalx, totaly)
+    SetRandomSeed(x + totalx, y + totaly)
     make_random_card(totalx, totaly)
     GamePlaySound("data/audio/Desktop/items.bank", "magic_wand/mana_fully_recharged", totalx, totaly)
 else

@@ -50,6 +50,7 @@ local to_insert = {
 		spawn_probability   = "0",
 		price               = 80,
 		mana                = 5,
+		spawn_requires_flag = "br_dummy_flag",
 		max_uses            = -1,
 		action              = function()
 			add_projectile("mods/boss_reworks/files/spells/reward_limbs.xml")
@@ -66,6 +67,7 @@ local to_insert = {
 		spawn_probability   = "0",
 		price               = 80,
 		mana                = 5,
+		spawn_requires_flag = "br_dummy_flag",
 		max_uses            = -1,
 		action              = function()
 			add_projectile("mods/boss_reworks/files/spells/reward_forgotten.xml")
@@ -82,6 +84,7 @@ local to_insert = {
 		spawn_probability   = "0",
 		price               = 80,
 		mana                = 5,
+		spawn_requires_flag = "br_dummy_flag",
 		max_uses            = -1,
 		action              = function()
 			add_projectile("mods/boss_reworks/files/spells/reward_squidward.xml")
