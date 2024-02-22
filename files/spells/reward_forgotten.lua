@@ -33,7 +33,7 @@ local bonk = true
 local me = GetUpdatedEntityID()
 local x, y = EntityGetTransform(me)
 for i = 1, #Items do
-    local entities = EntityGetWithTag(Items[i][1]) or {}
+    local entities = EntityGetInRadiusWithTag(x, y, 1600, Items[i][1]) or {}
     for j = 1, #entities do
         if not EntityHasTag(EntityGetRootEntity(entities[j]), "player_unit") then
             local eid = ShootProjectileAtEntity(me, "mods/boss_reworks/files/spells/forgotten_flare.xml", x, y, entities[j], 1)
