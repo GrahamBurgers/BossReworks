@@ -31,3 +31,4 @@ for k, v in ipairs(tree.children) do
 	end
 end
 ModTextFileSetContent(path, tostring(tree))
+inject(args.SS,modes.P,"data/entities/animals/boss_pit/boss_pit_death.lua", 'if flag_status then', 'CreateItemActionEntity("BR_REWARD_SQUIDWARD", x, y)')

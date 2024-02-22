@@ -59,8 +59,8 @@ local to_insert = {
 		id                  = "BR_REWARD_FORGOTTEN",
 		name                = "$br_spellname_forgotten",
 		description         = "$br_spelldesc_forgotten",
-		sprite              = "mods/boss_reworks/files/spells/reward_limbs.png",
-		related_projectiles = {"mods/boss_reworks/files/spells/reward_limbs.xml"},
+		sprite              = "mods/boss_reworks/files/spells/reward_forgotten.png",
+		related_projectiles = {"mods/boss_reworks/files/spells/reward_forgotten.xml"},
 		type                = ACTION_TYPE_UTILITY,
 		spawn_level         = "10",
 		spawn_probability   = "0",
@@ -69,6 +69,22 @@ local to_insert = {
 		max_uses            = -1,
 		action              = function()
 			add_projectile("mods/boss_reworks/files/spells/reward_forgotten.xml")
+		end,
+	},
+	{
+		id                  = "BR_REWARD_SQUIDWARD",
+		name                = "$br_spellname_squidward",
+		description         = "$br_spelldesc_squidward",
+		sprite              = "mods/boss_reworks/files/spells/reward_squidward.png",
+		related_projectiles = {"mods/boss_reworks/files/spells/reward_squidward.xml"},
+		type                = ACTION_TYPE_UTILITY,
+		spawn_level         = "10",
+		spawn_probability   = "0",
+		price               = 80,
+		mana                = 5,
+		max_uses            = -1,
+		action              = function()
+			add_projectile("mods/boss_reworks/files/spells/reward_squidward.xml")
 		end,
 	},
 }

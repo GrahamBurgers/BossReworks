@@ -2,7 +2,6 @@
 
     <LuaComponent
         script_source_file="mods/boss_reworks/files/spells/reward_forgotten.lua"
-        remove_after_executed="1"
     ></LuaComponent>
 
 </Entity>
