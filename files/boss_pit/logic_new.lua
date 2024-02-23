@@ -150,9 +150,17 @@ local function earthquake()
 	modify_wand(wand, "data/entities/projectiles/deck/crumbling_earth.xml", 7200, "data/items_gfx/wands/wand_0533.png", 7300, 4, 0, true)
 end
 
+local function missile()
+	local px, py = EntityGetTransform(player)
+	local theta = math.atan((py - y) / (px - x))
+	if px < x then theta = theta + math.pi end
+	local wand = ShootProjectile(me, "mods/boss_reworks/files/boss_pit/wand.xml", x, y, math.cos(theta), math.sin(theta), 2)
+	modify_wand(wand, "data/entities/projectiles/deck/rocket_tier_2.xml", 40, "data/entities/animals/boss_pit/wand_08.png", 180, 4, 1.1)
+end
+
 -- how many attacks is reasonable to have? some should probably not involve wands
 local attacks = {}
-if phase == 1 then attacks = {bb} end
+if phase == 1 then attacks = {bb, missile} end
 if phase == 2 then attacks = {spheres, thundercharge} end
 if phase == 3 then attacks = {gigasaws, effectorbs, chainsaw} end
 if phase == 4 then attacks = {thundercharge, effectorbs, gigasaws, chainsaw} end

@@ -26,7 +26,8 @@ EntitySetTransform(me, x, y, turn)
 
 ComponentSetValue2(comp, "is_emitting", true)
 
-if GameGetFrameNum() % 50 == 0 then
+local toggle = ComponentGetValue2(GetUpdatedComponentID(), "mTimesExecuted")
+if (toggle + 1) % 50 == 0 then
     local varsto = EntityGetFirstComponentIncludingDisabled(parent, "VariableStorageComponent", "squid_shield_trigger")
     local phase = 1
     if varsto then

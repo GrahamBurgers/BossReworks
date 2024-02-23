@@ -7,7 +7,7 @@ function damage_about_to_be_received( damage, x, y, entity_thats_responsible, cr
     local max_hp = ComponentGetValue2(damagemodel, "max_hp")
     local hp = ComponentGetValue2(damagemodel, "hp")
     local phase = ComponentGetValue2(varsto, "value_int")
-    if phase == 1 then damage = damage * 3 end
+    if phase == 1 then damage = damage * 6 end
     if phase >= 6 then return damage, critical_hit_chance end
 
     local acceptable_hp = max_hp * ((10 - phase * 2) / 10)
@@ -38,6 +38,7 @@ function damage_about_to_be_received( damage, x, y, entity_thats_responsible, cr
         local clock = EntityGetFirstComponentIncludingDisabled(me, "VariableStorageComponent", "squid_last_attack_frame")
         if clock then ComponentSetValue2(clock, "value_int", -1) end
         GameScreenshake(15)
+        GamePlaySound("data/audio/Desktop/event_cues.bank", "event_cues/rune/create", x, y)
     end
     return new_damage, critical_hit_chance
 end

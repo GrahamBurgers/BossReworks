@@ -15,6 +15,7 @@
 
     <LuaComponent
         script_source_file="mods/boss_reworks/files/spells/reward_limbs.lua"
+        execute_on_added="1"
     ></LuaComponent>
 
     <ParticleEmitterComponent
