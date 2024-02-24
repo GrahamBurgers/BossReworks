@@ -23,3 +23,5 @@ table.insert(tree.children,
 	nxml.parse(
 		'<Entity> <InheritTransformComponent/> <GameEffectComponent effect="STUN_PROTECTION_FREEZE" frames="-1"> </GameEffectComponent>'))
 ModTextFileSetContent(path, tostring(tree))
+-- why is dragon the only one to not get his own folder? :(
+inject(args.SS,modes.P,"data/scripts/animals/boss_dragon_death.lua", 'for i=1,count do', 'CreateItemActionEntity("BR_REWARD_DRAGON", pos_x + 16, pos_y)')

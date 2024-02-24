@@ -38,6 +38,9 @@ function OnPlayerSpawned(player)
 		})
 		local eid = EntityLoad("mods/boss_reworks/files/boss_wizard/effect_timer.xml")
 		EntityAddChild(player, eid)
+		local worldstate = GameGetWorldStateEntity()
+		local child = EntityCreateNew("br_soul_storage")
+		EntityAddChild(worldstate, child)
 	end
 end
 

@@ -1,0 +1,35 @@
+<Entity>
+
+    <ParticleEmitterComponent
+        area_circle_radius.min="14"
+        area_circle_radius.max="14"
+        area_circle_sector_degrees="360"
+        collide_with_gas_and_fire="0"
+        collide_with_grid="0"
+        cosmetic_force_create="1"
+        count_min="300"
+        count_max="300"
+        create_real_particles="0"
+        custom_alpha="0.3"
+        render_ultrabright="0"
+        draw_as_long="0"
+        render_back="0"
+        emission_interval_min_frames="1"
+        emission_interval_max_frames="1"
+        emit_cosmetic_particles="1"
+        emit_only_if_there_is_space="0"
+        emit_real_particles="0"
+        emitted_material_name="spark_red"
+        lifetime_min="0.25"
+        lifetime_max="0.35"
+        fade_based_on_lifetime="1"
+        gravity.x="0"
+        gravity.y="0"
+    ></ParticleEmitterComponent>
+
+    <LuaComponent
+        script_source_file="mods/boss_reworks/files/spells/reward_dragon.lua"
+        execute_every_n_frame="2"
+    ></LuaComponent>
+
+</Entity>
