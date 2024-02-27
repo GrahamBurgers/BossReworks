@@ -31,4 +31,9 @@ for k, v in ipairs(tree.children) do
 	end
 end
 ModTextFileSetContent(path, tostring(tree))
-inject(args.SS,modes.P,"data/entities/animals/boss_pit/boss_pit_death.lua", 'if flag_status then', 'CreateItemActionEntity("BR_REWARD_SQUIDWARD", x, y)')
+inject(args.SS,modes.P,"data/entities/animals/boss_pit/boss_pit_death.lua", 'if flag_status then', [[
+	if not GameHasFlagRun("br_reward_squidward") then
+		GameAddFlagRun("br_reward_squidward")
+		CreateItemActionEntity("BR_REWARD_SQUIDWARD", x, y)
+	end
+]])

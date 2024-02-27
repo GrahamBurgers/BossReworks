@@ -107,6 +107,23 @@ local to_insert = {
 			add_projectile("mods/boss_reworks/files/spells/reward_dragon.xml")
 		end,
 	},
+	{
+		id                  = "BR_REWARD_GATE",
+		name                = "$br_spellname_gate",
+		description         = "$br_spelldesc_gate",
+		sprite              = "mods/boss_reworks/files/spells/reward_gate.png",
+		related_projectiles = {"mods/boss_reworks/files/spells/reward_gate.xml"},
+		type                = ACTION_TYPE_UTILITY,
+		spawn_level         = "10",
+		spawn_probability   = "0",
+		price               = 80,
+		mana                = 5,
+		spawn_requires_flag = "br_dummy_flag",
+		max_uses            = -1,
+		action              = function()
+			add_projectile("mods/boss_reworks/files/spells/reward_gate.xml")
+		end,
+	},
 }
 
 local len = #actions

@@ -57,6 +57,9 @@ if #valid > 0 then
             GamePrint(GameTextGet("$br_max_hp_increased", tostring(amount)))
         end
     end
+    GamePlaySound("data/audio/Desktop/items.bank", "magic_wand/mana_fully_recharged", x, y)
+elseif #targets > 0 then
+    GamePlaySound("data/audio/Desktop/ui.bank", "ui/button_denied", x, y)
 end
 
 EntityKill(me)
