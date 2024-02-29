@@ -19,7 +19,7 @@
         emit_cosmetic_particles="1"
         emit_only_if_there_is_space="0"
         emit_real_particles="0"
-        emitted_material_name="spark_purple"
+        emitted_material_name="spark_red"
         lifetime_min="0.25"
         lifetime_max="0.35"
         fade_based_on_lifetime="1"
