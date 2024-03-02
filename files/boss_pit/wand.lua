@@ -21,6 +21,7 @@ if ( player ~= nil ) and ( #proj > 0 ) then
 	local vx, vy = math.cos(dir), math.sin(dir)
 
 	local pid = ShootProjectile( me, proj, x + vx / 5, y + vx / 5, vx, vy, mult)
+	EntityAddTag(pid, "resist_repulsion")
 	local comp = EntityGetFirstComponent(pid, "ProjectileComponent")
 	if comp then
 		ComponentSetValue2(comp, "die_on_low_velocity", false)

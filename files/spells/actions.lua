@@ -124,6 +124,23 @@ local to_insert = {
 			add_projectile("mods/boss_reworks/files/spells/reward_gate.xml")
 		end,
 	},
+	{
+		id                  = "BR_REWARD_ALCHEMIST",
+		name                = "$br_spellname_alchemist",
+		description         = "$br_spelldesc_alchemist",
+		sprite              = "mods/boss_reworks/files/spells/reward_alchemist.png",
+		related_projectiles = {"mods/boss_reworks/files/spells/reward_alchemist.xml"},
+		type                = ACTION_TYPE_UTILITY,
+		spawn_level         = "10",
+		spawn_probability   = "0",
+		price               = 80,
+		mana                = 5,
+		spawn_requires_flag = "br_dummy_flag",
+		max_uses            = -1,
+		action              = function()
+			add_projectile("mods/boss_reworks/files/spells/reward_alchemist.xml")
+		end,
+	},
 }
 
 local len = #actions

@@ -79,3 +79,10 @@ inject(args.SS,modes.R,"data/entities/animals/boss_alchemist/projectile_counter_
 
 inject(args.SS,modes.R,"data/entities/animals/boss_alchemist/projectile_counter_create_damage.lua",
 "cumulative = cumulative - 3.0", "cumulative = -5.0")
+
+inject(args.SS,modes.A,"data/entities/animals/boss_alchemist/death.lua", [[SetRandomSeed( pw, 60 )]], [[
+	if not GameHasFlagRun("br_reward_alchemist") then
+		GameAddFlagRun("br_reward_alchemist")
+		CreateItemActionEntity("BR_REWARD_ALCHEMIST", x + 32, y)
+	end
+]])

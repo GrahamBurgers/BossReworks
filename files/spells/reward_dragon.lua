@@ -1,6 +1,6 @@
 local me = GetUpdatedEntityID()
 local x, y = EntityGetTransform(me)
-local targets = EntityGetInRadiusWithTag(x, y, 14, "destruction_target")
+local targets = EntityGetInRadiusWithTag(x, y, 14, "homing_target")
 local worldstate = EntityGetAllChildren(GameGetWorldStateEntity())
 local child = nil
 for i = 1, #worldstate do
@@ -37,7 +37,7 @@ for i = 1, #targets do
     end
 end
 table.remove(valid, #valid) -- hax?
-local amount = 6 + (math.floor(#vscs / 6) * 2)
+local amount = 5 + (math.floor(#vscs / 5) * 2)
 if #valid > 0 then
     EntityConvertToMaterial(valid[1][1], "spark_white_bright")
     EntityKill(valid[1][1])
@@ -50,7 +50,6 @@ if #valid > 0 then
         local dmg = EntityGetFirstComponent(players[i], "DamageModelComponent")
         if dmg then
             ComponentSetValue2(dmg, "max_hp", ComponentGetValue2(dmg, "max_hp") + amount / 25)
-            ComponentSetValue2(dmg, "hp", ComponentGetValue2(dmg, "hp") + amount / 50)
             local x2, y2 = EntityGetTransform(players[i])
             EntityLoad("data/entities/particles/poof_green.xml", x2, y2)
             GameScreenshake(50)
