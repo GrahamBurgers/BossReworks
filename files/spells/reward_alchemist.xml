@@ -1,4 +1,4 @@
-<Entity>
+<Entity name="$projectile_default" tags="projectile">
 
     <ParticleEmitterComponent
         area_circle_radius.min="0"
@@ -60,5 +60,10 @@
         script_source_file="mods/boss_reworks/files/spells/reward_alchemist.lua"
         execute_every_n_frame="1"
     ></LuaComponent>
+
+	<VariableStorageComponent
+		name="projectile_file"
+		value_string="mods/boss_reworks/files/spells/reward_alchemist.xml"
+	></VariableStorageComponent>
 
 </Entity>

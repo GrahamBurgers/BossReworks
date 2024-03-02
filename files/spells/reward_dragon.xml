@@ -1,4 +1,4 @@
-<Entity>
+<Entity name="$projectile_default" tags="projectile">
 
     <ParticleEmitterComponent
         area_circle_radius.min="14"
@@ -31,5 +31,10 @@
         script_source_file="mods/boss_reworks/files/spells/reward_dragon.lua"
         execute_every_n_frame="2"
     ></LuaComponent>
+
+	<VariableStorageComponent
+		name="projectile_file"
+		value_string="mods/boss_reworks/files/spells/reward_dragon.xml"
+	></VariableStorageComponent>
 
 </Entity>

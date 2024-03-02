@@ -1,4 +1,4 @@
-<Entity>
+<Entity name="$projectile_default" tags="projectile">
 
     <ParticleEmitterComponent
         area_circle_radius.min="0"
@@ -54,5 +54,10 @@
     <LuaComponent
         script_source_file="mods/boss_reworks/files/spells/reward_gate.lua"
     ></LuaComponent>
+
+	<VariableStorageComponent
+		name="projectile_file"
+		value_string="mods/boss_reworks/files/spells/reward_gate.xml"
+	></VariableStorageComponent>
 
 </Entity>

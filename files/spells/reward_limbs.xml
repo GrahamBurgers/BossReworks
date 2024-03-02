@@ -1,4 +1,4 @@
-<Entity tags="br_spellname_limbs">
+<Entity name="$projectile_default" tags="projectile,br_spellname_limbs">
 
     <ProjectileComponent
         lifetime="120"
@@ -49,5 +49,10 @@
         y_vel_min="-2"
         y_vel_max="2"
     ></ParticleEmitterComponent>
+
+	<VariableStorageComponent
+		name="projectile_file"
+		value_string="mods/boss_reworks/files/spells/reward_limbs.xml"
+	></VariableStorageComponent>
 
 </Entity>
