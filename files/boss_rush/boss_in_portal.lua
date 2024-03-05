@@ -10,6 +10,7 @@ if comp then
             ComponentSetValue2(comps[i], "ignored_material", CellFactory_GetType("boss_reworks_templebrick_indestructible"))
             ComponentSetValue2(comps[i], "radius", 0)
             ComponentSetValue2(comps[i], "eat_probability", 0)
+            ComponentSetValue2(comps[i], "only_stain", true)
         end
         if ComponentGetTypeName(comps[i]) == "DamageModelComponent" then
             ComponentSetValue2(comps[i], "blood_material", "plasma_fading")

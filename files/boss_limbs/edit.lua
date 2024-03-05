@@ -89,8 +89,8 @@ inject(args.SS,modes.R,"data/entities/animals/boss_limbs/slime_boss_limbs.xml", 
 
 -- DROPS
 inject(args.SS,modes.R,"data/entities/animals/boss_limbs/boss_limbs_death.lua", 'EntityLoad( "data/entities/items/wand_unshuffle_04.xml", pos_x, pos_y )', [[
-	if not GameHasFlagRun("br_reward_limbs") then
-		GameAddFlagRun("br_reward_limbs")
+	if not GameHasFlagRun("br_killed_animal_boss_limbs") then
+		GameAddFlagRun("br_killed_animal_boss_limbs")
 		EntityLoad( "mods/boss_reworks/files/boss_limbs/wand_reward.xml", pos_x, pos_y )
 	end
 ]])

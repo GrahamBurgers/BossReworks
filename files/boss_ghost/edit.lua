@@ -46,8 +46,8 @@ inject(args.SS,modes.R,"data/entities/animals/boss_ghost/boss_ghost_polyp.xml", 
 inject(args.SS,modes.A,"data/entities/animals/boss_ghost/boss_ghost_polyp.xml", 'penetrate_world="1"', 'collide_with_tag="player_unit"')
 inject(args.SS,modes.R,"data/entities/animals/boss_ghost/death.lua", 'EntityLoad( "data/entities/items/pickup/heart_fullhp.xml",  x, y )', [[
     EntityLoad( "data/entities/items/pickup/heart_fullhp.xml", x + 8, y )
-    if not GameHasFlagRun("br_reward_forgotten") then
-		GameAddFlagRun("br_reward_forgotten")
+    if not GameHasFlagRun("br_killed_animal_boss_ghost") then
+		GameAddFlagRun("br_killed_animal_boss_ghost")
         CreateItemActionEntity("BR_REWARD_FORGOTTEN", x - 8, y)
     end
 ]])

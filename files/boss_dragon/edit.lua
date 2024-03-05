@@ -25,8 +25,8 @@ table.insert(tree.children,
 ModTextFileSetContent(path, tostring(tree))
 -- why is dragon the only one to not get his own folder? :(
 inject(args.SS,modes.P,"data/scripts/animals/boss_dragon_death.lua", 'for i=1,count do', [[
-	if not GameHasFlagRun("br_reward_dragon") then
-		GameAddFlagRun("br_reward_dragon")
+	if not GameHasFlagRun("br_killed_animal_boss_dragon") then
+		GameAddFlagRun("br_killed_animal_boss_dragon")
 		CreateItemActionEntity("BR_REWARD_DRAGON", pos_x + 16, pos_y)
 	end
 ]])

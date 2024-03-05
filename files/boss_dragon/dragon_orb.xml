@@ -9,11 +9,6 @@
     </VelocityComponent>
 	</Base>
 
-  <LifetimeComponent
-    fade_sprites="1"
-    lifetime="90"
-  ></LifetimeComponent>
-
   <ProjectileComponent 
     _enabled="1" 
     lob_min="0.5"

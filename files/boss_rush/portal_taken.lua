@@ -149,7 +149,8 @@ local function load_scene(x, y, room_name, background_name)
     LoadPixelScene(room_name, background_name or "", x + size_x * -0.5, y + size_y * -0.5, "", true, false, {}, 50, true)
 end
 
-local function nohit()
+local function nextboss()
+    --[[
     local hpmax = tonumber(GlobalsGetValue("BR_BOSS_RUSH_HP_MAX", "0")) or 0
     if GlobalsGetValue("BR_BOSS_RUSH_NOHIT", "0") == "1" then
         GamePrint("$br_boss_rush_nohit")
@@ -158,6 +159,7 @@ local function nohit()
     GamePrint("$br_boss_rush_healed")
     GlobalsSetValue("BR_BOSS_RUSH_HP_LEFT", tostring(math.min(hpmax + multiplier * 40, multiplier * 40 + tonumber(GlobalsGetValue("BR_BOSS_RUSH_HP_LEFT", "0")))))
     GlobalsSetValue("BR_BOSS_RUSH_NOHIT", "1")
+    ]]--
 
     -- maybe a good idea?
     local entities = EntityGetWithTag("boss_reworks_boss_rush") or {}
@@ -220,33 +222,50 @@ Bosses = {
         boss_portal(x, y, "data/entities/animals/boss_limbs/boss_limbs.xml", 130, -60)
         steal_player_stuff(player)
         spawn_wands("mods/boss_reworks/files/boss_rush/wands/limbs", player)
+        GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(150 * multiplier))
     end},
     {"$br_boss_rush_portal_dragon", function(x, y, player)
-        nohit()
+        nextboss()
         load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_dragon.png")
         boss_portal(x, y, "data/entities/animals/boss_dragon.xml", 0, 80)
         spawn_wands("mods/boss_reworks/files/boss_rush/wands/dragon", player)
+        GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(200 * multiplier))
     end},
     {"$br_boss_rush_portal_forgotten", function(x, y, player)
-        nohit()
+        nextboss()
         load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_forgotten.png")
         boss_portal(x, y, "data/entities/animals/boss_ghost/boss_ghost.xml", 0, -80)
         local eid = EntityLoad("data/entities/items/pickup/evil_eye.xml", x, y)
         EntityAddTag(eid, "boss_reworks_boss_rush")
         spawn_wands("mods/boss_reworks/files/boss_rush/wands/forgotten", player)
+        GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(300 * multiplier))
     end},
     {"$br_boss_rush_portal_gate", function(x, y, player)
-        -- todo todo todo
-        nohit()
+        nextboss()
         load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_gate.png")
         boss_portal(x, y, "data/entities/animals/boss_gate/gate_monster_a.xml", 0, -80)
         boss_portal(x, y, "data/entities/animals/boss_gate/gate_monster_b.xml", -52, -88)
         boss_portal(x, y, "data/entities/animals/boss_gate/gate_monster_c.xml", 52, -88)
         boss_portal(x, y, "data/entities/animals/boss_gate/gate_monster_d.xml", 0, -110)
         spawn_wands("mods/boss_reworks/files/boss_rush/wands/gate", player)
+        GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(350 * multiplier))
+        local eid = EntityCreateNew()
+        EntityAddComponent2(eid, "LuaComponent", {
+            script_source_file="data/scripts/perks/radar.lua"
+        })
+        EntityAddComponent2(eid, "InheritTransformComponent")
+        EntityAddTag(eid, "boss_reworks_boss_rush")
+        EntityAddChild(player, eid)
+    end},
+    {"$br_boss_rush_portal_alchemist", function(x, y, player)
+        nextboss()
+        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_forgotten.png")
+        boss_portal(x, y, "data/entities/animals/boss_alchemist/boss_alchemist.xml", 0, -80)
+        spawn_wands("mods/boss_reworks/files/boss_rush/wands/forgotten", player)
+        GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(400 * multiplier))
     end},
 }
-local debug_load_specific_room = nil
+local debug_load_specific_room = "$br_boss_rush_portal_gate"
 
 function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x, to_y )
     local name = EntityGetName(GetUpdatedEntityID())
@@ -257,6 +276,7 @@ function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x,
             if Bosses[i][1] == name then
                 Bosses[i][2](to_x, to_y, entity_that_was_teleported)
                 GlobalsSetValue("BR_BOSS_RUSH_PORTAL_NEXT", Bosses[i + 1][1] or "")
+                GlobalsSetValue("BR_BOSS_RUSH_HP_LEFT", GlobalsGetValue("BR_BOSS_RUSH_HP_MAX"))
             end
         end
     end
