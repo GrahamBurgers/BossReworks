@@ -42,7 +42,8 @@ if comp then
     EntityAddTag(eid, "boss_reworks_this_is_boss")
     EntityAddComponent2(eid, "LuaComponent", {
         execute_every_n_frame=-1,
-        script_death="mods/boss_reworks/files/boss_rush/boss_death.lua"
+        script_death="mods/boss_reworks/files/boss_rush/boss_death.lua",
+        script_shot="mods/boss_reworks/files/boss_rush/stop_breaking_everything.lua",
     })
 end
 EntityKill(GetUpdatedEntityID())

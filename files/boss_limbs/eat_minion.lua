@@ -5,7 +5,7 @@ local damagemodel = EntityGetFirstComponent(me, "DamageModelComponent")
 if #eid <= 0 then return end
 if not damagemodel then return end
 SetRandomSeed(damagemodel + #eid, me + GameGetFrameNum())
-if Random(1, 5) > #eid then return end
+if Random(1, 6) > #eid then return end
 local target = eid[Random(1, #eid)]
 
 local hp = ComponentGetValue2(damagemodel, "hp")

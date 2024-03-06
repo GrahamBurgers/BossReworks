@@ -72,7 +72,7 @@ ModTextFileSetContent("data/entities/animals/boss_limbs/slimeshooter_boss_limbs.
 tree = nxml.parse(ModTextFileGetContent("data/entities/animals/boss_limbs/boss_limbs.xml"))
 tree.attr.tags = tree.attr.tags .. ",boss_limbs"
 table.insert(tree.children,
-	nxml.parse('<LuaComponent execute_every_n_frame="240" script_source_file="mods/boss_reworks/files/boss_limbs/eat_minion.lua">'))
+	nxml.parse('<LuaComponent execute_every_n_frame="320" script_source_file="mods/boss_reworks/files/boss_limbs/eat_minion.lua">'))
 table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_armor_init.lua"> </LuaComponent>'))
 table.insert(tree.children,

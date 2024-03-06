@@ -25,7 +25,7 @@ function damage_received( damage, message, entity_thats_responsible, is_fatal, p
             GameSetCameraPos(6400, 50025)
             SetTimeOut(0.08, "mods/boss_reworks/files/damage_taken.lua", "turn_off_the_thingy")
             SetRandomSeed(GameGetFrameNum() + damage, GameGetFrameNum() + 24085)
-            GamePrintImportant("$br_boss_rush_death_0", "$br_boss_rush_death_" .. Random(1, 9))
+            GamePrintImportant("$br_boss_rush_death_0", "$br_boss_rush_death_1")
             ComponentSetValue2(health, "mFireFramesLeft", 0)
             local entities = EntityGetWithTag("boss_reworks_boss_rush") or {}
             for i = 1, #entities do

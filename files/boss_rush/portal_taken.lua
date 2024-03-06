@@ -26,16 +26,16 @@ local function aaaaaa(entity)
         local sprite = EntityGetFirstComponentIncludingDisabled(entity, "SpriteComponent", "enabled_in_hand")
         if sprite then EntitySetComponentIsEnabled(entity, sprite, true) end
         if isphysics then
-            EntitySetTransform(entity, Shelf2, 50084, 0)
-            EntityApplyTransform(entity, Shelf2, 50084, 0)
+            EntitySetTransform(entity, Shelf2, 50084 + 25, 0)
+            EntityApplyTransform(entity, Shelf2, 50084 + 25, 0)
             Shelf2 = Shelf2 + 18
             if item then
                 ComponentSetValue2(item, "play_hover_animation", false)
                 ComponentSetValue2(item, "play_spinning_animation", false)
             end
         else
-            EntitySetTransform(entity, Shelf1, 50055, math.pi / -2)
-            EntityApplyTransform(entity, Shelf1, 50055, math.pi / -2)
+            EntitySetTransform(entity, Shelf1, 50055 + 25, math.pi / -2)
+            EntityApplyTransform(entity, Shelf1, 50055 + 25, math.pi / -2)
             Shelf1 = Shelf1 + 18
             if item then
                 ComponentSetValue2(item, "play_hover_animation", true)
@@ -88,7 +88,7 @@ function steal_player_stuff(player)
 
     if #perks_to_spawn > 0 then
         local storage = EntityCreateNew()
-        EntitySetTransform(storage, 6482.5, 50065)
+        EntitySetTransform(storage, 6482.5, 50065 + 25)
         EntityAddComponent2(storage, "SpriteComponent", {
             image_file="mods/boss_reworks/files/boss_rush/perks/perk_storage.png",
             offset_x=7,
@@ -229,7 +229,7 @@ Bosses = {
         load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_dragon.png")
         boss_portal(x, y, "data/entities/animals/boss_dragon.xml", 0, 80)
         spawn_wands("mods/boss_reworks/files/boss_rush/wands/dragon", player)
-        GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(200 * multiplier))
+        GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(250 * multiplier))
     end},
     {"$br_boss_rush_portal_forgotten", function(x, y, player)
         nextboss()
@@ -259,13 +259,13 @@ Bosses = {
     end},
     {"$br_boss_rush_portal_alchemist", function(x, y, player)
         nextboss()
-        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_forgotten.png")
+        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_alchemist.png")
         boss_portal(x, y, "data/entities/animals/boss_alchemist/boss_alchemist.xml", 0, -80)
-        spawn_wands("mods/boss_reworks/files/boss_rush/wands/forgotten", player)
+        spawn_wands("mods/boss_reworks/files/boss_rush/wands/alchemist", player)
         GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(400 * multiplier))
     end},
 }
-local debug_load_specific_room = "$br_boss_rush_portal_gate"
+local debug_load_specific_room = nil
 
 function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x, to_y )
     local name = EntityGetName(GetUpdatedEntityID())
