@@ -194,6 +194,15 @@ local function spawn_wands(name, entity)
     EntityLoad(name .. "_02.xml", x + 12, y)
 end
 
+local function start_boss_rush(player)
+    GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(max))
+    GlobalsSetValue("BR_BOSS_RUSH_HP_MULTIPLIER", tostring(multiplier))
+    GlobalsSetValue("BR_BOSS_RUSH_NOHIT", "1")
+    GlobalsSetValue("BR_BOSS_RUSH_ACTIVE", "1")
+    GlobalsSetValue("BR_BOSS_RUSH_HP_LEFT", tostring(max))
+    GlobalsSetValue("BR_BOSS_RUSH_HP_TWEEN", tostring(max))
+end
+
 Bosses = {
     {"$br_boss_rush_portal_in", function(x, y, player)
         if not GameHasFlagRun("br_boss_rush_intro") then
@@ -212,17 +221,12 @@ Bosses = {
         end
     end},
     {"$br_boss_rush_portal_pyramid", function(x, y, player)
-        GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(max))
-        GlobalsSetValue("BR_BOSS_RUSH_HP_MULTIPLIER", tostring(multiplier))
-        GlobalsSetValue("BR_BOSS_RUSH_NOHIT", "1")
-        GlobalsSetValue("BR_BOSS_RUSH_ACTIVE", "1")
-        GlobalsSetValue("BR_BOSS_RUSH_HP_LEFT", tostring(max))
-        GlobalsSetValue("BR_BOSS_RUSH_HP_TWEEN", tostring(max))
+        start_boss_rush(player)
         load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_pyramid.png")
         boss_portal(x, y, "data/entities/animals/boss_limbs/boss_limbs.xml", 130, -60)
         steal_player_stuff(player)
         spawn_wands("mods/boss_reworks/files/boss_rush/wands/limbs", player)
-        GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(150 * multiplier))
+        GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(200 * multiplier))
     end},
     {"$br_boss_rush_portal_dragon", function(x, y, player)
         nextboss()
@@ -248,7 +252,6 @@ Bosses = {
         boss_portal(x, y, "data/entities/animals/boss_gate/gate_monster_c.xml", 52, -88)
         boss_portal(x, y, "data/entities/animals/boss_gate/gate_monster_d.xml", 0, -110)
         spawn_wands("mods/boss_reworks/files/boss_rush/wands/gate", player)
-        GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(350 * multiplier))
         local eid = EntityCreateNew()
         EntityAddComponent2(eid, "LuaComponent", {
             script_source_file="data/scripts/perks/radar.lua"
@@ -256,20 +259,31 @@ Bosses = {
         EntityAddComponent2(eid, "InheritTransformComponent")
         EntityAddTag(eid, "boss_reworks_boss_rush")
         EntityAddChild(player, eid)
+        GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(350 * multiplier))
     end},
     {"$br_boss_rush_portal_alchemist", function(x, y, player)
         nextboss()
         load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_alchemist.png")
-        boss_portal(x, y, "data/entities/animals/boss_alchemist/boss_alchemist.xml", 0, -80)
+        boss_portal(x, y, "data/entities/animals/boss_alchemist/boss_alchemist.xml", 0, -70)
         spawn_wands("mods/boss_reworks/files/boss_rush/wands/alchemist", player)
         GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(400 * multiplier))
     end},
+    {"$br_boss_rush_portal_robot", function(x, y, player)
+        nextboss()
+        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_alchemist.png")
+        boss_portal(x, y, "data/entities/animals/boss_robot/boss_robot.xml", 0, -80)
+        spawn_wands("mods/boss_reworks/files/boss_rush/wands/alchemist", player)
+        GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(450 * multiplier))
+    end},
 }
-local debug_load_specific_room = nil
+local debug_load_specific_room = "$br_boss_rush_portal_alchemist"
 
 function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x, to_y )
     local name = EntityGetName(GetUpdatedEntityID())
     name = debug_load_specific_room or name
+    if debug_load_specific_room then
+        start_boss_rush(entity_that_was_teleported)
+    end
     if (EntityHasTag(entity_that_was_teleported, "player_unit") or EntityHasTag(entity_that_was_teleported, "polymorphed_player")) then
         EntityAddRandomStains(entity_that_was_teleported, CellFactory_GetType("boss_reworks_unstainer"), 2000)
         for i = 1, #Bosses do

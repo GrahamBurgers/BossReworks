@@ -5,7 +5,7 @@ local player = EntityGetClosestWithTag(x, y, "player_unit") or EntityGetClosestW
 if player then
     x, y = EntityGetTransform(player)
 end
-y = y - 45
+y = y - 55
 local count = 10
 local spacing = 40
 local luaspace = 3

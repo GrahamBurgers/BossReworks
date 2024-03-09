@@ -8,6 +8,6 @@ for i = 1, #comps do
 end
 EntityAddComponent2(me, "LuaComponent", {
     script_source_file="mods/boss_reworks/files/boss_alchemist/ball_hit.lua",
-    execute_every_n_frame=15,
+    execute_every_n_frame=24,
     remove_after_executed=true,
 })

@@ -1,6 +1,6 @@
 local me = GetUpdatedEntityID()
 local x, y = EntityGetTransform(me)
-local targets = EntityGetInRadiusWithTag(x, y, 14, "homing_target")
+local targets = EntityGetInRadiusWithTag(x, y, 16, "homing_target")
 local worldstate = EntityGetAllChildren(GameGetWorldStateEntity())
 local child = nil
 for i = 1, #worldstate do
