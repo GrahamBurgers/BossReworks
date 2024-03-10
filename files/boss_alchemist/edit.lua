@@ -95,4 +95,3 @@ inject(args.SS,modes.A,"data/entities/animals/boss_alchemist/death.lua", [[SetRa
 ]])
 
 inject(args.SS,modes.A,"data/entities/animals/boss_alchemist/projectile_counter.xml", '<CellEaterComponent', ' ignored_material="boss_reworks_templebrick_indestructible"')
-print(ModTextFileGetContent("data/entities/animals/boss_alchemist/projectile_counter.xml"))
