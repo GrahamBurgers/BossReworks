@@ -1,5 +1,5 @@
 dofile_once("mods/boss_reworks/files/lib/injection.lua")
-local list = {"dragon", "gate", "limbs", "fish", "alchemist", "ghost", "robot", "wizard", "pit"}
+local list = {"dragon", "gate", "limbs", "fish", "alchemist", "ghost", "robot", "wizard", "pit", "tiny"}
 for i = 1, #list do
 	if ModSettingGet("boss_reworks.rework_" .. list[i]) then
 		dofile_once("mods/boss_reworks/files/boss_" .. list[i] .. "/edit.lua")
@@ -45,6 +45,61 @@ function OnPlayerSpawned(player)
 end
 
 function OnWorldPreUpdate()
+	if #EntityGetWithTag("br_worm_combo_entity") > 0 then
+		Gui = Gui or GuiCreate()
+		GuiIdPushString(Gui, "br_worm_combo")
+		GuiStartFrame(Gui)
+
+		local amount = tonumber(GlobalsGetValue("BR_WORM_COMBO", "0")) or 0
+		local max = tonumber(GlobalsGetValue("BR_WORM_COMBO_MAX", "0")) or 0
+		local score = GlobalsGetValue("BR_WORM_SCORE", "0")
+		score = tostring(math.floor(tonumber(score) or 0))
+		GlobalsSetValue("BR_WORM_SCORE", score)
+
+		local screen_w, screen_h = GuiGetScreenDimensions(Gui)
+		local bar = "mods/boss_reworks/files/spells/tiny/combo_bar.png"
+		local frame = "mods/boss_reworks/files/spells/tiny/combo_frame.png"
+		local frame_w, frame_h = GuiGetImageDimensions(Gui, frame)
+		local sframe = "mods/boss_reworks/files/spells/tiny/score_frame.png"
+		local num_w, num_h = GuiGetImageDimensions(Gui, "mods/boss_reworks/files/spells/tiny/score_dummy.png")
+
+		-- combo bar
+		GuiOptionsAddForNextWidget(Gui, 2) -- Make non interactive
+		GuiZSetForNextWidget(Gui, -1001)
+		GuiImage(Gui, 1, (screen_w - frame_w) / 2.3, screen_h / 8 - frame_h / 2, bar, 1, frame_w * math.max(0, (amount / max)), 1)
+
+		-- combo frame
+		GuiOptionsAddForNextWidget(Gui, 2) -- Make non interactive
+		GuiZSetForNextWidget(Gui, -1002)
+		GuiImage(Gui, 2, (screen_w - frame_w) / 2.3, screen_h / 8 - frame_h / 2, frame, 1, 1, 1)
+
+		-- score frame
+		GuiOptionsAddForNextWidget(Gui, 2) -- Make non interactive
+		GuiZSetForNextWidget(Gui, -1002)
+		GuiImage(Gui, 3, (screen_w - frame_w) / 1.7, screen_h / 8 - frame_h / 2, sframe, 1, 1, 1)
+
+		local length = string.len(score)
+		for i = 1, length do
+			GuiOptionsAddForNextWidget(Gui, 2) -- Make non interactive
+			GuiZSetForNextWidget(Gui, -1003)
+			local width_offset = 0 -- NATHAN HELP WAAAAAH
+			local thing = "mods/boss_reworks/files/spells/tiny/score_" .. string.sub(score, i, i) .. ".png"
+			GuiImage(Gui, 3 + i, ((screen_w - frame_w) / 1.7) + width_offset + i * num_w, screen_h / 8 - frame_h / 2, thing, 1, 1)
+		end
+
+		GuiIdPop(Gui)
+
+		local enemies = EntityGetWithTag("mortal")
+		for i = 1, #enemies do
+			if not EntityHasTag(enemies[i], "br_worm_combo_added") then
+				EntityAddTag(enemies[i], "br_worm_combo_added")
+				EntityAddComponent2(enemies[i], "LuaComponent", {
+					execute_every_n_frame=-1,
+					script_death="mods/boss_reworks/files/spells/tiny/combo_death.lua"
+				})
+			end
+		end
+	end
 	if GlobalsGetValue("BR_BOSS_RUSH_ACTIVE", "0") == "1" then
 		-- i stole this code from lap 2 and modified it
 		Gui = Gui or GuiCreate()

@@ -1,4 +1,5 @@
 ---@diagnostic disable: undefined-global, lowercase-global
+RemoveFlagPersistent("br_dummy_flag")
 local to_insert = {
 	{
 		id                  = "BR_LONGTELETRIGGER",
@@ -139,6 +140,23 @@ local to_insert = {
 		max_uses            = -1,
 		action              = function()
 			add_projectile("mods/boss_reworks/files/spells/reward_alchemist.xml")
+		end,
+	},
+	{
+		id                  = "BR_REWARD_TINY",
+		name                = "$br_spellname_tiny",
+		description         = "$br_spelldesc_tiny",
+		sprite              = "mods/boss_reworks/files/spells/reward_tiny.png",
+		related_projectiles = {"mods/boss_reworks/files/spells/reward_tiny.xml"},
+		type                = ACTION_TYPE_UTILITY,
+		spawn_level         = "10",
+		spawn_probability   = "0",
+		price               = 80,
+		mana                = 5,
+		spawn_requires_flag = "br_dummy_flag",
+		max_uses            = -1,
+		action              = function()
+			add_projectile("mods/boss_reworks/files/spells/reward_tiny.xml")
 		end,
 	},
 }

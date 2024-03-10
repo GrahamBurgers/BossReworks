@@ -96,6 +96,13 @@ mod_settings =
 				value_default = true,
 				scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
 			},
+			{
+				id = "rework_tiny",
+				ui_name = "Tiny",
+				ui_description = "Rework Tiny (Limatoukka).\nThis.",
+				value_default = true,
+				scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
+			},
 		},
 	},
 }
