@@ -8,6 +8,7 @@ local var = EntityGetFirstComponentIncludingDisabled(me, "VariableStorageCompone
 if who_shot == 0 or not var then EntityKill(me) return end
 local distance = ComponentGetValue2(var, "value_int")
 local theta = tonumber(ComponentGetValue2(var, "value_string"))
+---@cast theta number
 local rotate = ComponentGetValue2(var, "value_float")
 
 local off_x = math.cos(theta) * distance
