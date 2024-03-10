@@ -29,7 +29,7 @@ mod_settings =
 	{
 		category_id = "specific_bosses",
 		ui_name = "List of reworks",
-		ui_description = "Toggle reworks for specific bosses.\nThese descriptions will spoil the rework, so beware if you're trying to go in blind.\nTurning off a boss's rework will also prevent them from gaining boss armor and healthbar numbers.\nTry not to change these mid-run if you've already encountered the boss.\nPlease don't disable a boss's rework before you've fought the reworked boss at least once, OK?",
+		ui_description = "Toggle reworks for specific bosses.\nTurning off a boss's rework will forfeit their unique spell drops.\nPlease don't disable a boss's rework before you've fought the reworked boss at least once, OK?",
 		settings = {
 			-- todo: what order do we put these in? boss rush order?
 			-- also todo: is it even worth explaining the reworks here? might be better off linking to a wiki page

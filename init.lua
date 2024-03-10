@@ -1,3 +1,4 @@
+dofile_once("mods/boss_reworks/files/lib/injection.lua")
 local list = {"dragon", "gate", "limbs", "fish", "alchemist", "ghost", "robot", "wizard", "pit"}
 for i = 1, #list do
 	if ModSettingGet("boss_reworks.rework_" .. list[i]) then
@@ -5,6 +6,14 @@ for i = 1, #list do
 	end
 end
 ModMaterialsFileAdd("mods/boss_reworks/files/materials.xml")
+ModLuaFileAppend("data/scripts/gun/gun_actions.lua", "mods/boss_reworks/files/spells/actions.lua")
+inject(args.SS,modes.R,"data/entities/items/pickup/test/pouch.xml", 'item_physics', 'item_physics,br_pouch')
+inject(args.SS,modes.R,"data/entities/items/pickup/powder_stash.xml", 'item_physics', 'item_physics,br_pouch')
+inject(args.SS,modes.R,"data/entities/items/orbs/orb_base.xml", 'polymorphable_NOT', 'polymorphable_NOT,br_orb')
+inject(args.SS,modes.R,"data/entities/animals/longleg.xml", '<Entity', '<Entity tags="br_hamis"')
+inject(args.SS,modes.R,"data/entities/items/pickup/musicstone.xml", 'moon_energy', 'moon_energy,br_musicstone')
+inject(args.SS,modes.R,"data/entities/items/pickup/moon.xml", 'moon_energy', 'moon_energy,br_moon')
+inject(args.SS,modes.R,"data/entities/items/pickup/wandstone.xml", 'item_pickup', 'item_pickup,br_wandcore')
 
 local translations = ModTextFileGetContent("data/translations/common.csv")
 local new_translations = ModTextFileGetContent("mods/boss_reworks/translations.csv")
@@ -29,6 +38,9 @@ function OnPlayerSpawned(player)
 		})
 		local eid = EntityLoad("mods/boss_reworks/files/boss_wizard/effect_timer.xml")
 		EntityAddChild(player, eid)
+		local worldstate = GameGetWorldStateEntity()
+		local child = EntityCreateNew("br_soul_storage")
+		EntityAddChild(worldstate, child)
 	end
 end
 
@@ -62,36 +74,51 @@ function OnWorldPreUpdate()
 		local tween_w, tween_h = GuiGetImageDimensions(Gui, bar)
 		local frame = "mods/boss_reworks/files/boss_rush/health_frame.png"
 		local frame_w, frame_h = GuiGetImageDimensions(Gui, frame)
+		local back = "mods/boss_reworks/files/boss_rush/health_back.png"
 
+		-- these overlap with the pickup prompt but there's not much I can do without making the healthbar very obtrusive
+		-- Back
+		GuiOptionsAddForNextWidget(Gui, 2) -- Make non interactive
+		GuiZSetForNextWidget(Gui, -999)
+		GuiImage(Gui, 0, (screen_w - frame_w) / 2, screen_h / 1.1 - frame_h / 2, back, 1, 1, 1)
 		-- Red bar
 		GuiOptionsAddForNextWidget(Gui, 2) -- Make non interactive
 		GuiZSetForNextWidget(Gui, -1000)
-		GuiImage(Gui, 1, (screen_w - frame_w) / 2, screen_h / 1.2 - tween_h / 2, tween, 1, frame_w * thing / max, 1)
+		GuiImage(Gui, 1, (screen_w - frame_w) / 2, screen_h / 1.1 - tween_h / 2, tween, 1, frame_w * thing / max, 1)
 		-- Bar
 		GuiOptionsAddForNextWidget(Gui, 2) -- Make non interactive
 		GuiZSetForNextWidget(Gui, -1001)
-		GuiImage(Gui, 2, (screen_w - frame_w) / 2, screen_h / 1.2 - bar_h / 2, bar, 1, frame_w * amount / max, 1)
+		GuiImage(Gui, 2, (screen_w - frame_w) / 2, screen_h / 1.1 - bar_h / 2, bar, 1, frame_w * amount / max, 1)
 		-- Frame
 		GuiOptionsAddForNextWidget(Gui, 2) -- Make non interactive
 		GuiZSetForNextWidget(Gui, -1002)
-		GuiImage(Gui, 3, (screen_w - frame_w) / 2, screen_h / 1.2 - frame_h / 2, frame, 1, 1, 1)
+		GuiImage(Gui, 3, (screen_w - frame_w) / 2, screen_h / 1.1 - frame_h / 2, frame, 1, 1, 1)
 		-- Countdown
 		GuiOptionsAddForNextWidget(Gui, 2) -- Make non interactive
 		GuiZSetForNextWidget(Gui, -1003)
-		GuiText(Gui, (screen_w - text_w) / 2, screen_h / 1.2 - text_h / 2, text)
+		GuiColorSetForNextWidget(Gui, 0, 0, 0, 1)
+		GuiText(Gui, (screen_w - text_w) / 2, screen_h / 1.1 - text_h / 2, text)
 
 		GuiIdPop(Gui)
 
 		local players = EntityGetWithTag("player_unit") or {}
 		for i = 1, #players do
 			-- disable % based damage effects since those use the player's real HP
-			local comp = 0
-			comp = GameGetGameEffect( players[i], "POISON" )
-			if comp > 0 then ComponentSetValue2(comp, "effect", "NONE") ComponentSetValue2(comp, "frames", 0) end
-			comp = GameGetGameEffect( players[i], "RADIOACTIVE" )
-			if comp > 0 then ComponentSetValue2(comp, "effect", "NONE") ComponentSetValue2(comp, "frames", 0) end
-			comp = EntityGetFirstComponent(players[i], "DamageModelComponent") or 0
-			if comp > 0 then ComponentSetValue2(comp, "mFireDamageBufferedNextDeliveryFrame", GameGetFrameNum() + 3) ComponentSetValue2(comp, "mFireDamageBuffered", 0) end
+			local comp = GameGetGameEffect( players[i], "POISON" )
+			local comp2 = GameGetGameEffect( players[i], "RADIOACTIVE" )
+			local comp3 = EntityGetFirstComponent(players[i], "DamageModelComponent")
+			if comp and comp ~= 0 then
+				ComponentSetValue2(comp, "effect", "NONE")
+				ComponentSetValue2(comp, "frames", 0)
+			end
+			if comp2 and comp2 ~= 0 then
+				ComponentSetValue2(comp2, "effect", "NONE")
+				ComponentSetValue2(comp2, "frames", 0)
+			end
+			if comp3 and comp3 ~= 0 then
+				ComponentSetValue2(comp3, "mFireDamageBufferedNextDeliveryFrame", GameGetFrameNum() + 3)
+				ComponentSetValue2(comp3, "mFireDamageBuffered", 0)
+			end
 			if GameGetGameEffectCount(players[i], "ON_FIRE") > 0 then
 				local dmg = max / multiplier / 50 / 60 / 25
 				EntityInflictDamage(players[i], dmg, "DAMAGE_FIRE", "$damage_fire", "NONE", 0, 0)

@@ -1,0 +1,43 @@
+<Entity tags="wand,boss_reworks_boss_rush" name="$item_wand" >
+	<Base file="data/entities/base_item.xml">
+    <ItemComponent play_hover_animation="1" play_spinning_animation="1"> </ItemComponent>
+    <SpriteComponent image_file="data/items_gfx/wands/wand_0071.png" offset_x="2" offset_y="3" ></SpriteComponent>
+    </Base>
+	<Base file="data/entities/base_wand_pickup.xml" > <LuaComponent _enabled="0" script_item_picked_up="" /> </Base>
+	
+	<UIInfoComponent _tags="enabled_in_world" name="$item_wand"></UIInfoComponent>
+
+	<AbilityComponent
+        sprite_file="data/items_gfx/wands/wand_0071.png"
+        ui_name="$item_wand"
+        drop_as_item_on_death="0"
+        use_gun_script="1"
+
+        add_these_child_actions="CLIPPING_SHOT,AREA_DAMAGE,DAMAGE,GLOWING_BOLT"
+		mana_charge_speed="540"
+		mana_max="770"
+        >
+        <gun_config 
+            shuffle_deck_when_empty="0"
+            reload_time="-70"
+            deck_capacity="4"
+            actions_per_round="1"
+        ></gun_config>
+        <gunaction_config
+            spread_degrees="-6"
+            fire_rate_wait="-60"
+            speed_multiplier="0.8"
+        ></gunaction_config>
+    </AbilityComponent>
+	
+	<HotspotComponent 
+        _tags="shoot_pos" 
+        offset.x="10" 
+        offset.y="-0.5" >
+    </HotspotComponent>
+
+    <ManaReloaderComponent
+        _tags="enabled_in_world,enabled_in_hand,enabled_in_inventory" >
+    </ManaReloaderComponent>
+
+</Entity>

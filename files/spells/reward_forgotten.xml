@@ -1,0 +1,7 @@
+<Entity>
+
+    <LuaComponent
+        script_source_file="mods/boss_reworks/files/spells/reward_forgotten.lua"
+    ></LuaComponent>
+
+</Entity>

@@ -78,7 +78,7 @@ inject(args.SS,modes.P,"data/entities/animals/boss_wizard/state.lua", 'if ( mode
 	-- HAX, projectiles fired from projectiles advance his state for some reason
 	if EntityHasTag(pid, "br_effect_projectile") then return end
 	]])
-inject(args.SS,modes.R,"data/entities/animals/boss_wizard/wizard_nullify.lua", 'x, y, 36, "projectile"', 'x, y, 0, "projectile"')
+inject(args.SS,modes.R,"data/entities/animals/boss_wizard/wizard_nullify.lua", 'ipairs( projs )', '0')
 inject(args.SS,modes.R,"data/entities/animals/boss_wizard/state.lua", 'data/entities/animals/boss_wizard/bloodtentacle.xml', 'mods/boss_reworks/files/boss_wizard/bloodtentacle_new.xml')
 inject(args.SS,modes.A,"data/entities/animals/boss_wizard/wizard_nullify.lua", 'mode = 1', [[
 

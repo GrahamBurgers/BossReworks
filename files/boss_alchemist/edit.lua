@@ -7,6 +7,7 @@ local tree = nxml.parse(ModTextFileGetContent(path))
 for k, v in ipairs(tree.children) do
 	if v.name == "ProjectileComponent" then
 		v.attr.lifetime = v.attr.lifetime * 2
+		v.attr.damage = v.attr.damage * 0.2
 	end
 end
 table.insert(tree.children, nxml.parse(
@@ -70,12 +71,28 @@ inject(args.SS, modes.P, "data/entities/animals/boss_alchemist/projectile_counte
 if comp and ComponentGetValue2(comp,"damage_multiplier") <= 0.01 then return end
 ]])
 
+inject(args.SS, modes.R, "data/entities/animals/boss_alchemist/projectile_counter_create.lua", 'ComponentSetValue2( c, "execute_every_n_frame", 600 )',
+[[
+	ComponentSetValue2( c, "execute_every_n_frame", 660 )
+	ComponentSetValue2( c, "mNextExecutionTime", GameGetFrameNum() + 660 )
+]])
+
 inject(args.SS,modes.R,"data/entities/animals/boss_alchemist/projectile_counter_create_damage.lua",
 [[local eid = EntityLoad( "data/entities/animals/boss_alchemist/projectile_counter.xml", x, y )
 		EntityAddChild( entity_id, eid )]],"dofile(\"data/entities/animals/boss_alchemist/projectile_counter_create.lua\")")
 
 inject(args.SS,modes.R,"data/entities/animals/boss_alchemist/projectile_counter_create_damage.lua",
-"cumulative >= 3.0", "cumulative >= 5.0")
+"cumulative >= 3.0", "cumulative >= 7.0")
 
 inject(args.SS,modes.R,"data/entities/animals/boss_alchemist/projectile_counter_create_damage.lua",
-"cumulative = cumulative - 3.0", "cumulative = -5.0")
+"cumulative = cumulative - 3.0", "cumulative = -7.0")
+
+inject(args.SS,modes.A,"data/entities/animals/boss_alchemist/death.lua", [[SetRandomSeed( pw, 60 )]], [[
+	if not GameHasFlagRun("br_killed_animal_boss_alchemist") then
+		GameAddFlagRun("br_killed_animal_boss_alchemist")
+		CreateItemActionEntity("BR_REWARD_ALCHEMIST", x + 32, y)
+	end
+]])
+
+inject(args.SS,modes.A,"data/entities/animals/boss_alchemist/projectile_counter.xml", '<CellEaterComponent', ' ignored_material="boss_reworks_templebrick_indestructible"')
+print(ModTextFileGetContent("data/entities/animals/boss_alchemist/projectile_counter.xml"))

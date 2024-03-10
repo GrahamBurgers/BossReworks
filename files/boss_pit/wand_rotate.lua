@@ -12,3 +12,6 @@ else
     ComponentSetValue2(sprite, "has_special_scale", true)
 end
 EntitySetTransform(me, x, y, dir)
+if string.match(ComponentGetValue2(sprite, "image_file"), "^.+(%..+)$") ~= ".xml" then -- totally didn't have to look this up
+    EntityRefreshSprite(me, sprite)
+end

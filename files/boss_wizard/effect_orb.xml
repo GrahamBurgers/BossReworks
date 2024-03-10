@@ -1,4 +1,4 @@
-<Entity tags="br_effect_projectile" name="$projectile_default" >
+<Entity tags="br_effect_projectile,resist_repulsion" name="$projectile_default" >
 
 	<Base file="data/entities/base_projectile.xml" >
 		<VelocityComponent
@@ -6,6 +6,7 @@
 			air_friction="-0.1"
 			mass="0.05"
 			liquid_drag="0"
+			displace_liquid="0"
 			>
     	</VelocityComponent> 
 	</Base>

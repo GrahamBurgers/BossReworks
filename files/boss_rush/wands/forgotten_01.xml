@@ -8,23 +8,23 @@
 	<UIInfoComponent _tags="enabled_in_world" name="$item_wand"></UIInfoComponent>
 
 	<AbilityComponent
-        sprite_file="data/items_gfx/wands/wand_0154.png"
+        sprite_file="data/items_gfx/wands/wand_0015.png"
         ui_name="$item_wand"
         drop_as_item_on_death="0"
         use_gun_script="1"
 
-        add_these_child_actions="DECELERATING_SHOT,HOMING_CURSOR,BALL_LIGHTNING"
-		mana_charge_speed="180"
+        add_these_child_actions="LIFETIME,COLOUR_GREEN,SPEED,ELECTRIC_CHARGE,CHAINSAW,CHAINSAW,CHAINSAW"
+		mana_charge_speed="280"
 		mana_max="330"
         >
         <gun_config 
             shuffle_deck_when_empty="0"
-            reload_time="34"
-            deck_capacity="3"
-            actions_per_round="1"
+            reload_time="42"
+            deck_capacity="7"
+            actions_per_round="3"
         ></gun_config>
         <gunaction_config
-            spread_degrees="10"
+            spread_degrees="-10"
             fire_rate_wait="0"
             speed_multiplier="1"
         ></gunaction_config>

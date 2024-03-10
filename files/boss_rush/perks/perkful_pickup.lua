@@ -8,6 +8,6 @@ function item_pickup( entity_item, entity_who_picked, item_name )
         local entity = perk_spawn( x, y, id, true )
 	    perk_pickup( entity, entity_who_picked, id, false, false, false)
     end
-    EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_out.xml", 6270, 49940)
+    EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_out.xml", 6270, 49940 + 25)
     EntityKill(entity_item)
 end

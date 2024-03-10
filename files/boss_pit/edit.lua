@@ -19,14 +19,21 @@ for k, v in ipairs(tree.children) do
 		v.attr.execute_every_n_frame = "1"
 	end
 	if v.name == "DamageModelComponent" then
-		v.children[1].attr.projectile = 1
-		v.children[1].attr.explosion = 1
+		v.children[1].attr.projectile = 0.8
+		v.children[1].attr.explosion = 0.5
 		v.children[1].attr.holy = 0
 		-- v.attr.ragdoll_fx_forced = "NONE" -- causes issues with tentacle segments
 		v.attr.ragdoll_material = "meat_slime_green"
+		v.attr.blood_multiplier = "0.2"
 	end
 	if v.name == "HitboxComponent" then
 		v.attr.damage_multiplier = "1"
 	end
 end
 ModTextFileSetContent(path, tostring(tree))
+inject(args.SS,modes.P,"data/entities/animals/boss_pit/boss_pit_death.lua", 'if flag_status then', [[
+	if not GameHasFlagRun("br_killed_animal_boss_pit") then
+		GameAddFlagRun("br_killed_animal_boss_pit")
+		CreateItemActionEntity("BR_REWARD_SQUIDWARD", x, y)
+	end
+]])

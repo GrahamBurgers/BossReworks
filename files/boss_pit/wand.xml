@@ -1,4 +1,4 @@
-<Entity name="$projectile_default" >
+<Entity name="$projectile_default" tags="resist_repulsion" >
 
 	<Base file="data/entities/base_projectile.xml" >
 		<VelocityComponent
@@ -70,8 +70,36 @@
 		offset_x="16"
 		offset_y="16"
 		emissive="1"
+		z_index="3"
 		>
 	</SpriteComponent>
+
+	<ParticleEmitterComponent 
+		emitted_material_name="plasma_fading_pink"
+		offset.x="0"
+		offset.y="0"
+		gravity.y="0.0"
+		x_vel_min="-20"
+		x_vel_max="20"
+		y_vel_min="-20"
+		y_vel_max="20"
+		count_min="1"
+		count_max="1"
+		lifetime_min="0.65"
+		lifetime_max="1.2"
+		emit_real_particles="0"
+		render_on_grid="1"
+		airflow_force="0.3"
+		airflow_time="0.01"
+		airflow_scale="0.05"
+		emit_cosmetic_particles="1"
+		emission_interval_min_frames="1"
+		emission_interval_max_frames="2"
+		area_circle_radius.min="6"
+		area_circle_radius.max="8"
+		fade_based_on_lifetime="1"
+		is_emitting="1" >
+	</ParticleEmitterComponent>
 	
 	<LightComponent 
 		_enabled="1" 

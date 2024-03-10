@@ -1,0 +1,58 @@
+<Entity name="$projectile_default" tags="projectile,br_spellname_limbs">
+
+    <ProjectileComponent
+        lifetime="120"
+        collide_with_entities="0"
+        collide_with_world="0"
+        damage="0"
+        speed_min="0"
+        speed_max="0"
+        on_death_gfx_leave_sprite="0"
+        ground_collision_fx="0"
+        on_collision_spawn_entity="0"
+        play_damage_sounds="0"
+    ></ProjectileComponent>
+
+    <LuaComponent
+        script_source_file="mods/boss_reworks/files/spells/reward_limbs.lua"
+        execute_on_added="1"
+    ></LuaComponent>
+
+    <ParticleEmitterComponent
+        cosmetic_force_create="1"
+        count_min="1"
+        count_max="3"
+        custom_alpha="0.4"
+        draw_as_long="1"
+        emission_interval_min_frames="2"
+        emission_interval_max_frames="5"
+        emit_cosmetic_particles="1"
+        emit_only_if_there_is_space="0"
+        emit_real_particles="0"
+        emitted_material_name="spark_green"
+        fade_based_on_lifetime="1"
+        fire_cells_dont_ignite_damagemodel="0"
+        gravity.x="0"
+        gravity.y="0"
+        is_emitting="1"
+        is_trail="0"
+        lifetime_min="3"
+        lifetime_max="4"
+        particle_single_width="1"
+        render_back="0"
+        x_pos_offset_min="-3"
+        x_pos_offset_max="3"
+        x_vel_min="-2"
+        x_vel_max="2"
+        y_pos_offset_min="-6"
+        y_pos_offset_max="6"
+        y_vel_min="-2"
+        y_vel_max="2"
+    ></ParticleEmitterComponent>
+
+	<VariableStorageComponent
+		name="projectile_file"
+		value_string="mods/boss_reworks/files/spells/reward_limbs.xml"
+	></VariableStorageComponent>
+
+</Entity>

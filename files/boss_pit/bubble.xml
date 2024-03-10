@@ -5,6 +5,7 @@
 			gravity_y="0"
 			air_friction="1.0"
 			mass="0.02"
+      displace_liquid="0"
 			>
 		</VelocityComponent>
 	</Base>
@@ -22,12 +23,12 @@
     on_lifetime_out_explode="1"
     explosion_dont_damage_shooter="1"
     on_collision_die="1"
-    lifetime="300"
-    damage="0.2"
+    lifetime="400"
+    damage="0.32"
     bounce_always="1"
     bounces_left="20"
     bounce_energy="0.5"
-    velocity_sets_scale="1"
+    velocity_sets_scale="0"
     lifetime_randomness="0"
     ragdoll_force_multiplier="0.01"
     hit_particle_force_multiplier="0.1"
@@ -38,15 +39,17 @@
     shoot_light_flash_g="190"
     shoot_light_flash_b="255"
     knockback_force="0.5"
-    physics_impulse_coeff="2000"
+    physics_impulse_coeff="0"
+    damage_game_effect_entities="data/entities/misc/effect_movement_slower_ui.xml,"
 	>
     <config_explosion
       never_cache="1" 
       damage="0"
       camera_shake="0" 
       explosion_radius="4" 
-      explosion_sprite="data/particles/background_cleaner_explosion.xml" 
+      explosion_sprite="data/particles/explosion_008_pink.xml" 
       explosion_sprite_lifetime="0" 
+      explosion_sprite_emissive="1" 
       create_cell_probability="0" 
       hole_destroy_liquid="1" 
       hole_enabled="1" 
@@ -70,14 +73,12 @@
   <SpriteComponent 
     _enabled="1" 
     alpha="1" 
-    image_file="data/projectiles_gfx/background_cleaner.xml" 
+    image_file="mods/boss_reworks/files/boss_pit/bubble_anim.xml" 
     next_rect_animation=""
     rect_animation="fireball" 
     emissive="1"
     additive="1"
-
-    >
-  </SpriteComponent>
+  ></SpriteComponent>
 
   <LuaComponent
     script_source_file="mods/boss_reworks/files/boss_pit/bubble.lua"

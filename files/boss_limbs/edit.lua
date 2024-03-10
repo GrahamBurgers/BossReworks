@@ -1,6 +1,7 @@
 dofile("mods/boss_reworks/files/lib/injection.lua")
 local nxml = dofile("mods/boss_reworks/files/lib/nxml.lua")
 
+inject(args.SS, modes.R, "data/entities/animals/boss_limbs/body.xml", "hurt", "") -- hurt animation is problematic so remove it
 inject(args.SS, modes.R, "data/entities/animals/boss_limbs/boss_limbs_update.lua", ">= 2", ">= 7") -- 7 minion is enough
 inject(args.SS, modes.P, "data/entities/animals/boss_limbs/boss_limbs_update.lua", "local slime",
 	"\nfor i = 1,2 do x = x + Random(-5,5)\ny = y + Random(-5,5)\n")                               
@@ -71,7 +72,7 @@ ModTextFileSetContent("data/entities/animals/boss_limbs/slimeshooter_boss_limbs.
 tree = nxml.parse(ModTextFileGetContent("data/entities/animals/boss_limbs/boss_limbs.xml"))
 tree.attr.tags = tree.attr.tags .. ",boss_limbs"
 table.insert(tree.children,
-	nxml.parse('<LuaComponent execute_every_n_frame="240" script_source_file="mods/boss_reworks/files/boss_limbs/eat_minion.lua">'))
+	nxml.parse('<LuaComponent execute_every_n_frame="320" script_source_file="mods/boss_reworks/files/boss_limbs/eat_minion.lua">'))
 table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_armor_init.lua"> </LuaComponent>'))
 table.insert(tree.children,
@@ -85,3 +86,11 @@ ModTextFileSetContent("data/entities/animals/boss_limbs/boss_limbs.xml", tostrin
 
 inject(args.SS,modes.R,"data/entities/animals/boss_limbs/slime_boss_limbs.xml", 'speed_min="150"', 'speed_min="80"')
 inject(args.SS,modes.R,"data/entities/animals/boss_limbs/slime_boss_limbs.xml", 'speed_max="155"', 'speed_max="80"')
+
+-- DROPS
+inject(args.SS,modes.R,"data/entities/animals/boss_limbs/boss_limbs_death.lua", 'EntityLoad( "data/entities/items/wand_unshuffle_04.xml", pos_x, pos_y )', [[
+	if not GameHasFlagRun("br_killed_animal_boss_limbs") then
+		GameAddFlagRun("br_killed_animal_boss_limbs")
+		EntityLoad( "mods/boss_reworks/files/boss_limbs/wand_reward.xml", pos_x, pos_y )
+	end
+]])

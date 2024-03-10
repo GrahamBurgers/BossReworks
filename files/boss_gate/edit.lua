@@ -30,3 +30,12 @@ for k, v in ipairs(tree.children) do
 	end
 end
 ModTextFileSetContent(path, tostring(tree))
+inject(args.SS,modes.A,"data/entities/animals/boss_gate/gate_monster_death.lua", [[AddFlagPersistent( "miniboss_gate_monsters" )]], [[
+	if not GameHasFlagRun("br_killed_animal_gate_monster_a") then
+		GameAddFlagRun("br_killed_animal_gate_monster_a")
+		GameAddFlagRun("br_killed_animal_gate_monster_b")
+		GameAddFlagRun("br_killed_animal_gate_monster_c")
+		GameAddFlagRun("br_killed_animal_gate_monster_d")
+		CreateItemActionEntity("BR_REWARD_GATE", pos_x + 16, pos_y)
+	end
+]])
