@@ -1,5 +1,5 @@
 dofile_once("mods/boss_reworks/files/lib/injection.lua")
-local list = {"dragon", "gate", "limbs", "fish", "alchemist", "ghost", "robot", "wizard", "pit", "tiny"}
+local list = { "dragon", "gate", "limbs", "fish", "alchemist", "ghost", "robot", "wizard", "pit", "tiny" }
 for i = 1, #list do
 	if ModSettingGet("boss_reworks.rework_" .. list[i]) then
 		dofile_once("mods/boss_reworks/files/boss_" .. list[i] .. "/edit.lua")
@@ -7,13 +7,13 @@ for i = 1, #list do
 end
 ModMaterialsFileAdd("mods/boss_reworks/files/materials.xml")
 ModLuaFileAppend("data/scripts/gun/gun_actions.lua", "mods/boss_reworks/files/spells/actions.lua")
-inject(args.SS,modes.R,"data/entities/items/pickup/test/pouch.xml", 'item_physics', 'item_physics,br_pouch')
-inject(args.SS,modes.R,"data/entities/items/pickup/powder_stash.xml", 'item_physics', 'item_physics,br_pouch')
-inject(args.SS,modes.R,"data/entities/items/orbs/orb_base.xml", 'polymorphable_NOT', 'polymorphable_NOT,br_orb')
-inject(args.SS,modes.R,"data/entities/animals/longleg.xml", '<Entity', '<Entity tags="br_hamis"')
-inject(args.SS,modes.R,"data/entities/items/pickup/musicstone.xml", 'moon_energy', 'moon_energy,br_musicstone')
-inject(args.SS,modes.R,"data/entities/items/pickup/moon.xml", 'moon_energy', 'moon_energy,br_moon')
-inject(args.SS,modes.R,"data/entities/items/pickup/wandstone.xml", 'item_pickup', 'item_pickup,br_wandcore')
+inject(args.SS, modes.R, "data/entities/items/pickup/test/pouch.xml", 'item_physics', 'item_physics,br_pouch')
+inject(args.SS, modes.R, "data/entities/items/pickup/powder_stash.xml", 'item_physics', 'item_physics,br_pouch')
+inject(args.SS, modes.R, "data/entities/items/orbs/orb_base.xml", 'polymorphable_NOT', 'polymorphable_NOT,br_orb')
+inject(args.SS, modes.R, "data/entities/animals/longleg.xml", '<Entity', '<Entity tags="br_hamis"')
+inject(args.SS, modes.R, "data/entities/items/pickup/musicstone.xml", 'moon_energy', 'moon_energy,br_musicstone')
+inject(args.SS, modes.R, "data/entities/items/pickup/moon.xml", 'moon_energy', 'moon_energy,br_moon')
+inject(args.SS, modes.R, "data/entities/items/pickup/wandstone.xml", 'item_pickup', 'item_pickup,br_wandcore')
 
 local translations = ModTextFileGetContent("data/translations/common.csv")
 local new_translations = ModTextFileGetContent("mods/boss_reworks/translations.csv")
@@ -57,34 +57,32 @@ function OnWorldPreUpdate()
 		GlobalsSetValue("BR_WORM_SCORE", score)
 
 		local screen_w, screen_h = GuiGetScreenDimensions(Gui)
-		local bar = "mods/boss_reworks/files/spells/tiny/combo_bar.png"
-		local frame = "mods/boss_reworks/files/spells/tiny/combo_frame.png"
-		local frame_w, frame_h = GuiGetImageDimensions(Gui, frame)
-		local sframe = "mods/boss_reworks/files/spells/tiny/score_frame.png"
+		local combo_bar = "mods/boss_reworks/files/spells/tiny/combo_bar.png"
+		local combo_box = "mods/boss_reworks/files/spells/tiny/combo_frame.png"
+		local box_w, box_h = GuiGetImageDimensions(Gui, combo_box)
+		local score_box = "mods/boss_reworks/files/spells/tiny/score_frame.png"
 		local num_w, num_h = GuiGetImageDimensions(Gui, "mods/boss_reworks/files/spells/tiny/score_dummy.png")
 
-		-- combo bar
-		GuiOptionsAddForNextWidget(Gui, 2) -- Make non interactive
+		local x, y = screen_w / 2 - box_w / 2, screen_h / 8 - box_h / 2
+		local box_offset = 3 / 4 * box_w
+
+		GuiOptionsAdd(Gui, 2) -- Make non interactive
 		GuiZSetForNextWidget(Gui, -1001)
-		GuiImage(Gui, 1, (screen_w - frame_w) / 2.3, screen_h / 8 - frame_h / 2, bar, 1, frame_w * math.max(0, (amount / max)), 1)
+		GuiImage(Gui, 1, x - box_offset, y, combo_bar, 1, box_w * math.max(0, (amount / max)), 1)
 
-		-- combo frame
-		GuiOptionsAddForNextWidget(Gui, 2) -- Make non interactive
 		GuiZSetForNextWidget(Gui, -1002)
-		GuiImage(Gui, 2, (screen_w - frame_w) / 2.3, screen_h / 8 - frame_h / 2, frame, 1, 1, 1)
+		GuiImage(Gui, 2, x - box_offset, y, combo_box, 1, 1, 1)
 
-		-- score frame
-		GuiOptionsAddForNextWidget(Gui, 2) -- Make non interactive
 		GuiZSetForNextWidget(Gui, -1002)
-		GuiImage(Gui, 3, (screen_w - frame_w) / 1.7, screen_h / 8 - frame_h / 2, sframe, 1, 1, 1)
+		GuiImage(Gui, 3, x + box_offset, y, score_box, 1, 1, 1)
 
 		local length = string.len(score)
+		GuiZSet(Gui, -1003)
+		print(score)
 		for i = 1, length do
-			GuiOptionsAddForNextWidget(Gui, 2) -- Make non interactive
-			GuiZSetForNextWidget(Gui, -1003)
-			local width_offset = 0 -- NATHAN HELP WAAAAAH
-			local thing = "mods/boss_reworks/files/spells/tiny/score_" .. string.sub(score, i, i) .. ".png"
-			GuiImage(Gui, 3 + i, ((screen_w - frame_w) / 1.7) + width_offset + i * num_w, screen_h / 8 - frame_h / 2, thing, 1, 1)
+			local number_sprite = "mods/boss_reworks/files/spells/tiny/score_" .. string.sub(score, i, i) .. ".png"
+			GuiImage(Gui, 3 + i, x + box_offset - length * num_w / 2 + (i - 1) * num_w + num_w / 2, y, number_sprite, 1, 1)
+			--  + (i - 1) * num_w - num_w * length - num_w / 2
 		end
 
 		GuiIdPop(Gui)
@@ -94,8 +92,8 @@ function OnWorldPreUpdate()
 			if not EntityHasTag(enemies[i], "br_worm_combo_added") then
 				EntityAddTag(enemies[i], "br_worm_combo_added")
 				EntityAddComponent2(enemies[i], "LuaComponent", {
-					execute_every_n_frame=-1,
-					script_death="mods/boss_reworks/files/spells/tiny/combo_death.lua"
+					execute_every_n_frame = -1,
+					script_death = "mods/boss_reworks/files/spells/tiny/combo_death.lua"
 				})
 			end
 		end
@@ -120,7 +118,8 @@ function OnWorldPreUpdate()
 		end
 		GlobalsSetValue("BR_BOSS_RUSH_HP_TWEEN", tostring(thing))
 
-		local text = math.floor(0.5 + math.max(0, amount)) / multiplier .. " / " .. math.floor(0.5 + math.max(0, max)) / multiplier
+		local text = math.floor(0.5 + math.max(0, amount)) / multiplier ..
+			" / " .. math.floor(0.5 + math.max(0, max)) / multiplier
 		local screen_w, screen_h = GuiGetScreenDimensions(Gui)
 		local text_w, text_h = GuiGetTextDimensions(Gui, text)
 		local bar = "mods/boss_reworks/files/boss_rush/health_bar.png"
@@ -155,8 +154,8 @@ function OnWorldPreUpdate()
 		local players = EntityGetWithTag("player_unit") or {}
 		for i = 1, #players do
 			-- disable % based damage effects since those use the player's real HP
-			local comp = GameGetGameEffect( players[i], "POISON" )
-			local comp2 = GameGetGameEffect( players[i], "RADIOACTIVE" )
+			local comp = GameGetGameEffect(players[i], "POISON")
+			local comp2 = GameGetGameEffect(players[i], "RADIOACTIVE")
 			local comp3 = EntityGetFirstComponent(players[i], "DamageModelComponent")
 			if comp and comp ~= 0 then
 				ComponentSetValue2(comp, "effect", "NONE")
@@ -178,8 +177,8 @@ function OnWorldPreUpdate()
 		local poly = EntityGetWithTag("polymorphed_player") or {}
 		for i = 1, #poly do
 			local comp_poly = GameGetGameEffect(poly[i], "POLYMORPH")
-			if( comp_poly == 0 or comp_poly == nil ) then comp_poly = GameGetGameEffect(poly[i], "POLYMORPH_RANDOM") end
-			if( comp_poly == 0 or comp_poly == nil ) then comp_poly = GameGetGameEffect(poly[i], "POLYMORPH_UNSTABLE") end
+			if (comp_poly == 0 or comp_poly == nil) then comp_poly = GameGetGameEffect(poly[i], "POLYMORPH_RANDOM") end
+			if (comp_poly == 0 or comp_poly == nil) then comp_poly = GameGetGameEffect(poly[i], "POLYMORPH_UNSTABLE") end
 
 			-- forever polymorph!
 			if comp_poly then
