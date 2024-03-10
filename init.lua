@@ -78,7 +78,6 @@ function OnWorldPreUpdate()
 
 		local length = string.len(score)
 		GuiZSet(Gui, -1003)
-		print(score)
 		for i = 1, length do
 			local number_sprite = "mods/boss_reworks/files/spells/tiny/score_" .. string.sub(score, i, i) .. ".png"
 			GuiImage(Gui, 3 + i, x + box_offset - length * num_w / 2 + (i - 1) * num_w + num_w / 2, y, number_sprite, 1, 1)
