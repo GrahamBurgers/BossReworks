@@ -1,0 +1,30 @@
+<Entity tags="br_spellname_tiny">
+
+    <InheritTransformComponent>
+    </InheritTransformComponent>
+
+    <LuaComponent
+        script_source_file="mods/boss_reworks/files/spells/tiny/buff.lua"
+    ></LuaComponent>
+
+	<UIIconComponent
+		name="$br_wormpoints_statusname"
+		description="$br_wormpoints_statusdesc"
+		icon_sprite_file="mods/boss_reworks/files/spells/tiny/buff.png"
+		is_perk="0"
+		display_above_head="0"
+		display_in_hud="1"
+		>
+	</UIIconComponent>
+
+    <GameEffectComponent
+        effect="MANA_REGENERATION"
+        frames="-1"
+    ></GameEffectComponent>
+
+    <GameEffectComponent
+        effect="NO_SLIME_SLOWDOWN"
+        frames="-1"
+    ></GameEffectComponent>
+
+</Entity>

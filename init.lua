@@ -96,6 +96,26 @@ function OnWorldPreUpdate()
 				})
 			end
 		end
+	elseif #EntityGetWithTag("player_unit") > 0 then
+		local score = math.floor(tonumber(GlobalsGetValue("BR_WORM_SCORE", "0")) or 0)
+		if score ~= 0 then
+			local players = EntityGetWithTag("player_unit")
+			local converted = math.max(0, math.floor(math.log((score + 4000) / 5000) * 1000))
+			GamePrintImportant(GameTextGet("$br_wormpoints_end_1", tostring(score)), GameTextGet("$br_wormpoints_end_2", tostring(converted)))
+			GlobalsSetValue("BR_WORM_SCORE", "0")
+			local existing = EntityGetWithTag("br_spellname_tiny") or {}
+			for j = 1, #existing do
+				EntityKill(existing[j])
+			end
+			for j = 1, #players do
+				local eid = EntityLoad("mods/boss_reworks/files/spells/tiny/buff.xml")
+				local comps = EntityGetComponent(eid, "GameEffectComponent") or {}
+				for i = 1, #comps do
+					ComponentSetValue2(comps[i], "frames", converted * 60)
+				end
+				EntityAddChild(players[j], eid)
+			end
+		end
 	end
 	if GlobalsGetValue("BR_BOSS_RUSH_ACTIVE", "0") == "1" then
 		-- i stole this code from lap 2 and modified it
