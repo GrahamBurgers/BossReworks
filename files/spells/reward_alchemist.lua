@@ -67,6 +67,7 @@ if #valid > 0 then
         end
         if insert then new_statuses[#new_statuses+1] = statuses[i] end
     end
+    SetRandomSeed(GameGetFrameNum() + entity, 203458 + frames + GameGetFrameNum())
     local choice = new_statuses[Random(1, #new_statuses)]
     local effect = EntityCreateNew()
     EntityAddTag(effect, "alchemist_soul")
