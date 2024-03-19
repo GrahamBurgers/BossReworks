@@ -1,24 +1,30 @@
 local x, y = EntityGetTransform(GetUpdatedEntityID())
 local mine = EntityGetFirstComponent(GetUpdatedEntityID(), "VelocityComponent")
-if not mine then return end
+local proj = EntityGetFirstComponent(GetUpdatedEntityID(), "ProjectileComponent")
+if not mine or not proj then return end
+local boss = ComponentGetValue2(proj, "mWhoShot")
+local x2 = ComponentGetValue2(proj, "ragdoll_force_multiplier")
+local y2 = ComponentGetValue2(proj, "hit_particle_force_multiplier")
+local bx, by = EntityGetTransform(boss)
 local xv, yv = ComponentGetValue2(mine, "mVelocity")
-local xold, yold = ComponentGetValue2(mine, "mPrevPosition")
-EntitySetTransform(GetUpdatedEntityID(), xold, yold)
+if bx and by then EntitySetTransform(GetUpdatedEntityID(), bx + x2, by + y2) end
 xv = xv * -1
 yv = yv * -1
+local tick = ComponentGetValue2(GetUpdatedComponentID(), "mTimesExecuted")
+if tick <= 12 then return end
+
 local entities = EntityGetInRadiusWithTag(x, y, 16, "hittable") or {}
 local projectiles = EntityGetInRadiusWithTag(x, y, 16, "projectile") or {}
 for i = 1, #entities do
-    if EntityGetName(entities[i]) ~= "boss_reworks_succ" then
-        local velco = EntityGetFirstComponent(entities[i], "CharacterDataComponent")
-        if velco then
-            local x3, y3 = ComponentGetValue2(velco, "mVelocity")
-            ComponentSetValue2(velco, "mVelocity", x3 + xv, y3 + yv)
-        end
+    local velco = EntityGetFirstComponent(entities[i], "CharacterDataComponent")
+    if velco then
+        local x3, y3 = ComponentGetValue2(velco, "mVelocity")
+        ComponentSetValue2(velco, "mVelocity", x3 + xv, y3 + yv)
     end
 end
 for i = 1, #projectiles do
-    if EntityGetName(projectiles[i]) ~= "boss_reworks_succ" then
+    local proj2 = EntityGetFirstComponent(projectiles[i], "ProjectileComponent")
+    if proj2 and ComponentGetValue2(proj2, "mWhoShot") ~= boss then
         local velco = EntityGetFirstComponent(projectiles[i], "VelocityComponent")
         if velco then
             local x3, y3 = ComponentGetValue2(velco, "mVelocity")
@@ -34,10 +40,9 @@ function calculate_force_for_body( entity, body_mass, body_x, body_y, body_vel_x
 end
 PhysicsApplyForceOnArea(calculate_force_for_body, GetUpdatedEntityID(), x - 10, y - 10, x + 10, y + 10)
 
-local tick = ComponentGetValue2(GetUpdatedComponentID(), "mTimesExecuted")
-if tick == 180 then
+if tick == 200 then
     EntityAddComponent2(GetUpdatedEntityID(), "LifetimeComponent", {
-        lifetime=40,
+        lifetime=20,
         fade_sprites=true,
     })
 end

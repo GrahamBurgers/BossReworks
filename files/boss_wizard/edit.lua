@@ -91,3 +91,12 @@ inject(args.SS,modes.A,"data/entities/animals/boss_wizard/wizard_nullify.lua", '
 		end
 	end
 ]])
+
+inject(args.SS,modes.A,"data/entities/animals/boss_wizard/death.lua", [[AddFlagPersistent( "miniboss_wizard" )]], [[
+
+	if not GameHasFlagRun("br_killed_animal_boss_wizard") then
+		GameAddFlagRun("br_killed_animal_boss_wizard")
+		CreateItemActionEntity("BR_REWARD_MASTER", x + 4, y)
+	end
+]])
+print(ModTextFileGetContent("data/entities/animals/boss_wizard/death.lua"))

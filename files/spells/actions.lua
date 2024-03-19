@@ -53,6 +53,7 @@ local to_insert = {
 		mana                = 5,
 		spawn_requires_flag = "br_dummy_flag",
 		max_uses            = -1,
+		custom_xml_file     = "mods/boss_reworks/files/spells/cards/limbs.xml",
 		action              = function()
 			add_projectile("mods/boss_reworks/files/spells/reward_limbs.xml")
 		end,
@@ -70,6 +71,7 @@ local to_insert = {
 		mana                = 5,
 		spawn_requires_flag = "br_dummy_flag",
 		max_uses            = -1,
+		custom_xml_file     = "mods/boss_reworks/files/spells/cards/forgotten.xml",
 		action              = function()
 			add_projectile("mods/boss_reworks/files/spells/reward_forgotten.xml")
 		end,
@@ -87,6 +89,7 @@ local to_insert = {
 		mana                = 5,
 		spawn_requires_flag = "br_dummy_flag",
 		max_uses            = -1,
+		custom_xml_file     = "mods/boss_reworks/files/spells/cards/squidward.xml",
 		action              = function()
 			add_projectile("mods/boss_reworks/files/spells/reward_squidward.xml")
 		end,
@@ -104,6 +107,7 @@ local to_insert = {
 		mana                = 5,
 		spawn_requires_flag = "br_dummy_flag",
 		max_uses            = -1,
+		custom_xml_file     = "mods/boss_reworks/files/spells/cards/dragon.xml",
 		action              = function()
 			add_projectile("mods/boss_reworks/files/spells/reward_dragon.xml")
 		end,
@@ -121,6 +125,7 @@ local to_insert = {
 		mana                = 5,
 		spawn_requires_flag = "br_dummy_flag",
 		max_uses            = -1,
+		custom_xml_file     = "mods/boss_reworks/files/spells/cards/gate.xml",
 		action              = function()
 			add_projectile("mods/boss_reworks/files/spells/reward_gate.xml")
 		end,
@@ -138,6 +143,7 @@ local to_insert = {
 		mana                = 5,
 		spawn_requires_flag = "br_dummy_flag",
 		max_uses            = -1,
+		custom_xml_file     = "mods/boss_reworks/files/spells/cards/alchemist.xml",
 		action              = function()
 			add_projectile("mods/boss_reworks/files/spells/reward_alchemist.xml")
 		end,
@@ -155,6 +161,7 @@ local to_insert = {
 		mana                = 5,
 		spawn_requires_flag = "br_dummy_flag",
 		max_uses            = -1,
+		custom_xml_file     = "mods/boss_reworks/files/spells/cards/tiny.xml",
 		action              = function()
 			add_projectile("mods/boss_reworks/files/spells/reward_tiny.xml")
 		end,
@@ -172,6 +179,7 @@ local to_insert = {
 		mana                = 5,
 		spawn_requires_flag = "br_dummy_flag",
 		max_uses            = -1,
+		custom_xml_file     = "mods/boss_reworks/files/spells/cards/master.xml",
 		action              = function()
 			add_projectile("mods/boss_reworks/files/spells/reward_master.xml")
 		end,

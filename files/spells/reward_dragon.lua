@@ -38,7 +38,7 @@ for i = 1, #targets do
 end
 table.remove(valid, #valid) -- hax?
 local amount = 5 + (math.floor(#vscs / 5) * 2)
-if #valid > 0 then
+if #valid > 0 and string.len(valid[1][3]) > 0 then
     EntityConvertToMaterial(valid[1][1], "spark_white_bright")
     EntityKill(valid[1][1])
     EntityAddComponent2(child, "VariableStorageComponent", {
