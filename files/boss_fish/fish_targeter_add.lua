@@ -1,3 +1,10 @@
+local damagemodel = EntityGetFirstComponent(GetUpdatedEntityID(), "DamageModelComponent")
+if damagemodel then
+    local max_hp = ComponentGetValue2(damagemodel, "max_hp")
+    local hp = ComponentGetValue2(damagemodel, "hp")
+    if hp >= max_hp then return end
+end
+
 local x, y = EntityGetTransform(GetUpdatedEntityID())
 y = y + 35
 if not (#EntityGetInRadiusWithTag(x, y, 200, "player_unit") > 0 or #EntityGetInRadiusWithTag(x, y, 200, "polymorphed_player") > 0) then return end

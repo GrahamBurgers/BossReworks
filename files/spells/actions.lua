@@ -184,6 +184,24 @@ local to_insert = {
 			add_projectile("mods/boss_reworks/files/spells/reward_master.xml")
 		end,
 	},
+	{
+		id                  = "BR_REWARD_LEVI",
+		name                = "$br_spellname_leviathan",
+		description         = "$br_spelldesc_leviathan",
+		sprite              = "mods/boss_reworks/files/spells/reward_levi.png",
+		related_projectiles = {"mods/boss_reworks/files/spells/reward_levi.xml"},
+		type                = ACTION_TYPE_UTILITY,
+		spawn_level         = "10",
+		spawn_probability   = "0",
+		price               = 80,
+		mana                = 5,
+		spawn_requires_flag = "br_dummy_flag",
+		max_uses            = -1,
+		custom_xml_file     = "mods/boss_reworks/files/spells/cards/levi.xml",
+		action              = function()
+			add_projectile("mods/boss_reworks/files/spells/reward_levi.xml")
+		end,
+	},
 }
 
 local len = #actions

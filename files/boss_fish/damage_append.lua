@@ -2,7 +2,7 @@ damage_received_but_cooler = damage_received
 
 function damage_received( damage, desc, entity_who_caused, is_fatal )
     local damagemodel = EntityGetFirstComponent(GetUpdatedEntityID(), "DamageModelComponent")
-    if damagemodel then
+    if damagemodel and damage > 0 then
         local max_hp = ComponentGetValue2(damagemodel, "max_hp")
         local hp = ComponentGetValue2(damagemodel, "hp")
         local threshold = 150

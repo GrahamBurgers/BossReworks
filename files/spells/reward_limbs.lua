@@ -10,7 +10,7 @@ if comp and proj and platforming then
     local x, y = EntityGetTransform(who)
     local xv, yv = ComponentGetValue2(comp, "mVelocity")
     ComponentSetValue2(comp, "mVelocity", xv, gravity)
-    EntitySetTransform(GetUpdatedEntityID(), x, y - 3.5)
+    EntitySetTransform(GetUpdatedEntityID(), x, y)
 end
 local toggle = ComponentGetValue2(GetUpdatedComponentID(), "mTimesExecuted")
 if toggle == 1 then

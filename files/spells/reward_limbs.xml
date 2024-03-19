@@ -44,8 +44,8 @@
         x_pos_offset_max="3"
         x_vel_min="-2"
         x_vel_max="2"
-        y_pos_offset_min="-6"
-        y_pos_offset_max="6"
+        y_pos_offset_min="-9.5"
+        y_pos_offset_max="2.5"
         y_vel_min="-2"
         y_vel_max="2"
     ></ParticleEmitterComponent>

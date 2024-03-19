@@ -50,7 +50,7 @@ if #valid >= 1 and #Actions > 0 then
         local which = 0
         for i = 1, #pool do
             for j = 1, #Actions do
-                if not (Actions[j].spawn_requires_flag and not HasFlagPersistent(Actions[j].spawn_requires_flag)) then
+                if Actions[j].id == pool[i] and not (Actions[j].spawn_requires_flag and not HasFlagPersistent(Actions[j].spawn_requires_flag)) then
                     new_pool[#new_pool+1] = pool[i]
                     if pool[i] == id then
                         which = #new_pool
@@ -59,7 +59,7 @@ if #valid >= 1 and #Actions > 0 then
                 end
             end
         end
-        if #new_pool > 0 then
+        if #new_pool > 1 then
             local x2, y2 = EntityGetTransform(entity)
             bonk = false
             EntityKill(entity)

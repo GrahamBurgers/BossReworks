@@ -1,6 +1,15 @@
 local eye = EntityGetAllChildren(GetUpdatedEntityID())[1]
 local varsto = EntityGetFirstComponent(eye, "VariableStorageComponent")
 if not varsto then return end
+
+local damagemodel = EntityGetFirstComponent(GetUpdatedEntityID(), "DamageModelComponent")
+if damagemodel then
+    local max_hp = ComponentGetValue2(damagemodel, "max_hp")
+    local hp = ComponentGetValue2(damagemodel, "hp")
+    if hp >= max_hp then
+		ComponentSetValue2(varsto, "value_int", 180)
+	end
+end
 local timer = ComponentGetValue2(varsto, "value_int")
 local particles = EntityGetFirstComponentIncludingDisabled(eye, "ParticleEmitterComponent")
 if not particles then
