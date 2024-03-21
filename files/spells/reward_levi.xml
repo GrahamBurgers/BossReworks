@@ -9,10 +9,12 @@
 		affect_physics_bodies="1"
     ></VelocityComponent>
 
+    <!--
 	<LuaComponent
 		script_source_file="data/scripts/projectiles/homing_cursor.lua"
 		execute_every_n_frame="1"
 	></LuaComponent>
+    -->
     
     <ProjectileComponent
         lifetime="300"

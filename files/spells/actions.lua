@@ -202,6 +202,30 @@ local to_insert = {
 			add_projectile("mods/boss_reworks/files/spells/reward_levi.xml")
 		end,
 	},
+	{
+		id                  = "BR_REWARD_ROBOT",
+		name                = "$br_spellname_robot",
+		description         = "$br_spelldesc_robot",
+		sprite              = "mods/boss_reworks/files/spells/reward_robot.png",
+		type                = ACTION_TYPE_UTILITY,
+		spawn_level         = "10",
+		spawn_probability   = "0",
+		price               = 80,
+		mana                = 5,
+		spawn_requires_flag = "br_dummy_flag",
+		max_uses            = -1,
+		custom_xml_file     = "mods/boss_reworks/files/spells/cards/robot.xml",
+		action              = function()
+			if reflecting then return end
+			local construction = EntityGetWithTag("br_construction")
+			for i = 1, #construction do
+				if #(EntityGetAllChildren(construction[i]) or {}) <= 0 then
+					local child = EntityLoad("mods/boss_reworks/files/spells/robot/emitter_child.xml")
+					EntityAddChild(construction[i], child)
+				end
+			end
+		end,
+	},
 }
 
 local len = #actions

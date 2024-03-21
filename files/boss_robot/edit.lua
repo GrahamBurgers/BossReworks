@@ -29,3 +29,14 @@ ModTextFileSetContent(path, tostring(tree))
 inject(args.SS,modes.R,"data/entities/animals/boss_robot/rocket.xml", 'fire="2.2"', 'fire="0"')
 inject(args.SS,modes.R,"data/entities/animals/boss_robot/rocket.xml", 'lifetime="100"', 'lifetime="60"')
 inject(args.SS,modes.R,"data/entities/animals/boss_robot/rocket.xml", 'damage="6"', 'damage="1"')
+
+path = "data/entities/items/pickup/wandstone.xml"
+tree = nxml.parse(ModTextFileGetContent(path))
+for k, v in ipairs(tree.children) do
+	if v.name == "GameEffectComponent" then
+		if v.attr.effect == "EDIT_WANDS_EVERYWHERE" then
+			v.attr._tags = v.attr._tags .. ",enabled_in_inventory"
+		end
+	end
+end
+ModTextFileSetContent(path, tostring(tree))

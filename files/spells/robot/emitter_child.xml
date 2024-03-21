@@ -1,0 +1,10 @@
+<Entity>
+
+    <LifetimeComponent
+        lifetime="40"
+    ></LifetimeComponent>
+
+	<InheritTransformComponent>
+	</InheritTransformComponent>
+
+</Entity>

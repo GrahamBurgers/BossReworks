@@ -35,3 +35,10 @@ content = content:gsub("liquid_drag=\"0\"", "liquid_drag=\"-0.05\"")
 ModTextFileSetContent(path, content)
 
 ModLuaFileAppend("data/entities/animals/boss_fish/damage.lua", "mods/boss_reworks/files/boss_fish/damage_append.lua")
+
+inject(args.SS,modes.A,"data/entities/animals/boss_fish/death.lua", [[AddFlagPersistent( "miniboss_fish" )]], [[
+	if not GameHasFlagRun("br_killed_animal_fish_giga") then
+		GameAddFlagRun("br_killed_animal_fish_giga")
+		CreateItemActionEntity("BR_REWARD_LEVI", x, y + 64)
+	end
+]])
