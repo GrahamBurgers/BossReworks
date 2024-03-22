@@ -1,10 +1,15 @@
 <Entity>
 
-    <LifetimeComponent
-        lifetime="40"
-    ></LifetimeComponent>
+    <LuaComponent
+        _tags="enabled_in_world,enabled_in_hand,enabled_in_inventory"
+        script_source_file="mods/boss_reworks/files/spells/robot/emitter_child.lua"
+        execute_every_n_frame="35"
+    ></LuaComponent>
 
-	<InheritTransformComponent>
-	</InheritTransformComponent>
+    <LifetimeComponent
+        _enabled="0"
+        _tags="enabled_in_inventory"
+        lifetime="1"
+    ></LifetimeComponent>
 
 </Entity>

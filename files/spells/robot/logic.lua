@@ -23,6 +23,7 @@ end
 
 local function the_other_one(who, image)
     return EntityAddComponent2(who, "ParticleEmitterComponent", {
+        _tags="enabled_in_world,enabled_in_hand,enabled_in_inventory",
         image_animation_file=image,
         emitted_material_name="steel_static",
         create_real_particles=true,
@@ -73,23 +74,32 @@ local function hax_add_the_comps(who, image)
     ComponentSetValue2(c, "gravity", 0, 0)
 
     c = aargh(who, image)
-    ComponentSetValue2(c, "offset", -0.2, -0.17)
+    ComponentSetValue2(c, "offset", -0.1, 0.2)
     ComponentSetValue2(c, "gravity", 0, 0)
 
     c = aargh(who, image)
-    ComponentSetValue2(c, "offset", 0.2, -0.17)
+    ComponentSetValue2(c, "offset", 0.3, 0.2)
     ComponentSetValue2(c, "gravity", 0, 0)
 
     c = aargh(who, image)
-    ComponentSetValue2(c, "offset", -0.2, 0.23)
+    ComponentSetValue2(c, "offset", -0.1, 0.25)
     ComponentSetValue2(c, "gravity", 0, 0)
 
     c = aargh(who, image)
-    ComponentSetValue2(c, "offset", 0.2, 0.23)
+    ComponentSetValue2(c, "offset", 0.3, 0.25)
     ComponentSetValue2(c, "gravity", 0, 0)
 end
 
-local shape_list = {"shape_square.png", "shape_circle.png", "shape_line.png", "shape_box.png"}
+local shape_list = {
+    {"shape_square.png", 200},
+    {"shape_circle.png", 200},
+    {"shape_line.png", 200},
+    {"shape_box.png", 200},
+    {"shape_anvil.png", 200},
+    {"shape_hamis.png", 200},
+    {"shape_saw.png", 200},
+    {"shape_bump.png", 200},
+}
 
 ---@diagnostic disable: cast-local-type, param-type-mismatch
 local mx, my = DEBUG_GetMouseWorld()
@@ -109,22 +119,24 @@ end
 local children = EntityGetAllChildren(me) or {}
 if #children >= 1 then
     on = true
-    local c
-    c = the_other_one(children[1], file)
-    ComponentSetValue2(c, "offset", -0.2, -0.5)
-    ComponentSetValue2(c, "gravity", 0, 0)
+    if EntityGetFirstComponent(children[1], "ParticleEmitterComponent") == nil then
+        local c1 = the_other_one(children[1], file)
+        local c2 = the_other_one(children[1], file)
+        local c3 = the_other_one(children[1], file)
+        local c4 = the_other_one(children[1], file)
 
-    c = the_other_one(children[1], file)
-    ComponentSetValue2(c, "offset", 0.2, -0.5)
-    ComponentSetValue2(c, "gravity", 0, 0)
-
-    c = the_other_one(children[1], file)
-    ComponentSetValue2(c, "offset", -0.2, -0.1)
-    ComponentSetValue2(c, "gravity", 0, 0)
-
-    c = the_other_one(children[1], file)
-    ComponentSetValue2(c, "offset", 0.2, -0.1)
-    ComponentSetValue2(c, "gravity", 0, 0)
+        ComponentSetValue2(c1, "gravity", 0, 0)
+        ComponentSetValue2(c2, "gravity", 0, 0)
+        ComponentSetValue2(c3, "gravity", 0, 0)
+        ComponentSetValue2(c4, "gravity", 0, 0)
+        if (rot + 1.58) % 1.571 > 0.1 then
+            ComponentSetValue2(c1, "offset", 0, -0.5)
+            ComponentSetValue2(c2, "offset", 0.2, -0.5)
+            ComponentSetValue2(c3, "offset", -0.2, -0.1)
+            ComponentSetValue2(c4, "offset", 0.2, -0.1)
+        end
+        EntitySetTransform(children[1], x, y, rot)
+    end
 else
     if EntityHasTag(player, "player_unit") and EntityGetFirstComponentIncludingDisabled(spell, "VariableStorageComponent") ==
     EntityGetFirstComponent(spell, "VariableStorageComponent") then
@@ -156,19 +168,19 @@ else
             local image = ComponentGetValue2(gui, "image_file")
             local count = 0
             if image == "mods/boss_reworks/files/spells/robot/gui_left.png" then
-                EntitySetTransform(me, x, y, rot + -15 * (math.pi / 180))
+                EntitySetTransform(me, x, y, rot + -22.5 * (math.pi / 180))
             elseif image == "mods/boss_reworks/files/spells/robot/gui_right.png" then
-                EntitySetTransform(me, x, y, rot + 15 * (math.pi / 180))
+                EntitySetTransform(me, x, y, rot + 22.5 * (math.pi / 180))
             elseif image == "mods/boss_reworks/files/spells/robot/gui_down.png" then
                 for i = 1, #shape_list do
-                    if "mods/boss_reworks/files/spells/robot/" .. shape_list[i] == file then
+                    if "mods/boss_reworks/files/spells/robot/" .. shape_list[i][1] == file then
                         count = (i % #shape_list) + 1
                         break
                     end
                 end
             elseif image == "mods/boss_reworks/files/spells/robot/gui_up.png" then
                 for i = 1, #shape_list do
-                    if "mods/boss_reworks/files/spells/robot/" .. shape_list[i] == file then
+                    if "mods/boss_reworks/files/spells/robot/" .. shape_list[i][1] == file then
                         count = ((i - 2) % #shape_list) + 1
                         break
                     end
@@ -177,7 +189,7 @@ else
             if count ~= 0 then
                 EntitySetTransform(me, x, y, 0)
                 for i = 1, #particles do
-                    hax_add_the_comps(me, "mods/boss_reworks/files/spells/robot/" .. shape_list[count])
+                    hax_add_the_comps(me, "mods/boss_reworks/files/spells/robot/" .. shape_list[count][1])
                 end
             end
             ComponentSetValue2(gui, "image_file", "mods/boss_reworks/files/spells/robot/gui.png")
