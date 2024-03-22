@@ -30,6 +30,7 @@ for k, v in ipairs(tree.children) do
 	end
 end
 ModTextFileSetContent(path, tostring(tree))
+inject(args.SS,modes.R,"data/entities/buildings/wizardcave_gate_monster_spawner.xml", "rock_box2d_nohit_hard", "boss_reworks_gate_monster_rock")
 inject(args.SS,modes.A,"data/entities/animals/boss_gate/gate_monster_death.lua", [[AddFlagPersistent( "miniboss_gate_monsters" )]], [[
 	if not GameHasFlagRun("br_killed_animal_gate_monster_a") then
 		GameAddFlagRun("br_killed_animal_gate_monster_a")

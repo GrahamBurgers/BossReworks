@@ -23,6 +23,17 @@
 			update_transform_rotation="0"
 			alpha="0.9"
 		></SpriteComponent>
+
+		<SpriteComponent
+			offset_x="16"
+			offset_y="19"
+			z_index="-11"
+			update_transform_rotation="0"
+			image_file="data/fonts/font_pixel_white.xml" 
+			is_text_sprite="1"
+			text="$100"
+			alpha="0.9"
+		></SpriteComponent>
 	</Entity>
 
 	<ItemActionComponent 

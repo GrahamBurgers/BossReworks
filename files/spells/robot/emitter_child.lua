@@ -5,6 +5,9 @@ local functions = {
     ["mods/boss_reworks/files/spells/robot/shape_anvil.png"] = function()
         EntityLoad("data/entities/buildings/forge_item_check.xml", x, y)
     end,
+    ["mods/boss_reworks/files/spells/robot/shape_triangle.png"] = function()
+        EntityLoad("data/entities/buildings/wizardcave_gate.xml", x, y)
+    end,
 }
 
 local particles = EntityGetFirstComponent(me, "ParticleEmitterComponent")

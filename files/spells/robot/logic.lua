@@ -91,14 +91,17 @@ local function hax_add_the_comps(who, image)
 end
 
 local shape_list = {
-    {"shape_square.png", 200},
-    {"shape_circle.png", 200},
-    {"shape_line.png", 200},
-    {"shape_box.png", 200},
-    {"shape_anvil.png", 200},
-    {"shape_hamis.png", 200},
-    {"shape_saw.png", 200},
-    {"shape_bump.png", 200},
+    {"shape_square.png", 250},
+    {"shape_circle.png", 250},
+    {"shape_line.png", 300},
+    {"shape_box.png", 100},
+    {"shape_anvil.png", 5000},
+    {"shape_hamis.png", 5},
+    {"shape_saw.png", 150},
+    {"shape_bump.png", 150},
+    {"shape_drain.png", 200}
+    -- {"shape_triangle.png", 20000},
+    -- {"shape_egg.png", 20000},
 }
 
 ---@diagnostic disable: cast-local-type, param-type-mismatch
@@ -108,7 +111,8 @@ local x, y, rot = EntityGetTransform(me)
 local spell = EntityGetParent(me)
 local player = EntityGetRootEntity(me)
 local controls = EntityGetFirstComponentIncludingDisabled(player, "ControlsComponent")
-local gui = EntityGetFirstComponentIncludingDisabled(me, "SpriteComponent")
+local gui = EntityGetComponentIncludingDisabled(me, "SpriteComponent")[1]
+local text = EntityGetComponentIncludingDisabled(me, "SpriteComponent")[2]
 local on = false
 local particles = EntityGetComponentIncludingDisabled(me, "ParticleEmitterComponent") or {}
 local file = ComponentGetValue2(particles[1], "image_animation_file")
@@ -120,22 +124,57 @@ local children = EntityGetAllChildren(me) or {}
 if #children >= 1 then
     on = true
     if EntityGetFirstComponent(children[1], "ParticleEmitterComponent") == nil then
-        local c1 = the_other_one(children[1], file)
-        local c2 = the_other_one(children[1], file)
-        local c3 = the_other_one(children[1], file)
-        local c4 = the_other_one(children[1], file)
+        local price = string.gsub(ComponentGetValue2(text, "text"), "%$", "")
+        price = tonumber(price)
+        local wallet = EntityGetFirstComponent(player, "WalletComponent")
+        local money = 0
+        if wallet then money = ComponentGetValue2(wallet, "money") end
+        if money >= price then
+            GamePlaySound("data/audio/Desktop/event_cues.bank", "event_cues/shop_item/create", x, y)
+            ComponentSetValue2(wallet, "money", money - price)
+            local c1 = the_other_one(children[1], file)
+            local c2 = the_other_one(children[1], file)
+            local c3 = the_other_one(children[1], file)
+            local c4 = the_other_one(children[1], file)
 
-        ComponentSetValue2(c1, "gravity", 0, 0)
-        ComponentSetValue2(c2, "gravity", 0, 0)
-        ComponentSetValue2(c3, "gravity", 0, 0)
-        ComponentSetValue2(c4, "gravity", 0, 0)
-        if (rot + 1.58) % 1.571 > 0.1 then
-            ComponentSetValue2(c1, "offset", 0, -0.5)
-            ComponentSetValue2(c2, "offset", 0.2, -0.5)
-            ComponentSetValue2(c3, "offset", -0.2, -0.1)
-            ComponentSetValue2(c4, "offset", 0.2, -0.1)
+            ComponentSetValue2(c1, "gravity", 0, 0)
+            ComponentSetValue2(c2, "gravity", 0, 0)
+            ComponentSetValue2(c3, "gravity", 0, 0)
+            ComponentSetValue2(c4, "gravity", 0, 0)
+            if (rot + 1.58) % 1.571 > 0.1 then
+                ComponentSetValue2(c1, "offset", 0, -0.5)
+                ComponentSetValue2(c2, "offset", 0.2, -0.5)
+                ComponentSetValue2(c3, "offset", -0.2, -0.1)
+                ComponentSetValue2(c4, "offset", 0.2, -0.1)
+            end
+            EntitySetTransform(children[1], x, y, rot)
+            EntityAddComponent2(children[1], "ParticleEmitterComponent", {
+                _tags="enabled_in_world,enabled_in_hand,enabled_in_inventory",
+                image_animation_file=file,
+                emitted_material_name="steel_static",
+                create_real_particles=true,
+                emission_interval_min_frames=1,
+                emission_interval_max_frames=1,
+                emit_cosmetic_particles=true,
+                emit_only_if_there_is_space=false,
+                emit_real_particles=false,
+                cosmetic_force_create=true,
+                count_min=1,
+                count_max=1,
+                image_animation_speed=50,
+                delay_frames=33,
+                lifetime_min=0.03,
+                lifetime_max=0.03,
+                render_on_grid=false,
+                render_back=true,
+                image_animation_use_entity_rotation=true,
+                image_animation_loop=false,
+                set_magic_creation=true,
+            })
+        else
+            EntityKill(children[1])
+            GamePlaySound("data/audio/Desktop/ui.bank", "ui/button_denied", x, y)
         end
-        EntitySetTransform(children[1], x, y, rot)
     end
 else
     if EntityHasTag(player, "player_unit") and EntityGetFirstComponentIncludingDisabled(spell, "VariableStorageComponent") ==
@@ -162,6 +201,7 @@ else
                 image = "mods/boss_reworks/files/spells/robot/gui_up.png"
             end
             EntitySetComponentIsEnabled(me, gui, true)
+            EntitySetComponentIsEnabled(me, text, true)
             ComponentSetValue2(gui, "image_file", image)
             EntityRefreshSprite(me, gui)
         else
@@ -191,9 +231,12 @@ else
                 for i = 1, #particles do
                     hax_add_the_comps(me, "mods/boss_reworks/files/spells/robot/" .. shape_list[count][1])
                 end
+                ComponentSetValue2(text, "text", "$" .. shape_list[count][2])
+                EntityRefreshSprite(me, text)
             end
             ComponentSetValue2(gui, "image_file", "mods/boss_reworks/files/spells/robot/gui.png")
             EntitySetComponentIsEnabled(me, gui, false)
+            EntitySetComponentIsEnabled(me, text, false)
             EntitySetTransform(GetUpdatedEntityID(), mx, my)
         end
     end
