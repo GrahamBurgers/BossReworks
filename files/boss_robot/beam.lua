@@ -1,5 +1,5 @@
 local tick = ComponentGetValue2(GetUpdatedComponentID(), "mTimesExecuted")
-if tick % 800 == 0 or (240 + tick) % 800 == 0 then
+if tick > 1200 and (tick % 700 == 0 or (240 + tick) % 700 == 0) then
     local me = GetUpdatedEntityID()
     dofile_once("mods/boss_reworks/files/projectile_utils.lua")
     local x, y = EntityGetTransform(me)
@@ -15,7 +15,7 @@ if tick % 800 == 0 or (240 + tick) % 800 == 0 then
         local vel_x = math.cos(theta) * speed
         local vel_y = math.sin(theta) * speed
         theta = theta + angle_inc
-        for j = 3, (distance / speed) + 2 do
+        for j = 3, math.max(4, (distance / speed) + 2) do
             local eid = ShootProjectile(me, "mods/boss_reworks/files/boss_robot/succ.xml", x + vel_x * j, x + vel_y * j, vel_x, vel_y, 0.175)
             local proj = EntityGetFirstComponent(eid, "ProjectileComponent")
             if proj then

@@ -1,32 +1,32 @@
 <Entity tags="wand,boss_reworks_boss_rush" name="$item_wand" >
 	<Base file="data/entities/base_item.xml">
     <ItemComponent play_hover_animation="1" play_spinning_animation="1"> </ItemComponent>
-    <SpriteComponent image_file="data/items_gfx/wands/wand_0265.png" offset_x="2" offset_y="3" ></SpriteComponent>
+    <SpriteComponent image_file="data/items_gfx/wands/wand_0491.png" offset_x="2" offset_y="2" ></SpriteComponent>
     </Base>
 	<Base file="data/entities/base_wand_pickup.xml" > <LuaComponent _enabled="0" script_item_picked_up="" /> </Base>
 	
 	<UIInfoComponent _tags="enabled_in_world" name="$item_wand"></UIInfoComponent>
 
 	<AbilityComponent
-        sprite_file="data/items_gfx/wands/wand_0265.png"
+        sprite_file="data/items_gfx/wands/wand_0491.png"
         ui_name="$item_wand"
         drop_as_item_on_death="0"
         use_gun_script="1"
 
-        add_these_child_actions="LASER_LUMINOUS_DRILL,BURST_2,LIFETIME,TEMPORARY_PLATFORM,TEMPORARY_WALL"
-		mana_charge_speed="400"
-		mana_max="160"
+        add_these_child_actions="BOUNCY_ORB,RECOIL_DAMPER"
+		mana_charge_speed="1300"
+		mana_max="420"
         >
         <gun_config 
             shuffle_deck_when_empty="0"
-            reload_time="240"
-            deck_capacity="5"
-            actions_per_round="1"
+            reload_time="4"
+            deck_capacity="2"
+            actions_per_round="2"
         ></gun_config>
         <gunaction_config
             spread_degrees="0"
-            fire_rate_wait="0"
-            speed_multiplier="1"
+            fire_rate_wait="-70"
+            speed_multiplier="1.8"
         ></gunaction_config>
     </AbilityComponent>
 	

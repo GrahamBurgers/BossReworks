@@ -15,6 +15,7 @@ for k, v in ipairs(tree.children) do
 		v.children[1].attr.projectile = 0.1
 		v.children[1].attr.explosion = 0.1
 		v.children[1].attr.holy = 0.2
+		v.attr.blood_multiplier = 0.2
 	end
 	if v.name == "Entity" then
 		for k2, v2 in ipairs(v.children) do
@@ -29,6 +30,19 @@ ModTextFileSetContent(path, tostring(tree))
 inject(args.SS,modes.R,"data/entities/animals/boss_robot/rocket.xml", 'fire="2.2"', 'fire="0"')
 inject(args.SS,modes.R,"data/entities/animals/boss_robot/rocket.xml", 'lifetime="100"', 'lifetime="60"')
 inject(args.SS,modes.R,"data/entities/animals/boss_robot/rocket.xml", 'damage="6"', 'damage="1"')
+inject(args.SS,modes.R,"data/entities/animals/boss_robot/state.lua", 'EntityLoad( "data/entities/animals/robobase/healerdrone_physics.xml", x, y )', [[
+	local eid = EntityLoad( "data/entities/animals/robobase/healerdrone_physics.xml", x, y )
+	EntitySetComponentIsEnabled(eid, EntityGetFirstComponent(eid, "MaterialInventoryComponent"), false)
+	EntitySetComponentIsEnabled(eid, EntityGetFirstComponent(eid, "ExplodeOnDamageComponent"), false)
+	local dmg = EntityGetFirstComponent(eid, "DamageModelComponent")
+	if dmg then
+		ComponentSetValue2(dmg, "blood_material", "smoke")
+		ComponentSetValue2(dmg, "blood_spray_material", "smoke")
+	end
+]])
+inject(args.SS,modes.R,"data/entities/animals/boss_robot/rocket.xml", 'count_min="5"', 'count_min="0"')
+inject(args.SS,modes.R,"data/entities/animals/boss_robot/rocket.xml", 'count_max="5"', 'count_max="1"')
+inject(args.SS,modes.R,"data/entities/animals/boss_robot/rocket.xml", 'create_cell_probability="5"', 'create_cell_probability="1"')
 
 path = "data/entities/items/pickup/wandstone.xml"
 tree = nxml.parse(ModTextFileGetContent(path))

@@ -99,4 +99,3 @@ inject(args.SS,modes.A,"data/entities/animals/boss_wizard/death.lua", [[AddFlagP
 		CreateItemActionEntity("BR_REWARD_MASTER", x + 4, y)
 	end
 ]])
-print(ModTextFileGetContent("data/entities/animals/boss_wizard/death.lua"))

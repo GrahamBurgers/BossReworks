@@ -175,6 +175,8 @@ if #children >= 1 then
             EntityKill(children[1])
             GamePlaySound("data/audio/Desktop/ui.bank", "ui/button_denied", x, y)
         end
+        if children[2] then EntityKill(children[2]) end -- idk what this does
+        if children[3] then EntityKill(children[3]) end
     end
 else
     if EntityHasTag(player, "player_unit") and EntityGetFirstComponentIncludingDisabled(spell, "VariableStorageComponent") ==

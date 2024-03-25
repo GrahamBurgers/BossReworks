@@ -31,7 +31,7 @@
 			update_transform_rotation="0"
 			image_file="data/fonts/font_pixel_white.xml" 
 			is_text_sprite="1"
-			text="$100"
+			text="$250"
 			alpha="0.9"
 		></SpriteComponent>
 	</Entity>
