@@ -6,8 +6,7 @@ for i = 1, #sprites do
         EntityRemoveComponent(me, sprites[i])
     end
 end
-local amount = 3
-if EntityGetName(me) == "$animal_fish_large" then amount = 5 end
+local amount = 4
 dofile_once("mods/boss_reworks/files/projectile_utils.lua")
 CircleShot(me, "mods/boss_reworks/files/boss_fish/swirl.xml", amount, x, y, 45, math.pi * 2)
 GameScreenshake(amount)

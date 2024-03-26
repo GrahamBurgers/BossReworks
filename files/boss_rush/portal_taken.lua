@@ -1,5 +1,6 @@
 local multiplier = 100 -- multiply it before storing cause shoving a float into an int scares me
-local max = 800 * multiplier -- make this very high for now until we know how long/hard boss rush will be
+local max = 100 * multiplier
+dofile_once("data/scripts/perks/perk.lua")
 
 local function aaaaaa(entity)
     if EntityGetComponentIncludingDisabled(entity, "ItemComponent") ~= nil and not EntityHasTag(entity, "card_action") then
@@ -69,7 +70,6 @@ function steal_player_stuff(player)
             end
         end
     end
-    dofile_once("data/scripts/perks/perk.lua")
     local perks_to_spawn = {}
 
 	for i,perk_data in ipairs(perk_list) do
@@ -131,7 +131,7 @@ function steal_player_stuff(player)
         local exits = EntityGetWithName("$br_boss_rush_portal_out")
         if exits ~= nil then EntityKill(exits) end
     end
-    remove_all_perks()
+    IMPL_remove_all_perks(player)
 end
 
 local function boss_portal(to_x, to_y, entity, x_off, y_off)
@@ -171,6 +171,7 @@ local function nextboss()
         end
         EntityKill(entities[i])
     end
+    remove_all_perks()
 end
 
 local function spawn_wands(name, entity)
@@ -275,8 +276,22 @@ Bosses = {
         spawn_wands("mods/boss_reworks/files/boss_rush/wands/robot", player)
         GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(450 * multiplier))
     end},
+    {"$br_boss_rush_portal_leviathan", function(x, y, player)
+        nextboss()
+        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_levi.png")
+        boss_portal(x, y, "data/entities/animals/boss_fish/fish_giga.xml", 0, 100)
+        spawn_wands("mods/boss_reworks/files/boss_rush/wands/leviathan", player)
+        GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(500 * multiplier))
+        local perk = perk_spawn(x, y, "BREATH_UNDERWATER")
+        perk_pickup(perk, player, EntityGetName(perk), false, false)
+        local perk2 = perk_spawn(x, y, "UNLIMITED_SPELLS")
+        perk_pickup(perk2, player, EntityGetName(perk2), false, false)
+    end},
+    {"$br_boss_rush_portal_what", function(x, y, player)
+        -- test test
+    end},
 }
-local debug_load_specific_room = "$br_boss_rush_portal_robot"
+local debug_load_specific_room = "$br_boss_rush_portal_leviathan"
 
 function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x, to_y )
     local name = EntityGetName(GetUpdatedEntityID())

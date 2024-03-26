@@ -6,7 +6,7 @@ if not comp or not var then return end
 local amount = ComponentGetValue2(var, "value_float")
 local effect = ComponentGetValue2(var, "value_string")
 
-local pips = 360 / 7
+local pips = 360 / 6
 local entities = EntityGetInRadiusWithTag(x, y, 6, "br_effect_projectile") or {}
 for i = 1, #entities do
     local proj = EntityGetFirstComponentIncludingDisabled(entities[i], "ProjectileComponent")

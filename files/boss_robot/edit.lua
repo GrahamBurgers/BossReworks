@@ -44,6 +44,14 @@ inject(args.SS,modes.R,"data/entities/animals/boss_robot/rocket.xml", 'count_min
 inject(args.SS,modes.R,"data/entities/animals/boss_robot/rocket.xml", 'count_max="5"', 'count_max="1"')
 inject(args.SS,modes.R,"data/entities/animals/boss_robot/rocket.xml", 'create_cell_probability="5"', 'create_cell_probability="1"')
 
+inject(args.SS,modes.P,"data/entities/animals/boss_robot/death.lua", 'AddFlagPersistent( "miniboss_robot" )', [[
+	if not GameHasFlagRun("br_killed_animal_boss_robot") then
+		GameAddFlagRun("br_killed_animal_boss_robot")
+		CreateItemActionEntity("BR_REWARD_ROBOT", x, y - 20)
+	end
+
+]])
+
 path = "data/entities/items/pickup/wandstone.xml"
 tree = nxml.parse(ModTextFileGetContent(path))
 for k, v in ipairs(tree.children) do

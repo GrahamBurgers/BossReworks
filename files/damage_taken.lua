@@ -42,6 +42,9 @@ function damage_received( damage, message, entity_thats_responsible, is_fatal, p
                 frames=180,
             })
             EntityAddChild(me, effect)
+
+            dofile_once("data/scripts/perks/perk.lua")
+            IMPL_remove_all_perks(me)
             return
         end
         if damage > 0 then

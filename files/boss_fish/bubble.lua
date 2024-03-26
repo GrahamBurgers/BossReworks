@@ -5,8 +5,11 @@ local px, py = 0, nil
 if player then
     local x2, y2 = EntityGetTransform(player)
     if y2 > y + 20 then EntityKill(me) return end
-    local characterdata = EntityGetFirstComponent(player, "CharacterDataComponent") or 0
-    px, py = ComponentGetValue2(characterdata, "mVelocity")
+    local characterdata = EntityGetFirstComponent(player, "CharacterDataComponent")
+    if characterdata then
+        px, py = ComponentGetValue2(characterdata, "mVelocity")
+        py = math.min(0, py)
+    end
 end
 local comp = EntityGetFirstComponent(me, "VariableStorageComponent")
 local velco = EntityGetFirstComponent(me, "VelocityComponent")

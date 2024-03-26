@@ -56,3 +56,8 @@ if (toggle + 1) % 50 == 0 then
         end
 	end
 end
+
+local players = EntityGetWithTag("player_unit")
+for i = 1, #players do
+	EntityRemoveStainStatusEffect( players[i], "PROTECTION_ALL", 5 )
+end
