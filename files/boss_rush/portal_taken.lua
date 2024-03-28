@@ -287,11 +287,18 @@ Bosses = {
         local perk2 = perk_spawn(x, y, "UNLIMITED_SPELLS")
         perk_pickup(perk2, player, EntityGetName(perk2), false, false)
     end},
+    {"$br_boss_rush_portal_master", function(x, y, player)
+        nextboss()
+        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_robot.png")
+        boss_portal(x, y, "data/entities/animals/boss_wizard/boss_wizard.xml", 0, -80)
+        spawn_wands("mods/boss_reworks/files/boss_rush/wands/robot", player)
+        GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(550 * multiplier))
+    end},
     {"$br_boss_rush_portal_what", function(x, y, player)
         -- test test
     end},
 }
-local debug_load_specific_room = "$br_boss_rush_portal_leviathan"
+local debug_load_specific_room = "$br_boss_rush_portal_master"
 
 function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x, to_y )
     local name = EntityGetName(GetUpdatedEntityID())

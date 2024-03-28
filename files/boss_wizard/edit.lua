@@ -66,7 +66,6 @@ ModTextFileSetContent(path, tostring(tree))
 
 inject(args.SS,modes.R,"data/entities/animals/boss_wizard/wizard_orb_death.xml", 'blood_material="blood"', 'blood_material="smoke"')
 inject(args.SS,modes.R,"data/entities/animals/boss_wizard/wizard_orb_death.xml", 'blood_spray_material="blood"', 'blood_spray_material="smoke"')
-inject(args.SS,modes.R,"data/entities/animals/boss_wizard/wizard_orb_death.xml", '101', '100')
 inject(args.SS,modes.R,"data/entities/animals/boss_wizard/wizard_orb_death.xml", '<AreaDamageComponent', '<AreaDamageComponent _enabled="0"') -- no need to discourage the player from staying near the boss
 inject(args.SS,modes.A,"data/entities/animals/boss_wizard/wizard_orb_death.xml", 'physics_objects_damage="0"', 'materials_damage="0"')
 inject(args.SS,modes.R,"data/entities/animals/boss_wizard/wizard_orb_blood.xml", 'polymorphable_NOT', 'wizard_orb_blood,polymorphable_NOT')
@@ -78,7 +77,7 @@ inject(args.SS,modes.P,"data/entities/animals/boss_wizard/state.lua", 'if ( mode
 	-- HAX, projectiles fired from projectiles advance his state for some reason
 	if EntityHasTag(pid, "br_effect_projectile") then return end
 	]])
-inject(args.SS,modes.R,"data/entities/animals/boss_wizard/wizard_nullify.lua", 'ipairs( projs )', '0')
+inject(args.SS,modes.R,"data/entities/animals/boss_wizard/wizard_nullify.lua", '( projectile_id ~= proj_id ) then', '( projectile_id ~= proj_id ) and false then')
 inject(args.SS,modes.R,"data/entities/animals/boss_wizard/state.lua", 'data/entities/animals/boss_wizard/bloodtentacle.xml', 'mods/boss_reworks/files/boss_wizard/bloodtentacle_new.xml')
 inject(args.SS,modes.A,"data/entities/animals/boss_wizard/wizard_nullify.lua", 'mode = 1', [[
 

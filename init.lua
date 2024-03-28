@@ -203,7 +203,8 @@ function OnWorldPreUpdate()
 			if comp_poly then
 				ComponentSetValue2(comp_poly, "frames", 1)
 				GamePrint("$br_boss_rush_polymorphed")
-				GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(math.max(multiplier, multiplier * -80 + max)))
+				local hp = tostring(0.5 * tonumber(GlobalsGetValue("BR_BOSS_RUSH_HP_LEFT", "0")))
+				GlobalsSetValue("BR_BOSS_RUSH_HP_LEFT", hp)
 			end
 		end
 	end

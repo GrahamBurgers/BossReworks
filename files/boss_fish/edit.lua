@@ -1,3 +1,4 @@
+dofile("mods/boss_reworks/files/lib/injection.lua")
 local nxml = dofile("mods/boss_reworks/files/lib/nxml.lua")
 local path = "data/entities/animals/boss_fish/fish_giga.xml"
 local tree = nxml.parse(ModTextFileGetContent(path))
@@ -7,7 +8,7 @@ table.insert(tree.children,
 table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/healthbar_counter.lua" </LuaComponent>'))
 table.insert(tree.children,
-	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_fish/fish_targeter_add.lua" execute_every_n_frame="700"> </LuaComponent>'))
+	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_fish/fish_targeter_add.lua" execute_every_n_frame="760"> </LuaComponent>'))
 table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_fish/orb_warning.lua"> </LuaComponent>'))
 for k, v in ipairs(tree.children) do
@@ -23,6 +24,9 @@ for k, v in ipairs(tree.children) do
 			end
 		end
 	end
+	if v.name == "LuaComponent" and v.attr.script_damage_received == "data/entities/animals/boss_fish/damage.lua" then
+		v.attr.script_damage_received = "mods/boss_reworks/files/boss_fish/damage.lua"
+	end
 end
 ModTextFileSetContent(path, tostring(tree))
 
@@ -34,11 +38,11 @@ content = content:gsub("penetrate_entities=\"1\"", "collide_with_entities=\"0\""
 content = content:gsub("liquid_drag=\"0\"", "liquid_drag=\"-0.05\"")
 ModTextFileSetContent(path, content)
 
-ModLuaFileAppend("data/entities/animals/boss_fish/damage.lua", "mods/boss_reworks/files/boss_fish/damage_append.lua")
-
 inject(args.SS,modes.A,"data/entities/animals/boss_fish/death.lua", [[AddFlagPersistent( "miniboss_fish" )]], [[
 	if not GameHasFlagRun("br_killed_animal_fish_giga") then
 		GameAddFlagRun("br_killed_animal_fish_giga")
 		CreateItemActionEntity("BR_REWARD_LEVI", x, y + 64)
 	end
 ]])
+
+inject(args.SS,modes.R,"data/entities/animals/boss_fish/eye.lua", '160, "player_unit"', '220, "player_unit"')

@@ -1,3 +1,4 @@
+dofile("mods/boss_reworks/files/lib/injection.lua")
 local nxml = dofile("mods/boss_reworks/files/lib/nxml.lua")
 local path = "data/entities/animals/boss_dragon.xml"
 local tree = nxml.parse(ModTextFileGetContent(path))
