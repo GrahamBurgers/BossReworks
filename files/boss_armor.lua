@@ -1,6 +1,6 @@
 ---@diagnostic disable-next-line: lowercase-global
 function damage_about_to_be_received(damage, x, y, entity_thats_responsible, critical_hit_chance)
-	if damage < 0 then return damage, critical_hit_chance end
+	if damage < 0 or GameGetGameEffectCount(GetUpdatedEntityID(), "PROTECTION_ALL") > 0 then return damage, critical_hit_chance end
 	local comp = EntityGetFirstComponent(GetUpdatedEntityID(), "VariableStorageComponent", "boss_reworks_armor") or 0
 	local health = EntityGetFirstComponent(GetUpdatedEntityID(), "DamageModelComponent") or 0
 	local max_hp = ComponentGetValue2(health, "max_hp")

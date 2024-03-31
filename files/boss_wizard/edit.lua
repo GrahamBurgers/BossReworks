@@ -15,6 +15,9 @@ table.insert(tree.children,
 table.insert(tree.children,
 	nxml.parse('<VariableStorageComponent _tags="boss_wizard_rotato" name="rotato" value_int="0" value_float="0" value_string="1" ></VariableStorageComponent>'))
 for k, v in ipairs(tree.children) do
+	if v.name == "ParticleEmitterComponent" and v.attr.emitted_material_name == "blood" then
+		v.attr.emitted_material_name = "boss_reworks_blood_nostain"
+	end
 	if v.name == "LuaComponent" and v.attr.script_source_file == "data/entities/animals/boss_wizard/bloodtentacle.lua" then
 		-- v.attr._enabled = "1"
 		v.attr.execute_every_n_frame = "4"
@@ -64,13 +67,46 @@ for k, v in ipairs(tree.children) do
 end
 ModTextFileSetContent(path, tostring(tree))
 
-inject(args.SS,modes.R,"data/entities/animals/boss_wizard/wizard_orb_death.xml", 'blood_material="blood"', 'blood_material="smoke"')
-inject(args.SS,modes.R,"data/entities/animals/boss_wizard/wizard_orb_death.xml", 'blood_spray_material="blood"', 'blood_spray_material="smoke"')
-inject(args.SS,modes.R,"data/entities/animals/boss_wizard/wizard_orb_death.xml", '<AreaDamageComponent', '<AreaDamageComponent _enabled="0"') -- no need to discourage the player from staying near the boss
-inject(args.SS,modes.A,"data/entities/animals/boss_wizard/wizard_orb_death.xml", 'physics_objects_damage="0"', 'materials_damage="0"')
-inject(args.SS,modes.R,"data/entities/animals/boss_wizard/wizard_orb_blood.xml", 'polymorphable_NOT', 'wizard_orb_blood,polymorphable_NOT')
-inject(args.SS,modes.A,"data/entities/animals/boss_wizard/wizard_orb_blood.xml", 'physics_objects_damage="0"', 'wait_for_kill_flag_on_death="1"')
-inject(args.SS,modes.A,"data/entities/animals/boss_wizard/wizard_orb_blood.xml", 'physics_objects_damage="0"', 'materials_damage="0"')
+path = "data/entities/animals/boss_wizard/wizard_orb_death.xml"
+tree = nxml.parse(ModTextFileGetContent(path))
+for k, v in ipairs(tree.children) do
+	if v.name == "ParticleEmitterComponent" and v.attr.emitted_material_name == "slime" then
+		v.attr.emitted_material_name = "boss_reworks_slime_nostain"
+	end
+	if v.name == "DamageModelComponent" then
+		v.attr.blood_material = "smoke"
+		v.attr.blood_spray_material = "smoke"
+		v.attr.materials_damage = "0"
+		v.attr.blood_multiplier = "0.2"
+		v.attr.blood_spray_create_some_cosmetic = "1"
+		v.children[1].attr.projectile="0.8"
+		v.children[1].attr.explosion="0.8"
+		v.children[1].attr.electricity="0.8"
+		v.children[1].attr.fire="0.8"
+		v.children[1].attr.ice="0.8"
+		v.children[1].attr.melee="0.8"
+		v.children[1].attr.slice="0.8"
+	end
+	if v.name == "AreaDamageComponent" then
+		v.attr._enabled = "0"
+	end
+end
+ModTextFileSetContent(path, tostring(tree))
+
+path = "data/entities/animals/boss_wizard/wizard_orb_blood.xml"
+tree = nxml.parse(ModTextFileGetContent(path))
+tree.attr.tags = tree.attr.tags .. ",wizard_orb_blood"
+for k, v in ipairs(tree.children) do
+	if v.name == "ParticleEmitterComponent" and v.attr.emitted_material_name == "blood" then
+		v.attr.emitted_material_name = "boss_reworks_blood_nostain"
+	end
+	if v.name == "DamageModelComponent" then
+		v.attr.wait_for_kill_flag_on_death = "1"
+		v.attr.materials_damage = "0"
+	end
+end
+ModTextFileSetContent(path, tostring(tree))
+
 inject(args.SS,modes.R,"data/entities/animals/boss_wizard/statusburst.xml", 'data/entities/animals/boss_wizard/statusburst.lua', 'mods/boss_reworks/files/boss_wizard/statusburst_new.lua')
 inject(args.SS,modes.R,"data/entities/animals/boss_wizard/statusburst.xml", 'execute_every_n_frame="2"', 'execute_every_n_frame="4"')
 inject(args.SS,modes.P,"data/entities/animals/boss_wizard/state.lua", 'if ( mode == 0 ) then', [[
@@ -79,7 +115,7 @@ inject(args.SS,modes.P,"data/entities/animals/boss_wizard/state.lua", 'if ( mode
 	]])
 inject(args.SS,modes.R,"data/entities/animals/boss_wizard/wizard_nullify.lua", '( projectile_id ~= proj_id ) then', '( projectile_id ~= proj_id ) and false then')
 inject(args.SS,modes.R,"data/entities/animals/boss_wizard/state.lua", 'data/entities/animals/boss_wizard/bloodtentacle.xml', 'mods/boss_reworks/files/boss_wizard/bloodtentacle_new.xml')
-inject(args.SS,modes.A,"data/entities/animals/boss_wizard/wizard_nullify.lua", 'mode = 1', [[
+inject(args.SS,modes.A,"data/entities/animals/boss_wizard/wizard_nullify.lua", 'mode = 2', [[
 
 	local children = EntityGetAllChildren(entity_id)
 	for i = 1, #children do

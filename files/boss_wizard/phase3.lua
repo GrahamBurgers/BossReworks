@@ -34,12 +34,15 @@ if not comp then
 end
 local x, y = EntityGetTransform(GetUpdatedEntityID())
 local radius, _ = ComponentGetValue2(comp, "area_circle_radius")
-local add = 1
+local add = 2
+local regen = 0
 if mode < 3 then
-    radius = math.max(200, radius - 0.3)
+    radius = math.max(150, radius - 0.3)
+    regen = 3
 else
     radius = math.max(100, radius - 0.6)
-    add = 4
+    add = 6
+    regen = 8
 end
 local entities = EntityGetWithTag("br_effect_timer") or {}
 for i = 1, #entities do
@@ -58,3 +61,5 @@ end
 ComponentSetValue2(comp, "area_circle_radius", radius, radius)
 ComponentSetValue2(comp, "count_min", radius)
 ComponentSetValue2(comp, "count_max", radius)
+
+EntityInflictDamage(GetUpdatedEntityID(), (regen * -0.25) / 60, "DAMAGE_HEALING", "$damage_healing", "NONE", 0, 0, GetUpdatedEntityID())

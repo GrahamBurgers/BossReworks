@@ -30,4 +30,20 @@
 		color="00000000" >
 		</Graphics>
 	</CellDataChild>
+	<CellDataChild
+		_parent="blood"
+		_inherit_reactions="0"
+		wang_color="ff8b4d87"
+		name="boss_reworks_blood_nostain"
+		liquid_stains="0"
+		>
+	</CellDataChild>
+	<CellDataChild
+		_parent="slime"
+		_inherit_reactions="0"
+		wang_color="ff8c4d87"
+		name="boss_reworks_slime_nostain"
+		liquid_stains="0"
+		>
+	</CellDataChild>
 </Materials>

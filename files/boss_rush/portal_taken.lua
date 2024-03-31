@@ -289,16 +289,23 @@ Bosses = {
     end},
     {"$br_boss_rush_portal_master", function(x, y, player)
         nextboss()
-        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_robot.png")
-        boss_portal(x, y, "data/entities/animals/boss_wizard/boss_wizard.xml", 0, -80)
-        spawn_wands("mods/boss_reworks/files/boss_rush/wands/robot", player)
+        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_master.png")
+        boss_portal(x, y, "data/entities/animals/boss_wizard/boss_wizard.xml", 0, -30)
+        spawn_wands("mods/boss_reworks/files/boss_rush/wands/wizard", player)
         GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(550 * multiplier))
+    end},
+    {"$br_boss_rush_portal_squidward", function(x, y, player)
+        nextboss()
+        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_master.png")
+        boss_portal(x, y, "data/entities/animals/boss_pit/boss_pit.xml", 0, -30)
+        spawn_wands("mods/boss_reworks/files/boss_rush/wands/wizard", player)
+        GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(600 * multiplier))
     end},
     {"$br_boss_rush_portal_what", function(x, y, player)
         -- test test
     end},
 }
-local debug_load_specific_room = "$br_boss_rush_portal_master"
+local debug_load_specific_room = "$br_boss_rush_portal_squidward"
 
 function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x, to_y )
     local name = EntityGetName(GetUpdatedEntityID())
