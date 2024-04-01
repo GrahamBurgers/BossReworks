@@ -1,8 +1,8 @@
 local me = GetUpdatedEntityID()
 local x, y = EntityGetTransform(me)
-local player = EntityGetClosestWithTag(x, y, "player_unit") or EntityGetClosestWithTag(x, y, "polymorphed_player")
+local player = EntityGetClosestWithTag(x, y, "player_unit") or EntityGetClosestWithTag(x, y, "polymorphed_player") or 0
 local px, py = 0, nil
-if player then
+if player > 0 then
     local x2, y2 = EntityGetTransform(player)
     if y2 > y + 20 then EntityKill(me) return end
     local characterdata = EntityGetFirstComponent(player, "CharacterDataComponent")

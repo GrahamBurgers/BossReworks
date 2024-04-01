@@ -18,6 +18,7 @@ if (toggle + 1) % 150 == 0 then
 		dofile_once("mods/boss_reworks/files/projectile_utils.lua")
 		ShootProjectile(me, "mods/boss_reworks/files/boss_dragon/dragon_orb_creator.xml", x + x2, y + y2, 0, 0)
 	end
+	--[[
 	local hpcomp = EntityGetFirstComponent(me, "DamageModelComponent")
 	local healthbar = EntityGetFirstComponent(me, "SpriteComponent", "health_bar")
 	if hpcomp ~= nil and healthbar ~= nil and false then -- not very interesting
@@ -27,14 +28,13 @@ if (toggle + 1) % 150 == 0 then
 			ComponentSetValue2(comp, "projectile_1_count", 4)
 			ComponentSetValue2(comp, "projectile_2_count", 8)
 			ComponentSetValue2(comp, "speed", 1.5)
-			ComponentSetValue2(healthbar, "image_file", "mods/boss_reworks/files/health_slider_panic.png")
 		else
 			ComponentSetValue2(comp, "direction_adjust_speed", 0.003)
 			ComponentSetValue2(comp, "direction_adjust_speed_hunt", 0.04)
 			ComponentSetValue2(comp, "projectile_1_count", 2)
 			ComponentSetValue2(comp, "projectile_2_count", 5)
 			ComponentSetValue2(comp, "speed", 1)
-			ComponentSetValue2(healthbar, "image_file", "data/ui_gfx/health_slider_front.png")
 		end
 	end
+	]]--
 end

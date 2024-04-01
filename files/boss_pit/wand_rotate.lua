@@ -1,8 +1,8 @@
 local me = GetUpdatedEntityID()
 local x, y = EntityGetTransform(me)
-local player = EntityGetClosestWithTag(x, y, "player_unit") or EntityGetClosestWithTag(x, y, "polymorphed_player")
+local player = EntityGetClosestWithTag(x, y, "player_unit") or EntityGetClosestWithTag(x, y, "polymorphed_player") or 0
 local sprite = EntityGetFirstComponent(me, "SpriteComponent")
-if not player or not sprite then return end
+if player <= 0 or not sprite then return end
 local px,py = EntityGetTransform( player )
 local dir = math.atan((py - y) / (px - x))
 if px < x then

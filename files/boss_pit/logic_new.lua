@@ -2,8 +2,8 @@ local me = GetUpdatedEntityID()
 local x, y = EntityGetTransform(me)
 local varsto = EntityGetFirstComponentIncludingDisabled(me, "VariableStorageComponent", "squid_shield_trigger")
 local clock = EntityGetFirstComponentIncludingDisabled(me, "VariableStorageComponent", "squid_last_attack_frame")
-local player = EntityGetClosestWithTag(x, y, "player_unit") or EntityGetClosestWithTag(x, y, "polymorphed_player")
-if not varsto or not clock or not player then return end
+local player = EntityGetClosestWithTag(x, y, "player_unit") or EntityGetClosestWithTag(x, y, "polymorphed_player") or 0
+if not varsto or not clock or player <= 0 then return end
 dofile_once("mods/boss_reworks/files/projectile_utils.lua")
 local phase = ComponentGetValue2(varsto, "value_int")
 local last = ComponentGetValue2(clock, "value_int")

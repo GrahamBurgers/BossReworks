@@ -2,7 +2,7 @@ dofile_once("mods/boss_reworks/files/projectile_utils.lua")
 
 local me = GetUpdatedEntityID()
 local x, y = EntityGetTransform(me)
-local player = EntityGetClosestWithTag(x, y, "player_unit") or EntityGetClosestWithTag(x, y, "polymorphed_player")
+local player = EntityGetClosestWithTag(x, y, "player_unit") or EntityGetClosestWithTag(x, y, "polymorphed_player") or 0
 local proj = ""
 local mult = 1
 local comps = EntityGetComponent(me, "VariableStorageComponent") or {}
@@ -14,7 +14,7 @@ for i = 1, #comps do
 	end
 end
 
-if ( player ~= nil ) and ( #proj > 0 ) then
+if ( player > 0 ) and ( #proj > 0 ) then
 	local px,py = EntityGetTransform( player )
 	local dir = math.atan((py - y) / (px - x))
 	if px < x then dir = dir + math.pi end

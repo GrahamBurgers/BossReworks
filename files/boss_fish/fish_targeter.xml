@@ -4,7 +4,7 @@
     </InheritTransformComponent>
     
     <LuaComponent
-        execute_every_n_frame="45"
+        execute_every_n_frame="50"
         script_source_file="mods/boss_reworks/files/boss_fish/fish_target.lua"
     ></LuaComponent>
 

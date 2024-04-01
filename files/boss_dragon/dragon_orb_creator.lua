@@ -1,7 +1,7 @@
 local me = GetUpdatedEntityID()
 local comp = EntityGetFirstComponent(me, "SpriteParticleEmitterComponent")
 local x, y = EntityGetTransform(me)
-local player = EntityGetClosestWithTag(x, y, "player_unit") or EntityGetClosestWithTag(x, y, "polymorphed_player")
+local player = EntityGetClosestWithTag(x, y, "player_unit") or EntityGetClosestWithTag(x, y, "polymorphed_player") or 0
 if comp ~= nil then
 	local xs, ys = ComponentGetValue2(comp, "scale")
 	xs = xs + (0.5 - xs) / 5
@@ -9,7 +9,7 @@ if comp ~= nil then
 	ComponentSetValue2(comp, "scale", xs, ys)
 end
 local vel = EntityGetFirstComponent(me, "VelocityComponent")
-if vel and ComponentGetValue2(vel, "mVelocity") == 0 and player ~= nil then
+if vel and ComponentGetValue2(vel, "mVelocity") == 0 and player > 0 then
 	local x2, y2 = EntityGetTransform(player)
 	local newx, newy
 	if x2 > x then newx = 90 else newx = -90 end

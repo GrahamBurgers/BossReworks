@@ -1,8 +1,8 @@
 dofile_once("mods/boss_reworks/files/projectile_utils.lua")
 local me = GetUpdatedEntityID()
 local amount = ComponentGetValue2(GetUpdatedComponentID(), "mTimesExecuted") or 0
-local players = EntityGetWithTag("player_unit") or EntityGetWithTag("polymorphed_player")
-if not players then return end
+local players = EntityGetWithTag("player_unit") or EntityGetWithTag("polymorphed_player") or {}
+if #players <= 0 then return end
 for i = 1, #players do
     local x, y = EntityGetTransform(players[i])
     GamePlaySound( "data/audio/Desktop/projectiles.bank", "projectiles/orb_c/create", x, y )

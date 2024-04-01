@@ -1,8 +1,8 @@
 local x, y = EntityGetTransform(GetUpdatedEntityID())
 local fish = EntityGetInRadiusWithTag(x, y, 300, "helpless_animal") or {}
 SetRandomSeed(x + 4280, y + #fish + GetUpdatedComponentID())
-if #fish > 1 then
-    for i = 1, 2 do
+if #fish > 0 then
+    for i = 1, math.min(2, #fish) do
         local rand = Random(1, #fish)
         local condemned = fish[rand]
         table.remove(fish, rand)
