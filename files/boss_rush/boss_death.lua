@@ -9,6 +9,36 @@ function death( damage_type_bit_field, damage_message, entity_thats_responsible,
         if ui then
             ComponentSetValue2(ui, "name", next)
         end
+        local projectiles = EntityGetWithTag("projectile") or {} -- this will cause no issues
+        for i = 1, #projectiles do
+            local x2, y2 = EntityGetTransform(projectiles[i])
+            EntityLoad("data/entities/particles/poof_blue.xml", x2, y2)
+            local comps = EntityGetComponent(projectiles[i], "ProjectileComponent") or {}
+            for j = 1, #comps do
+                ComponentSetValue2(comps[j], "on_death_explode", false)
+                ComponentSetValue2(comps[j], "on_lifetime_out_explode", false)
+                ComponentObjectSetValue2(comps[j], "config_explosion", "damage", 0)
+                ComponentObjectSetValue2(comps[j], "config_explosion", "hole_enabled", false)
+                ComponentObjectSetValue2(comps[j], "config_explosion", "explosion_radius", 0)
+            end
+            local what = EntityGetComponent(projectiles[i], "ExplodeOnDamageComponent") or {}
+            for j = 1, #what do
+                ComponentSetValue2(what[j], "explode_on_death_percent", 0)
+                ComponentObjectSetValue2(what[j], "config_explosion", "damage", 0)
+                ComponentObjectSetValue2(what[j], "config_explosion", "hole_enabled", false)
+                ComponentObjectSetValue2(what[j], "config_explosion", "explosion_radius", 0)
+            end
+            local why = EntityGetComponent(projectiles[i], "ExplosionComponent") or {}
+            for j = 1, #why do
+                ComponentObjectSetValue2(why[j], "config_explosion", "damage", 0)
+                ComponentObjectSetValue2(why[j], "config_explosion", "hole_enabled", false)
+                ComponentObjectSetValue2(why[j], "config_explosion", "explosion_radius", 0)
+            end
+            EntitySetTransform(projectiles[i], x, y)
+            EntityApplyTransform(projectiles[i], x, y)
+            EntityKill(projectiles[i])
+        end
+        GamePlaySound( "data/audio/Desktop/misc.bank", "misc/beam_from_sky_kick", x, y )
     end
     EntityConvertToMaterial(GetUpdatedEntityID(), "spark_blue")
     GameScreenshake(50)

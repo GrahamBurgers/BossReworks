@@ -142,11 +142,11 @@ local function boss_portal(to_x, to_y, entity, x_off, y_off)
     return eid
 end
 
-local function load_scene(x, y, room_name, background_name)
+local function load_scene(x, y, room_name)
     local gui = GuiCreate()
     local size_x, size_y = GuiGetImageDimensions(gui, room_name)
     GuiDestroy(gui)
-    LoadPixelScene(room_name, background_name or "", x + size_x * -0.5, y + size_y * -0.5, "", true, false, {}, 50, true)
+    LoadPixelScene(room_name, "", x + size_x * -0.5, y + size_y * -0.5, "mods/boss_reworks/files/boss_rush/bg_big.png", true, false, {}, 50, true)
 end
 
 local function nextboss()
@@ -195,7 +195,7 @@ local function spawn_wands(name, entity)
     EntityLoad(name .. "_02.xml", x + 12, y)
 end
 
-local function start_boss_rush(player)
+local function start_boss_rush()
     GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(max))
     GlobalsSetValue("BR_BOSS_RUSH_HP_MULTIPLIER", tostring(multiplier))
     GlobalsSetValue("BR_BOSS_RUSH_NOHIT", "1")
@@ -296,16 +296,35 @@ Bosses = {
     end},
     {"$br_boss_rush_portal_squidward", function(x, y, player)
         nextboss()
-        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_master.png")
+        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_squidward.png")
         boss_portal(x, y, "data/entities/animals/boss_pit/boss_pit.xml", 0, -30)
-        spawn_wands("mods/boss_reworks/files/boss_rush/wands/wizard", player)
+        spawn_wands("mods/boss_reworks/files/boss_rush/wands/squidward", player)
         GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(600 * multiplier))
+        local perk = perk_spawn(x, y, "UNLIMITED_SPELLS")
+        perk_pickup(perk, player, EntityGetName(perk), false, false)
     end},
-    {"$br_boss_rush_portal_what", function(x, y, player)
-        -- test test
+    {"$br_boss_rush_portal_kolmi", function(x, y, player)
+        nextboss()
+        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_kolmi.png")
+        boss_portal(x, y, "mods/boss_reworks/files/boss_centipede/boss_centipede_active.xml", 0, -50)
+        spawn_wands("mods/boss_reworks/files/boss_rush/wands/kolmi", player)
+        GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(650 * multiplier))
+    end},
+    {"$br_boss_rush_portal_end", function(x, y, player)
+        nextboss()
+        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/endroom.png")
+        GlobalsSetValue("BR_BOSS_RUSH_ACTIVE", "0")
+        AddFlagPersistent("br_boss_rush_completed")
+        GamePrintImportant("$br_boss_rush_end_01", "$br_boss_rush_end_02")
+        if not GameHasFlagRun("br_boss_rush_end") then
+            EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_back.xml", x, y - 50)
+            GameAddFlagRun("br_boss_rush_end")
+        end
+        local friend = EntityLoad("mods/boss_reworks/files/boss_rush/bff.xml")
+        EntityLoadToEntity("data/entities/misc/effect_charm.xml", friend)
     end},
 }
-local debug_load_specific_room = "$br_boss_rush_portal_squidward"
+local debug_load_specific_room = nil
 
 function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x, to_y )
     local name = EntityGetName(GetUpdatedEntityID())
@@ -318,7 +337,7 @@ function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x,
         for i = 1, #Bosses do
             if Bosses[i][1] == name then
                 Bosses[i][2](to_x, to_y, entity_that_was_teleported)
-                GlobalsSetValue("BR_BOSS_RUSH_PORTAL_NEXT", Bosses[i + 1][1] or "")
+                GlobalsSetValue("BR_BOSS_RUSH_PORTAL_NEXT", (Bosses[i + 1] or Bosses[i])[1])
                 GlobalsSetValue("BR_BOSS_RUSH_HP_LEFT", GlobalsGetValue("BR_BOSS_RUSH_HP_MAX"))
             end
         end

@@ -188,5 +188,5 @@ if phase == 4 then attacks = { thundercharge, effectorbs, gigasaws, chainsaw } e
 if phase == 5 then attacks = { spheres, thundercharge, gigasaws, chainsaw } end
 if phase == 6 then attacks = { effectorbs, chaingun, spheres, thundercharge, gigasaws, chainsaw } end
 
-if phase >= 5 and Random(1, 5) == 1 then attacks[attacks + 1] = earthquake end
+if phase >= 5 and Random(1, 5) == 1 then attacks[#attacks + 1] = earthquake end
 attacks[Random(1, #attacks)]()
