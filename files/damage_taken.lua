@@ -19,10 +19,11 @@ function damage_received( damage, message, entity_thats_responsible, is_fatal, p
         local fake_hp = old_fake_hp - damage
         GlobalsSetValue("BR_BOSS_RUSH_HP_LEFT", tostring(math.min(max, fake_hp * multiplier)))
         if fake_hp <= 0 then
+            local x, y = 6400, 50025
             EntityAddRandomStains(me, CellFactory_GetType("boss_reworks_unstainer"), 2000)
-            EntitySetTransform(me, 6400, 50025)
-            EntityApplyTransform(me, 6400, 50025)
-            GameSetCameraPos(6400, 50025)
+            EntitySetTransform(me, x, y)
+            EntityApplyTransform(me, x, y)
+            GameSetCameraPos(x, y)
             SetTimeOut(0.08, "mods/boss_reworks/files/damage_taken.lua", "turn_off_the_thingy")
             SetRandomSeed(GameGetFrameNum() + damage, GameGetFrameNum() + 24085)
             GamePrintImportant("$br_boss_rush_death_0", "$br_boss_rush_death_1")
@@ -45,6 +46,33 @@ function damage_received( damage, message, entity_thats_responsible, is_fatal, p
 
             dofile_once("data/scripts/perks/perk.lua")
             IMPL_remove_all_perks(me)
+            local projectiles = EntityGetWithTag("projectile") or {} -- this will cause no issues
+            for i = 1, #projectiles do
+                local comps = EntityGetComponent(projectiles[i], "ProjectileComponent") or {}
+                for j = 1, #comps do
+                    ComponentSetValue2(comps[j], "on_death_explode", false)
+                    ComponentSetValue2(comps[j], "on_lifetime_out_explode", false)
+                    ComponentObjectSetValue2(comps[j], "config_explosion", "damage", 0)
+                    ComponentObjectSetValue2(comps[j], "config_explosion", "hole_enabled", false)
+                    ComponentObjectSetValue2(comps[j], "config_explosion", "explosion_radius", 0)
+                end
+                local what = EntityGetComponent(projectiles[i], "ExplodeOnDamageComponent") or {}
+                for j = 1, #what do
+                    ComponentSetValue2(what[j], "explode_on_death_percent", 0)
+                    ComponentObjectSetValue2(what[j], "config_explosion", "damage", 0)
+                    ComponentObjectSetValue2(what[j], "config_explosion", "hole_enabled", false)
+                    ComponentObjectSetValue2(what[j], "config_explosion", "explosion_radius", 0)
+                end
+                local why = EntityGetComponent(projectiles[i], "ExplosionComponent") or {}
+                for j = 1, #why do
+                    ComponentObjectSetValue2(why[j], "config_explosion", "damage", 0)
+                    ComponentObjectSetValue2(why[j], "config_explosion", "hole_enabled", false)
+                    ComponentObjectSetValue2(why[j], "config_explosion", "explosion_radius", 0)
+                end
+                EntitySetTransform(projectiles[i], x, y)
+                EntityApplyTransform(projectiles[i], x, y)
+                EntityKill(projectiles[i])
+            end
             return
         end
         if damage > 0 then
