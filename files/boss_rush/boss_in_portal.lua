@@ -1,5 +1,6 @@
 local comp = EntityGetFirstComponent(GetUpdatedEntityID(), "VariableStorageComponent")
 local x, y = EntityGetTransform(GetUpdatedEntityID())
+local calamari = GlobalsGetValue("BR_MODE", "0") == "calamari"
 if comp then
     local thing = ComponentGetValue2(comp, "value_string")
     local eid = EntityLoad(thing, x, y)
@@ -19,7 +20,7 @@ if comp then
             ComponentSetValue2(comps[i], "materials_damage", false)
 
             local name = string.gsub(EntityGetName(eid), "%$", "") -- format like GameAddFlagRun("br_killed_animal_boss_pit")
-            if not GameHasFlagRun("br_killed_" .. name) then
+            if not GameHasFlagRun("br_killed_" .. name) and not calamari then
                 ComponentSetValue2(comps[i], "hp", ComponentGetValue2(comps[i], "hp") * 1.2)
                 ComponentSetValue2(comps[i], "max_hp", ComponentGetValue2(comps[i], "max_hp") * 1.2)
             end
@@ -29,7 +30,7 @@ if comp then
             ComponentRemoveTag(comps[i], "magic_eye")
         end
         -- put this at the bottom, else it errors after removed
-        if ComponentGetTypeName(comps[i]) == "LuaComponent" then
+        if ComponentGetTypeName(comps[i]) == "LuaComponent" and not calamari then
             if ComponentGetValue2(comps[i], "script_death") and string.len(ComponentGetValue2(comps[i], "script_death")) > 0 then
                 EntityRemoveComponent(eid, comps[i])
             end

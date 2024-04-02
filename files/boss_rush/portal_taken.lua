@@ -2,6 +2,7 @@ local multiplier = 100 -- multiply it before storing cause shoving a float into 
 local max = 100 * multiplier
 dofile_once("data/scripts/perks/perk.lua")
 
+local mode = GlobalsGetValue("BR_MODE", "0")
 local function aaaaaa(entity)
     if EntityGetComponentIncludingDisabled(entity, "ItemComponent") ~= nil and not EntityHasTag(entity, "card_action") then
         EntityRemoveFromParent(entity)
@@ -218,7 +219,11 @@ Bosses = {
             if ui then
                 ComponentSetValue2(ui, "name", name)
             end
-            EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_out.xml", x - 130, y - 60)
+            if mode ~= "bossrush" then
+                EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_out.xml", x - 130, y - 60)
+            else
+                EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_spawn.xml", x - 130, y - 60)
+            end
         end
     end},
     {"$br_boss_rush_portal_pyramid", function(x, y, player)
@@ -335,11 +340,16 @@ function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x,
     end
     if (EntityHasTag(entity_that_was_teleported, "player_unit") or EntityHasTag(entity_that_was_teleported, "polymorphed_player")) then
         EntityAddRandomStains(entity_that_was_teleported, CellFactory_GetType("boss_reworks_unstainer"), 2000)
-        for i = 1, #Bosses do
-            if Bosses[i][1] == name then
-                Bosses[i][2](to_x, to_y, entity_that_was_teleported)
-                GlobalsSetValue("BR_BOSS_RUSH_PORTAL_NEXT", (Bosses[i + 1] or Bosses[i])[1])
-                GlobalsSetValue("BR_BOSS_RUSH_HP_LEFT", GlobalsGetValue("BR_BOSS_RUSH_HP_MAX"))
+        if mode == "calamari" then
+            load_scene(to_x, to_y, "mods/boss_reworks/files/boss_rush/rooms/arena_squidward.png")
+            boss_portal(to_x, to_y, "data/entities/animals/boss_pit/boss_pit.xml", 0, -30)
+        else
+            for i = 1, #Bosses do
+                if Bosses[i][1] == name then
+                    Bosses[i][2](to_x, to_y, entity_that_was_teleported)
+                    GlobalsSetValue("BR_BOSS_RUSH_PORTAL_NEXT", (Bosses[i + 1] or Bosses[i])[1])
+                    GlobalsSetValue("BR_BOSS_RUSH_HP_LEFT", GlobalsGetValue("BR_BOSS_RUSH_HP_MAX"))
+                end
             end
         end
     end

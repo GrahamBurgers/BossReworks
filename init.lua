@@ -21,12 +21,15 @@ translations = translations .. new_translations
 translations = translations:gsub("\r", ""):gsub("\n\n", "\n")
 ModTextFileSetContent("data/translations/common.csv", translations)
 
-local content = ModTextFileGetContent("data/biome/_pixel_scenes.xml")
-content = content:gsub("<mBufferedPixelScenes>", [[<mBufferedPixelScenes>
-  <PixelScene pos_x="10496" pos_y="4352" just_load_an_entity="mods/boss_reworks/files/boss_rush/rooms/portal_space.xml" />
-  <PixelScene pos_x="10496" pos_y="4352" just_load_an_entity="mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_in.xml" />
-]])
-ModTextFileSetContent("data/biome/_pixel_scenes.xml", content) -- mostly functional
+local mode = tostring(ModSettingGet("boss_reworks.mode"))
+if mode ~= "calamari" then
+	local content = ModTextFileGetContent("data/biome/_pixel_scenes.xml")
+	content = content:gsub("<mBufferedPixelScenes>", [[<mBufferedPixelScenes>
+	<PixelScene pos_x="10496" pos_y="4352" just_load_an_entity="mods/boss_reworks/files/boss_rush/rooms/portal_space.xml" />
+	<PixelScene pos_x="10496" pos_y="4352" just_load_an_entity="mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_in.xml" />
+	]])
+	ModTextFileSetContent("data/biome/_pixel_scenes.xml", content) -- mostly functional
+end
 
 function OnPlayerSpawned(player)
 	if not GameHasFlagRun("boss_reworks_init") then
@@ -41,6 +44,18 @@ function OnPlayerSpawned(player)
 		local worldstate = GameGetWorldStateEntity()
 		local child = EntityCreateNew("br_soul_storage")
 		EntityAddChild(worldstate, child)
+
+		GlobalsSetValue("BR_MODE", mode)
+		if mode == "calamari" or mode == "bossrush" then
+			local x, y = EntityGetTransform(player)
+			local portal = EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_in.xml", x, y)
+			EntityAddComponent(portal, "LifetimeComponent", {lifetime=120})
+		end
+		if mode == "powerful" then
+			EntityAddComponent2(player, "LuaComponent", {
+				script_source_file="mods/boss_reworks/files/boss_armor_init.lua"
+			})
+		end
 	end
 end
 

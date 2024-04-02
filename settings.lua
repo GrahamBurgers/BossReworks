@@ -27,6 +27,14 @@ mod_settings =
 		scope = MOD_SETTING_SCOPE_RUNTIME,
 	},
 	{
+		id = "mode",
+		ui_name = "Mode",
+		ui_description = "Silly bonus modifiers.\nCalamari: Spawn in Squidward's Boss Rush arena with just your starting gear.\nBoss Rush: Spawn in Boss Rush.\nPowerful: YOU have boss armor. Very untested.",
+		value_default = "normal",
+		values = { {"normal","Normal"}, {"calamari","Calamari"}, {"bossrush","Boss Rush"}, {"powerful","Powerful"} },
+		scope = MOD_SETTING_SCOPE_NEW_GAME,
+	},
+	{
 		category_id = "specific_bosses",
 		ui_name = "List of reworks",
 		ui_description = "Toggle reworks for specific bosses.\nTurning off a boss's rework will forfeit their unique spell drops.\nPlease don't disable a boss's rework before you've fought the reworked boss at least once, OK?",

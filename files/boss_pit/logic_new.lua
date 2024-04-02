@@ -182,8 +182,8 @@ end
 -- how many attacks is reasonable to have? some should probably not involve wands
 local attacks = {}
 if phase == 1 then attacks = { bb, missile } end
-if phase == 2 then attacks = { spheres, thundercharge } end
-if phase == 3 then attacks = { gigasaws, effectorbs, chainsaw } end
+if phase == 2 then attacks = { gigasaws, thundercharge } end
+if phase == 3 then attacks = { spheres, effectorbs, chainsaw } end
 if phase == 4 then attacks = { thundercharge, effectorbs, gigasaws, chainsaw } end
 if phase == 5 then attacks = { spheres, thundercharge, gigasaws, chainsaw } end
 if phase == 6 then attacks = { effectorbs, chaingun, spheres, thundercharge, gigasaws, chainsaw } end

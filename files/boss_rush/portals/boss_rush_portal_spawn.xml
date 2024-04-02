@@ -1,0 +1,16 @@
+<Entity name="$br_boss_rush_portal_pyramid" tags="boss_reworks_boss_rush">
+
+	<Base file="mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_out.xml" >
+		<UIInfoComponent
+			name="$br_boss_rush_portal_out"
+		></UIInfoComponent>
+
+		<TeleportComponent
+			target_x_is_absolute_position="1"
+			target_y_is_absolute_position="1"
+			target.x="227"
+			target.y="-80"
+		></TeleportComponent>
+	</Base>
+
+</Entity>
