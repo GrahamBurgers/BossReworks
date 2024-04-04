@@ -8,15 +8,4 @@ if not whoshot or not EntityHasTag(whoshot, "player_unit") or EntityHasTag(whosh
     GamePlaySound("data/audio/Desktop/ui.bank", "ui/button_denied", x, y)
     return
 end
-local worms = {
-    "mods/boss_reworks/files/spells/tiny/worm.xml",
-    -- "mods/boss_reworks/files/spells/tiny/worm_ghost.xml",
-    -- "mods/boss_reworks/files/spells/tiny/worm_hell.xml",
-}
-SetRandomSeed(me + GameGetFrameNum(), whoshot + 24950)
-for i = 1, #worms do
-    if Random(1, 4) > 1 or i == #worms then
-        LoadGameEffectEntityTo(whoshot, worms[i])
-        return
-    end
-end
+LoadGameEffectEntityTo(whoshot, "mods/boss_reworks/files/spells/tiny/worm.xml")

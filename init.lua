@@ -56,6 +56,9 @@ function OnPlayerSpawned(player)
 				script_source_file="mods/boss_reworks/files/boss_armor_init.lua"
 			})
 		end
+		if mode == "Wormy" then
+			LoadGameEffectEntityTo(player, "mods/boss_reworks/files/spells/tiny/worm.xml")
+		end
 	end
 end
 

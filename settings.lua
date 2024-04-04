@@ -64,9 +64,9 @@ mod_settings =
 		not_setting = true,
 		scope = MOD_SETTING_SCOPE_NEW_GAME,
 		ui_fn = function(mod_id, gui, in_main_menu, im_id, setting)
-			copypaste("mode", gui, {"Normal", "Calamari", "Boss Rush", "Powerful", "Shuffle"}, im_id, 0,
+			copypaste("mode", gui, {"Normal", "Calamari", "Boss Rush", "Powerful", "Shuffle", "Wormy"}, im_id, 0,
 			"Mode: ",
-			"Silly bonus run modifiers. Not for use in traditional runs.\nCalamari: Spawn in the Wand Connoisseur's Boss Rush arena with just your starting gear.\nBoss Rush: Spawn in Boss Rush.\nPowerful: YOU have boss armor. Very untested.\nShuffle: Boss soul drops are shuffled."
+			"Silly bonus run modifiers. Not for use in traditional runs.\nCalamari: Spawn in the Wand Connoisseur's Boss Rush arena with just your starting gear.\nBoss Rush: Spawn in Boss Rush.\nPowerful: YOU have boss armor. Very untested.\nShuffle: Boss soul drops are shuffled.\nWormy: You're a worm. Keep a combo going or you die."
 			)
 		end
 	},

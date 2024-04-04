@@ -30,7 +30,7 @@ if comp then
             ComponentRemoveTag(comps[i], "magic_eye")
         end
         -- put this at the bottom, else it errors after removed
-        if ComponentGetTypeName(comps[i]) == "LuaComponent" and not mode == "Calamari" then
+        if ComponentGetTypeName(comps[i]) == "LuaComponent" and mode ~= "Calamari" then
             if ComponentGetValue2(comps[i], "script_death") and string.len(ComponentGetValue2(comps[i], "script_death")) > 0 then
                 EntityRemoveComponent(eid, comps[i])
             end

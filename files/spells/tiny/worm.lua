@@ -3,6 +3,7 @@ local worm = EntityGetRootEntity(me)
 local comp = GetUpdatedComponentID()
 local dmg = EntityGetFirstComponent(worm, "DamageModelComponent")
 local wormcomp = EntityGetFirstComponent(worm, "WormComponent")
+local wormy = GlobalsGetValue("BR_MODE", "0") == "Wormy"
 if ComponentGetValue2(comp, "mTimesExecuted") == 1 then
     EntityAddTag(worm, "br_worm_combo_entity")
     GlobalsSetValue("BR_WORM_COMBO", "600")
@@ -43,8 +44,8 @@ if ComponentGetValue2(comp, "mTimesExecuted") == 1 then
 else
     local amount = tonumber(GlobalsGetValue("BR_WORM_COMBO", "0")) or 0
     local max = tonumber(GlobalsGetValue("BR_WORM_COMBO_MAX", "0"))
-    amount = amount - 1.2
-    max = max - 0.5
+    amount = amount - 1.0
+    max = max - 0.4
     if dmg then
         local hp = ComponentGetValue2(dmg, "hp")
         local max_hp = ComponentGetValue2(dmg, "max_hp")
@@ -61,7 +62,15 @@ else
     GlobalsSetValue("BR_WORM_COMBO", tostring(amount))
     GlobalsSetValue("BR_WORM_COMBO_MAX", tostring(max))
     local cid = GameGetGameEffect(worm, "POLYMORPH")
-    if cid and amount > 0 then
-        ComponentSetValue2(cid, "frames", 2)
+    if cid then
+        if amount > 0 then
+            ComponentSetValue2(cid, "frames", 2)
+        elseif wormy and GameGetFrameNum() > 60 then
+            if dmg then
+                ComponentSetValue2(dmg, "wait_for_kill_flag_on_death", false)
+                EntityInflictDamage(worm, 399.96, "DAMAGE_OVEREATING", "$br_wormy_death", "BLOOD_EXPLOSION", 0, 0, worm)
+            end
+            EntityKill(worm)
+        end
     end
 end
