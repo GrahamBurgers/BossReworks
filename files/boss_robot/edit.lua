@@ -47,7 +47,8 @@ inject(args.SS,modes.R,"data/entities/animals/boss_robot/rocket.xml", 'create_ce
 inject(args.SS,modes.P,"data/entities/animals/boss_robot/death.lua", 'AddFlagPersistent( "miniboss_robot" )', [[
 	if not GameHasFlagRun("br_killed_animal_boss_robot") then
 		GameAddFlagRun("br_killed_animal_boss_robot")
-		CreateItemActionEntity("BR_REWARD_ROBOT", x, y - 20)
+		dofile_once("mods/boss_reworks/files/soul_things.lua")
+		CreateItemActionEntity(Soul("BR_REWARD_ROBOT"), x, y - 20)
 	end
 
 ]])

@@ -9,4 +9,5 @@ make_wand_from_gun_data( gun, entity_id, 4 )
 
 -- if it's possible for the wand to generate with less than 2 slots then I will be very sad
 AddGunAction(entity_id, "BR_LONGTELETRIGGER")
-AddGunAction(entity_id, "BR_REWARD_LIMBS")
+dofile_once("mods/boss_reworks/files/soul_things.lua")
+AddGunAction(entity_id, Soul("BR_REWARD_LIMBS"))

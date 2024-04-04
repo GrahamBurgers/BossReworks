@@ -28,6 +28,7 @@ ModTextFileSetContent(path, tostring(tree))
 inject(args.SS,modes.P,"data/scripts/animals/boss_dragon_death.lua", 'for i=1,count do', [[
 	if not GameHasFlagRun("br_killed_animal_boss_dragon") then
 		GameAddFlagRun("br_killed_animal_boss_dragon")
-		CreateItemActionEntity("BR_REWARD_DRAGON", pos_x + 16, pos_y)
+		dofile_once("mods/boss_reworks/files/soul_things.lua")
+		CreateItemActionEntity(Soul("BR_REWARD_DRAGON"), pos_x, pos_y)
 	end
 ]])

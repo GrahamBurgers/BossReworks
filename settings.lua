@@ -12,7 +12,30 @@ function mod_setting_bool_custom( mod_id, gui, in_main_menu, im_id, setting )
 end
 
 function mod_setting_change_callback( mod_id, gui, in_main_menu, setting, old_value, new_value  )
-	print( tostring(new_value) )
+end
+
+local function copypaste(setting, gui, options, im_id, offset_x, name, desc)
+	local id = "boss_reworks." .. setting
+	local id_fake = "boss_reworks.fake_" .. setting
+	GuiLayoutBeginHorizontal(gui, 0, 0, false, 0, 0)
+	local current = ModSettingGet(id_fake)
+
+	GuiColorSetForNextWidget(gui, 0.8, 0.8, 0.8, 0.6)
+	GuiText(gui, offset_x, 0, name)
+	GuiTooltip(gui, desc, "")
+
+	local lmb, rmb = GuiButton(gui, im_id, 0, 0, tostring(options[current]))
+	if lmb then
+		local next = (current % #options) + 1
+		ModSettingSet(id_fake, next)
+		ModSettingSet(id, options[next])
+	end
+	if rmb then
+		local next = 1
+		ModSettingSet(id_fake, next)
+		ModSettingSet(id, options[next])
+	end
+	GuiLayoutEnd(gui)
 end
 
 local mod_id = "boss_reworks" -- This should match the name of your mod's folder.
@@ -21,18 +44,31 @@ mod_settings =
 {
 	{
 		id = "boss_armor",
-		ui_name = "Boss armor",
-		ui_description = "Boss armor makes bosses more fair by making it less effective to deal massive amounts of damage at once.\nThis creates a more fair fight and ensures the boss will survive for long enough to do a few attacks.\nYou can turn this off if you want but it will make me sad.",
+		ui_name = "",
+		ui_description = "",
 		value_default = true,
+		not_setting = true,
 		scope = MOD_SETTING_SCOPE_RUNTIME,
+		ui_fn = function(mod_id, gui, in_main_menu, im_id, setting)
+			copypaste("boss_armor", gui, {true, false}, im_id, 0,
+			"Boss armor: ",
+			"Boss armor makes bosses more fair by making it less effective to deal massive amounts of damage at once.\nThis creates a more fair fight and ensures the boss will survive for long enough to do a few attacks.\nYou can turn this off if you want but it will make me sad.\nAll reworked bosses have boss armor by default."
+			)
+		end
 	},
 	{
 		id = "mode",
-		ui_name = "Mode",
-		ui_description = "Silly bonus modifiers.\nCalamari: Spawn in Squidward's Boss Rush arena with just your starting gear.\nBoss Rush: Spawn in Boss Rush.\nPowerful: YOU have boss armor. Very untested.",
-		value_default = "normal",
-		values = { {"normal","Normal"}, {"calamari","Calamari"}, {"bossrush","Boss Rush"}, {"powerful","Powerful"} },
+		ui_name = "",
+		ui_description = "",
+		value_default = "Normal",
+		not_setting = true,
 		scope = MOD_SETTING_SCOPE_NEW_GAME,
+		ui_fn = function(mod_id, gui, in_main_menu, im_id, setting)
+			copypaste("mode", gui, {"Normal", "Calamari", "Boss Rush", "Powerful", "Shuffle"}, im_id, 0,
+			"Mode: ",
+			"Silly bonus run modifiers. Not for use in traditional runs.\nCalamari: Spawn in the Wand Connoisseur's Boss Rush arena with just your starting gear.\nBoss Rush: Spawn in Boss Rush.\nPowerful: YOU have boss armor. Very untested.\nShuffle: Boss soul drops are shuffled."
+			)
+		end
 	},
 	{
 		category_id = "specific_bosses",
@@ -43,73 +79,143 @@ mod_settings =
 			-- also todo: is it even worth explaining the reworks here? might be better off linking to a wiki page
 			{
 				id = "rework_limbs",
-				ui_name = "Pyramid Boss",
-				ui_description = "Rework the Pyramid Boss (Kolmisilmän Koipi).\nThis grants it a new Path of Dark Flame attack, allows it to consume its\nminions for benefits, and allows its orb projectiles to travel through walls.\nAnti-cheese: The boss can no longer be frozen, or damaged while its insides are not exposed.",
+				ui_name = "",
+				ui_description = "",
 				value_default = true,
+				not_setting = true,
 				scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
+				ui_fn = function(mod_id, gui, in_main_menu, im_id, setting)
+					copypaste("rework_limbs", gui, {true, false}, im_id, 5,
+					"Pyramid Boss: ",
+					"Rework the Pyramid Boss (Kolmisilmän Koipi).\nThis grants the boss 2 new abilities and makes its minions tougher.\nAnti-cheese: The boss can no longer be frozen, or damaged while its insides are not exposed."
+					)
+				end
 			},
 			{
 				id = "rework_dragon",
-				ui_name = "Dragon",
-				ui_description = "Rework the Dragon (Suomuhauki).\nThis makes its tail orbs more bouncy, changes the fire breath\nto be more interesting, and gives it a new projectile attack.\nAnti-cheese: The boss can no longer be frozen.",
+				ui_name = "",
+				ui_description = "",
 				value_default = true,
+				not_setting = true,
 				scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
+				ui_fn = function(mod_id, gui, in_main_menu, im_id, setting)
+					copypaste("rework_dragon", gui, {true, false}, im_id, 5,
+					"Dragon: ",
+					"Rework the Dragon (Suomuhauki).\nThis grants the boss 1 new ability, and modifies 2 of its existing abilities.\nAnti-cheese: The boss can no longer be frozen."
+					)
+				end
 			},
 			{
 				id = "rework_alchemist",
-				ui_name = "High Alchemist",
-				ui_description = "Rework the High Alchemist (Ylialkemisti).\nThis changes its shield to be more useful but less common, makes the bouncing\nwand projectile last longer, and gives it a new projectile attack.\nAnti-cheese: The boss can no longer be damaged by any means while its shield is up.",
+				ui_name = "",
+				ui_description = "",
 				value_default = true,
+				not_setting = true,
 				scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
+				ui_fn = function(mod_id, gui, in_main_menu, im_id, setting)
+					copypaste("rework_alchemist", gui, {true, false}, im_id, 5,
+					"High Alchemist: ",
+					"Rework the High Alchemist (Ylialkemisti).\nThis grants the boss 1 new ability, and modifies 2 of its existing abilities.\nVulnerabilities: The boss takes more slice and projectile damage.\nAnti-cheese: The boss can no longer be damaged by any means while its shield is up."
+					)
+				end
 			},
 			{
 				id = "rework_gate",
-				ui_name = "Gate Guardians",
-				ui_description = "Rework the Gate Guardians (Veska, Molari, Mokke, Seula).\nThis gives them two new projectile attacks:\nOne that is more powerful with more segments and one that is more powerful with less.\nAnti-cheese: The boss can no longer be killed by destroying its physics body.",
+				ui_name = "",
+				ui_description = "",
 				value_default = true,
+				not_setting = true,
 				scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
+				ui_fn = function(mod_id, gui, in_main_menu, im_id, setting)
+					copypaste("rework_gate", gui, {true, false}, im_id, 5,
+					"Gate Guardians: ",
+					"Rework the Gate Guardians (Veska, Molari, Mokke, Seula).\nThis grants the boss 2 new abilities and modifies 1 of its existing abilities.\nVulnerabilities: The boss takes more projectile damage.\nAnti-cheese: The boss's physics body can no longer be destroyed by most means."
+					)
+				end
 			},
 			{
 				id = "rework_fish",
-				ui_name = "Leviathan",
-				ui_description = "Rework the Leviathan (Syväolento).\nThis makes the boss more vulnerable to projectile and explosion damage,\nand grants it two new attacks that interact with the battle environment.\nAnti-cheese: The boss can no longer damage itself.",
+				ui_name = "",
+				ui_description = "",
 				value_default = true,
+				not_setting = true,
 				scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
+				ui_fn = function(mod_id, gui, in_main_menu, im_id, setting)
+					copypaste("rework_fish", gui, {true, false}, im_id, 5,
+					"Leviathan: ",
+					"Rework the Leviathan (Syväolento).\nThis grants the boss 2 new abilities and modifies 2 of its existing abilities.\nVulnerabilities: The boss takes more projectile and explosion damage.\nAnti-cheese: The boss can no longer damage itself."
+					)
+				end
 			},
 			{
 				id = "rework_ghost",
-				ui_name = "Forgotten",
-				ui_description = "Rework the Forgotten (Unohdettu).\nThis gives the boss a teleport ability, makes the minions more useful, and makes the\nplasma activate faster without damaging the environment (or your Paha Silmä).\nAnti-cheese: The boss no longer takes damage from acid.",
+				ui_name = "",
+				ui_description = "",
 				value_default = true,
+				not_setting = true,
 				scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
+				ui_fn = function(mod_id, gui, in_main_menu, im_id, setting)
+					copypaste("rework_ghost", gui, {true, false}, im_id, 5,
+					"Forgotten: ",
+					"Rework the Forgotten (Unohdettu).\nThis grants the boss 1 new ability and modifies 1 of its existing abilities, as well as making its minions tougher.\nAnti-cheese: The boss no longer takes damage from acid."
+					)
+				end
 			},
 			{
 				id = "rework_robot",
-				ui_name = "Mecha-Kolmi",
-				ui_description = "Rework Mecha-Kolmi (Kolmisilmän silmä).\nThis gives the boss an attractive beam ability, while making the missiles less\ndangerous and making the boss more vulnerable to projectile and explosion damage.\nAnti-cheese: The boss can no longer be frozen.",
+				ui_name = "",
+				ui_description = "",
 				value_default = true,
+				not_setting = true,
 				scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
+				ui_fn = function(mod_id, gui, in_main_menu, im_id, setting)
+					copypaste("rework_robot", gui, {true, false}, im_id, 5,
+					"Mecha-Kolmi: ",
+					"Rework Mecha-Kolmi (Kolmisilmän silmä).\nThis grants the boss 1 new ability and modifies 1 of its existing abilities.\nVulnerabilities: The boss takes more projectile and explosion damage, and takes less holy damage.\nAnti-cheese: The boss can no longer be frozen."
+					)
+				end
 			},
 			{
 				id = "rework_wizard",
-				ui_name = "Master of Masters",
-				ui_description = "Rework the Master of Masters (Mestarien mestari).\nThis makes the boss's status effects more fair and interesting, and grants\nthe boss some new abilities in all 3 phases.\nAnti-cheese: The boss no longer takes damage from acid, and ambrosia is less effective.",
+				ui_name = "",
+				ui_description = "",
 				value_default = true,
+				not_setting = true,
 				scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
+				ui_fn = function(mod_id, gui, in_main_menu, im_id, setting)
+					copypaste("rework_wizard", gui, {true, false}, im_id, 5,
+					"Master of Masters: ",
+					"Rework the Master of Masters (Mestarien mestari).\nThis grants the boss 1 new ability and modifies 4 of its existing abilities.\nVulnerabilities: The purple death orbs now take 80% damage instead of 50% from most types.\nAnti-cheese: The boss no longer takes damage from acid, and ambrosia is less effective."
+					)
+				end
 			},
 			{
 				id = "rework_pit",
-				ui_name = "Squidward",
-				ui_description = "Rework Squidward (Sauvojen Tuntija).\nThis hrrnggngngng",
+				ui_name = "",
+				ui_description = "",
 				value_default = true,
+				not_setting = true,
 				scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
+				ui_fn = function(mod_id, gui, in_main_menu, im_id, setting)
+					copypaste("rework_pit", gui, {true, false}, im_id, 5,
+					"Connoisseur of Wands: ",
+					"Rework the Connoisseur of Wands (Sauvojen Tuntija).\nThis overhauls basically the entire boss.\nAnti-cheese: Ambrosia is less effective, and don't even bother trying any shenanigans with tablets."
+					)
+				end
 			},
 			{
 				id = "rework_tiny",
-				ui_name = "Tiny",
-				ui_description = "Rework Tiny (Limatoukka).\nThis.",
+				ui_name = "",
+				ui_description = "",
 				value_default = true,
+				not_setting = true,
 				scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
+				ui_fn = function(mod_id, gui, in_main_menu, im_id, setting)
+					copypaste("rework_tiny", gui, {true, false}, im_id, 5,
+					"Tiny: ",
+					"Rework Tiny (Limatoukka).\nThis does nothing special, but grants boss armor.\nThis is subject to change in the future!"
+					)
+				end
 			},
 		},
 	},

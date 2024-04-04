@@ -219,7 +219,7 @@ Bosses = {
             if ui then
                 ComponentSetValue2(ui, "name", name)
             end
-            if mode ~= "bossrush" then
+            if mode ~= "Boss Rush" then
                 EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_out.xml", x - 130, y - 60)
             else
                 EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_spawn.xml", x - 130, y - 60)
@@ -340,7 +340,7 @@ function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x,
     end
     if (EntityHasTag(entity_that_was_teleported, "player_unit") or EntityHasTag(entity_that_was_teleported, "polymorphed_player")) then
         EntityAddRandomStains(entity_that_was_teleported, CellFactory_GetType("boss_reworks_unstainer"), 2000)
-        if mode == "calamari" then
+        if mode == "Calamari" then
             load_scene(to_x, to_y, "mods/boss_reworks/files/boss_rush/rooms/arena_squidward.png")
             boss_portal(to_x, to_y, "data/entities/animals/boss_pit/boss_pit.xml", 0, -30)
         else

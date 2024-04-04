@@ -10,6 +10,7 @@ ModTextFileSetContent(path, tostring(tree))
 inject(args.SS,modes.P,"data/entities/animals/maggot_tiny/death.lua", 'GameAddFlagRun( "miniboss_maggot" )', [[
 	if not GameHasFlagRun("br_killed_animal_maggot_tiny") then
 		GameAddFlagRun("br_killed_animal_maggot_tiny")
-		CreateItemActionEntity("BR_REWARD_TINY", pos_x, pos_y)
+		dofile_once("mods/boss_reworks/files/soul_things.lua")
+		CreateItemActionEntity(Soul("BR_REWARD_TINY"), pos_x + 4, pos_y)
 	end
 ]])

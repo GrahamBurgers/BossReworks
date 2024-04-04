@@ -131,6 +131,7 @@ inject(args.SS,modes.A,"data/entities/animals/boss_wizard/death.lua", [[AddFlagP
 
 	if not GameHasFlagRun("br_killed_animal_boss_wizard") then
 		GameAddFlagRun("br_killed_animal_boss_wizard")
-		CreateItemActionEntity("BR_REWARD_MASTER", x + 4, y)
+		dofile_once("mods/boss_reworks/files/soul_things.lua")
+		CreateItemActionEntity(Soul("BR_REWARD_MASTER"), x + 4, y)
 	end
 ]])

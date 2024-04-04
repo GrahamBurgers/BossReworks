@@ -41,7 +41,8 @@ ModTextFileSetContent(path, content)
 inject(args.SS,modes.A,"data/entities/animals/boss_fish/death.lua", [[AddFlagPersistent( "miniboss_fish" )]], [[
 	if not GameHasFlagRun("br_killed_animal_fish_giga") then
 		GameAddFlagRun("br_killed_animal_fish_giga")
-		CreateItemActionEntity("BR_REWARD_LEVI", x, y + 64)
+		dofile_once("mods/boss_reworks/files/soul_things.lua")
+		CreateItemActionEntity(Soul("BR_REWARD_LEVI"), x, y + 64)
 	end
 ]])
 

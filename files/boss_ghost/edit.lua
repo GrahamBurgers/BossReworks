@@ -48,7 +48,8 @@ inject(args.SS,modes.R,"data/entities/animals/boss_ghost/death.lua", 'EntityLoad
     EntityLoad( "data/entities/items/pickup/heart_fullhp.xml", x + 8, y )
     if not GameHasFlagRun("br_killed_animal_boss_ghost") then
 		GameAddFlagRun("br_killed_animal_boss_ghost")
-        CreateItemActionEntity("BR_REWARD_FORGOTTEN", x - 8, y)
+        dofile_once("mods/boss_reworks/files/soul_things.lua")
+		CreateItemActionEntity(Soul("BR_REWARD_FORGOTTEN"), x - 8, y)
     end
 ]])
 inject(args.SS,modes.R,"data/entities/animals/boss_ghost/damage.lua", 'status = status + 1.0', 'status = status + damage * 3\nstatus = math.min( 100, status )')

@@ -1,5 +1,5 @@
 local me = GetUpdatedEntityID()
-if ModSettingGet("boss_reworks.boss_armor") == false then
+if not ModSettingGet("boss_reworks.boss_armor") then
     EntityRemoveComponent(me, GetUpdatedComponentID())
     return
 end

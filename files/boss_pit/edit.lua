@@ -34,6 +34,7 @@ ModTextFileSetContent(path, tostring(tree))
 inject(args.SS,modes.P,"data/entities/animals/boss_pit/boss_pit_death.lua", 'if flag_status then', [[
 	if not GameHasFlagRun("br_killed_animal_boss_pit") then
 		GameAddFlagRun("br_killed_animal_boss_pit")
-		CreateItemActionEntity("BR_REWARD_SQUIDWARD", x, y)
+		dofile_once("mods/boss_reworks/files/soul_things.lua")
+		CreateItemActionEntity(Soul("BR_REWARD_SQUIDWARD"), x, y)
 	end
 ]])

@@ -37,6 +37,7 @@ inject(args.SS,modes.A,"data/entities/animals/boss_gate/gate_monster_death.lua",
 		GameAddFlagRun("br_killed_animal_gate_monster_b")
 		GameAddFlagRun("br_killed_animal_gate_monster_c")
 		GameAddFlagRun("br_killed_animal_gate_monster_d")
-		CreateItemActionEntity("BR_REWARD_GATE", pos_x + 16, pos_y)
+		dofile_once("mods/boss_reworks/files/soul_things.lua")
+		CreateItemActionEntity(Soul("BR_REWARD_GATE"), pos_x + 16, pos_y)
 	end
 ]])

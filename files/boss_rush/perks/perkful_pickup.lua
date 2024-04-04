@@ -9,7 +9,7 @@ function item_pickup( entity_item, entity_who_picked, item_name )
 	    perk_pickup( entity, entity_who_picked, id, false, false, false)
     end
     local mode = GlobalsGetValue("BR_MODE", "0")
-    if mode ~= "bossrush" then
+    if mode ~= "Boss Rush" then
         EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_out.xml", 6270, 49940 + 25)
     else
         EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_spawn.xml", 6270, 49940 + 25)
