@@ -71,6 +71,8 @@ else
                 EntityInflictDamage(worm, 399.96, "DAMAGE_OVEREATING", "$br_wormy_death", "BLOOD_EXPLOSION", 0, 0, worm)
             end
             EntityKill(worm)
+            local score = math.floor(tonumber(GlobalsGetValue("BR_WORM_SCORE", "0")) or 0)
+            GamePrintImportant(GameTextGet("$br_wormpoints_end_1", tostring(score)), "")
         end
     end
 end

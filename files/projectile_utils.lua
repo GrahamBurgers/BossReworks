@@ -36,6 +36,8 @@ end
 
 function ShootProjectileAtEntity(who_shot, entity_file, x, y, to_entity, velocity_multiplier, set_velocity_directly)
 	local ex, ey = EntityGetTransform(to_entity)
+	ex = ex or x
+	ey = ey or y
 	return ShootProjectile(who_shot, entity_file, x, y, ex - x, ey - y, velocity_multiplier, set_velocity_directly)
 end
 
