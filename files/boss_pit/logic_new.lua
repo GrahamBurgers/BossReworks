@@ -5,6 +5,28 @@ local clock = EntityGetFirstComponentIncludingDisabled(me, "VariableStorageCompo
 local player = EntityGetClosestWithTag(x, y, "player_unit") or EntityGetClosestWithTag(x, y, "polymorphed_player") or 0
 if not varsto or not clock or player <= 0 then return end
 dofile_once("mods/boss_reworks/files/projectile_utils.lua")
+local wandcore = EntityGetInRadiusWithTag(x, y, 40, "br_wandcore") or {}
+if #wandcore > 0 then
+	local item = wandcore[1]
+	if EntityGetRootEntity(item) == item then
+		-- eat wandcore
+		GameScreenshake(50)
+		GamePlaySound("data/audio/Desktop/event_cues.bank", "event_cues/rune/create", x, y)
+		ComponentSetValue2(varsto, "value_int", 6)
+		ComponentSetValue2(clock, "value_int", -999)
+		local children = EntityGetAllChildren(me) or {}
+		for i = 1, #children do
+			if EntityGetName(children[i]) == "squid_shield" then
+				EntityKill(children[i])
+			end
+		end
+		EntityAddComponent2(me, "LuaComponent", {
+			execute_every_n_frame=-1,
+			script_death="mods/boss_reworks/files/boss_pit/tinker.lua"
+		})
+		EntityKill(wandcore[1])
+	end
+end
 local phase = ComponentGetValue2(varsto, "value_int")
 local last = ComponentGetValue2(clock, "value_int")
 if last == 0 then

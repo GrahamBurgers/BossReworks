@@ -1,4 +1,4 @@
-dofile( "data/scripts/perks/perk.lua" )
+dofile_once( "data/scripts/perks/perk.lua" )
 
 function item_pickup( entity_item, entity_who_picked, item_name )
     local x, y = EntityGetTransform(entity_who_picked)

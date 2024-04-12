@@ -52,7 +52,7 @@ mod_settings =
 		ui_fn = function(mod_id, gui, in_main_menu, im_id, setting)
 			copypaste("boss_armor", gui, {true, false}, im_id, 0,
 			"Boss armor: ",
-			"Boss armor makes bosses more fair by making it less effective to deal massive amounts of damage at once.\nThis creates a more fair fight and ensures the boss will survive for long enough to do a few attacks.\nYou can turn this off if you want but it will make me sad.\nAll reworked bosses have boss armor by default."
+			"Boss armor makes bosses more fair by making it less effective to deal massive amounts of damage at once.\nThis creates a more fair fight and ensures the boss will survive for long enough to do a few attacks.\nYou can turn this off if you want but it will make me sad.\nAll reworked bosses have boss armor by default, except for Sauvojen Tuntija."
 			)
 		end
 	},

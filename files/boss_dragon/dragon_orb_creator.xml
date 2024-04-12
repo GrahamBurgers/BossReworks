@@ -4,30 +4,23 @@
     ></LifetimeComponent>
 
 	<SpriteParticleEmitterComponent
-		sprite_file="data/particles/purplewhirl_$[1-8].png"
-		sprite_centered="1"
-		delay="0"
-		lifetime="1.5"
-        emissive="1"
-		color.r="0.9" color.g="0.7" color.b="0.25" color.a="0.75"
-		color_change.r="-1" color_change.g="0" color_change.b="0" color_change.a="-0.8"
-		velocity.x="0" velocity.y="0"
-		gravity.x="0" gravity.y="0"
-		velocity_slowdown="0.35"
-		rotation="0"
-		angular_velocity="7.5"
-		render_back="0"
-		use_velocity_as_rotation="0"
-		scale.x="0.01" scale.y="0.01"
-		emission_interval_min_frames="1"
-		emission_interval_max_frames="1"
-		count_min="1" count_max="1"
-		randomize_angular_velocity.min="-3.5"
-		randomize_angular_velocity.max="3.5"
-		randomize_rotation.min="-90"
-		randomize_rotation.max="90"
-		>
-	</SpriteParticleEmitterComponent>
+		sprite_file="mods/boss_reworks/files/boss_dragon/dragon_orb_creator.png"
+        sprite_centered="1"
+        lifetime = "0.8"                    randomize_lifetime.max = "0.4"
+        emission_interval_min_frames = "1"  emission_interval_max_frames = "1"
+        count_min = "1"                     count_max = "1"
+        color.r = "1"                       color_change.r = "-2.50"
+        color.g = "1"                       color_change.g = "-1.50"
+        color.b = "1"                       color_change.b = "-2.5"
+        color.a = "0.75"                    color_change.a = "-0.88"
+        randomize_position.min_x = "-0.44"  randomize_position.max_x = "0.44"
+        randomize_position.min_y = "-0.44"  randomize_position.max_y = "0.44"
+        randomize_velocity.min_x = "-4"     randomize_velocity.max_x = "4"
+        randomize_velocity.min_y = "-4"     randomize_velocity.max_y = "4"
+        randomize_rotation.min = "-90"      randomize_rotation.max         = "90"
+        angular_velocity       = "6.5"      randomize_angular_velocity.min = "-3.5"      randomize_angular_velocity.max = "3.5"
+        scale_velocity.x = "-0.6"           scale_velocity.y = "-0.6"
+    ></SpriteParticleEmitterComponent>
     
 	<ProjectileComponent 
 		_enabled="1" 
