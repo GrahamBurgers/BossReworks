@@ -63,6 +63,17 @@ function OnPlayerSpawned(player)
 end
 
 function OnWorldPreUpdate()
+	if mode == "Regular Armor" then
+		local enemies = EntityGetWithTag("mortal")
+		for i = 1, #enemies do
+			if not EntityHasTag(enemies[i], "br_funny_mode_thing") then
+				EntityAddTag(enemies[i], "br_funny_mode_thing")
+				EntityAddComponent2(enemies[i], "LuaComponent", {
+					script_source_file="mods/boss_reworks/files/boss_armor_init.lua"
+				})
+			end
+		end
+	end
 	if #EntityGetWithTag("br_worm_combo_entity") > 0 then
 		Gui = Gui or GuiCreate()
 		GuiIdPushString(Gui, "br_worm_combo")
