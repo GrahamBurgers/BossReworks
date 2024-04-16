@@ -91,17 +91,19 @@ local function hax_add_the_comps(who, image)
 end
 
 local shape_list = {
-    {"shape_square.png",    250},
-    {"shape_circle.png",    250},
-    {"shape_line.png",      300},
-    {"shape_box.png",       100},
-    {"shape_anvil.png",     1000},
+    {"shape_square.png",       250},
+    {"shape_circle.png",       250},
+    {"shape_line.png",         300},
+    {"shape_box.png",          100},
+    {"shape_anvil.png",        1000},
     -- {"shape_hamis.png", 5},
-    {"shape_chest.png",     1200},
-    {"shape_pillar.png",    2000},
-    {"shape_saw.png",       150},
-    {"shape_bump.png",      150},
-    {"shape_drain.png",     200}
+    {"shape_chest.png",        1200},
+    {"shape_utilitybox.png",   2500},
+    {"shape_pillar.png",       4000},
+    {"shape_saw.png",          150},
+    {"shape_bump.png",         150},
+    {"shape_drain.png",        200},
+    {"shape_kammi.png",        500},
     -- {"shape_triangle.png", 20000},
     -- {"shape_egg.png", 20000},
 }
