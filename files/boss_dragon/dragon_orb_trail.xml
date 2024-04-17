@@ -1,5 +1,5 @@
 <Sprite
- filename="mods/boss_reworks/files/boss_dragon/dragon_orb.png"
+ filename="mods/boss_reworks/files/boss_dragon/dragon_orb_trail.png"
  offset_x="4"
  offset_y="2"
  default_animation="fireball" >

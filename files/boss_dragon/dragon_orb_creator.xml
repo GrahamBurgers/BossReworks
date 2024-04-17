@@ -4,6 +4,7 @@
     ></LifetimeComponent>
 
 	<SpriteParticleEmitterComponent
+        emissive="1"
 		sprite_file="mods/boss_reworks/files/boss_dragon/dragon_orb_creator.png"
         sprite_centered="1"
         lifetime = "0.8"                    randomize_lifetime.max = "0.4"
@@ -36,7 +37,7 @@
 
 	<HomingComponent
 		target_tag="player_unit"
-		homing_targeting_coeff="-5.0"
+		homing_targeting_coeff="-4.0"
 		homing_velocity_multiplier="1"
 	></HomingComponent>
 

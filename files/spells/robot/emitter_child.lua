@@ -23,7 +23,7 @@ local function load_entity_relative(entity, xmove, ymove, dont_poof)
 	end
 end
 
-print(dir)
+-- print(dir)
 
 local functions = {
 	["mods/boss_reworks/files/spells/robot/shape_anvil.png"] = function()
@@ -39,12 +39,12 @@ local functions = {
 		load_entity_relative("data/entities/items/pickup/evil_eye.xml", 0, -70, false)
 	end,
 	["mods/boss_reworks/files/spells/robot/shape_utilitybox.png"] = function()
-		load_entity_relative("data/entities/items/pickup/utility_box.xml", 0, -11)
+		load_entity_relative("data/entities/items/pickup/utility_box.xml", 0, -10)
 	end,
 	["mods/boss_reworks/files/spells/robot/shape_kammi.png"] = function()
 		load_entity_relative("data/entities/props/physics_lantern.xml", -1, -12)
-		load_entity_relative("data/entities/props/furniture_bed.xml", -36, 12)
-		load_entity_relative("data/entities/props/furniture_wood_table.xml", 25, 12)
+		load_entity_relative("data/entities/props/furniture_bed.xml", -36, 22)
+		load_entity_relative("data/entities/props/furniture_wood_table.xml", 25, 22)
 		load_entity_relative("data/entities/props/physics_fungus_acid_small.xml", 41, 25)
 	end,
 }

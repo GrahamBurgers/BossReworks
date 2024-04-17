@@ -16,8 +16,8 @@ if (toggle + 1) % 20 == 0 then
 		dofile_once("mods/boss_reworks/files/projectile_utils.lua")
 		local px, py = EntityGetTransform(player)
 		local theta = math.atan((py - y) / (px - x))
-		theta = theta + ((math.random() > 0.5) and -0.32 or 0.32)
+		theta = theta + ((math.random() > 0.5) and -0.25 or 0.25)
 		if px < x then theta = theta + math.pi end
-		ShootProjectile(me, "mods/boss_reworks/files/boss_dragon/dragon_orb.xml", x, y, math.cos(theta), math.sin(theta), 0.4)
+		ShootProjectile(me, "mods/boss_reworks/files/boss_dragon/dragon_orb.xml", x, y, math.cos(theta), math.sin(theta), 0.3)
 	end
 end
