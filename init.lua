@@ -1,5 +1,5 @@
 dofile_once("mods/boss_reworks/files/lib/injection.lua")
-local list = { "dragon", "gate", "limbs", "fish", "alchemist", "ghost", "robot", "wizard", "pit", "tiny" }
+local list = { "dragon", "gate", "limbs", "fish", "alchemist", "ghost", "robot", "wizard", "pit", "tiny", "meat" }
 for i = 1, #list do
 	if ModSettingGet("boss_reworks.rework_" .. list[i]) then
 		dofile_once("mods/boss_reworks/files/boss_" .. list[i] .. "/edit.lua")
@@ -10,7 +10,7 @@ ModLuaFileAppend("data/scripts/gun/gun_actions.lua", "mods/boss_reworks/files/sp
 inject(args.SS, modes.R, "data/entities/items/pickup/test/pouch.xml", 'item_physics', 'item_physics,br_pouch')
 inject(args.SS, modes.R, "data/entities/items/pickup/powder_stash.xml", 'item_physics', 'item_physics,br_pouch')
 inject(args.SS, modes.R, "data/entities/items/orbs/orb_base.xml", 'polymorphable_NOT', 'polymorphable_NOT,br_orb')
-inject(args.SS, modes.R, "data/entities/animals/longleg.xml", '<Entity', '<Entity tags="br_hamis"')
+-- inject(args.SS, modes.R, "data/entities/animals/longleg.xml", '<Entity', '<Entity tags="br_hamis"')
 inject(args.SS, modes.R, "data/entities/items/pickup/musicstone.xml", 'moon_energy', 'moon_energy,br_musicstone')
 inject(args.SS, modes.R, "data/entities/items/pickup/moon.xml", 'moon_energy', 'moon_energy,br_moon')
 inject(args.SS, modes.R, "data/entities/items/pickup/wandstone.xml", 'item_pickup', 'item_pickup,br_wandcore')

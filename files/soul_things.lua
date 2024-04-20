@@ -27,5 +27,8 @@ function Soul(id)
             end
         end
     end
+    if ModSettingGet("boss_reworks.souls") == false then
+        id = "" -- probably errors
+    end
     return id
 end

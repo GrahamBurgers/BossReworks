@@ -19,6 +19,11 @@ local function copypaste(setting, gui, options, im_id, offset_x, name, desc)
 	local id_fake = "boss_reworks.fake_" .. setting
 	GuiLayoutBeginHorizontal(gui, 0, 0, false, 0, 0)
 	local current = ModSettingGet(id_fake)
+	if current == nil then
+		ModSettingSet(id_fake, 1)
+		ModSettingSet(id, options[1])
+		current = 1
+	end
 
 	GuiColorSetForNextWidget(gui, 0.8, 0.8, 0.8, 0.6)
 	GuiText(gui, offset_x, 0, name)
@@ -67,6 +72,20 @@ mod_settings =
 			copypaste("mode", gui, {"Normal", "Boss Rush", "Calamari", "Powerful", "Shuffle", "Wormy", "Regular Armor"}, im_id, 0,
 			"Mode: ",
 			"Silly bonus run modifiers. Not for use in traditional runs. Can't be changed mid-run.\nBoss Rush: Spawn in Boss Rush.\nCalamari: Spawn in the Wand Connoisseur's Boss Rush arena with just your starting gear.\nPowerful: YOU have boss armor. Very untested.\nShuffle: Boss soul drops are shuffled.\nWormy: You're a worm. Keep a combo going or you die.\nRegular Armor: Everything BUT you has boss armor. Very untested."
+			)
+		end
+	},
+	{
+		id = "souls",
+		ui_name = "",
+		ui_description = "",
+		value_default = true,
+		not_setting = true,
+		scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
+		ui_fn = function(mod_id, gui, in_main_menu, im_id, setting)
+			copypaste("souls", gui, {true, false}, im_id, 0,
+			"Souls: ",
+			"Killed bosses will drop their Soul if their rework is enabled.\nSouls are special spells that always and only drop from their respective boss.\nThese aren't just any old projectile spells, though!\nThey have unique effects that aren't explored by any vanilla spells.\nCollect them all!"
 			)
 		end
 	},
@@ -214,6 +233,20 @@ mod_settings =
 					copypaste("rework_tiny", gui, {true, false}, im_id, 5,
 					"Tiny: ",
 					"Rework Tiny (Limatoukka).\nThis does nothing special, but grants boss armor.\nThis is subject to change in the future!"
+					)
+				end
+			},
+			{
+				id = "rework_meat",
+				ui_name = "",
+				ui_description = "",
+				value_default = true,
+				not_setting = true,
+				scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
+				ui_fn = function(mod_id, gui, in_main_menu, im_id, setting)
+					copypaste("rework_meat", gui, {true, false}, im_id, 5,
+					"Meat Boss: ",
+					"Rework the Meat Boss (Kolmisilmän sydän).\nThis does nothing special, but grants boss armor and fixes some cheese.\nThis boss currently does not have a special Soul drop.\nThis is subject to change in the future!"
 					)
 				end
 			},
