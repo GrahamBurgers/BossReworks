@@ -6,6 +6,7 @@
       air_friction="0"
       mass="0"
       liquid_drag="0"
+      displace_liquid="0"
 	  >
     </VelocityComponent>
 	</Base>

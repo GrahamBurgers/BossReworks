@@ -228,6 +228,26 @@ local to_insert = {
 	},
 }
 
+if ModIsEnabled("grahamsperks") then
+	to_insert[#to_insert+1] = {
+		id                  = "BR_WARPTELEDEATHTRIGGER",
+		name                = "$br_spellname_warpteledeathtrigger", -- how long can this be before things start breaking?
+		description         = "$br_spelldesc_warpteledeathtrigger",
+		sprite              = "mods/boss_reworks/files/spells/warp_teleport.png",
+		type                = ACTION_TYPE_PROJECTILE,
+		spawn_level         = "0,1,2",
+		spawn_probability   = "0.6,0.4,0.2",
+		price               = 180,
+		mana                = 65,
+		custom_xml_file     = "mods/grahamsperks/files/spells/teleport_fast_card.xml",
+		related_projectiles = { "mods/grahamsperks/files/spells/teleport_fast.xml" },
+		action              = function()
+			c.fire_rate_wait = c.fire_rate_wait + 35
+			add_projectile_trigger_death("mods/grahamsperks/files/spells/teleport_fast.xml", 1)
+		end,
+	}
+end
+
 local len = #actions
 for i=1, #to_insert do
 	actions[len+i] = to_insert[i]

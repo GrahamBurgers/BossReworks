@@ -11,6 +11,8 @@
         ground_collision_fx="0"
         on_collision_spawn_entity="0"
         play_damage_sounds="0"
+        on_death_explode="0"
+        on_lifetime_out_explode="0"
     ></ProjectileComponent>
 
     <LuaComponent

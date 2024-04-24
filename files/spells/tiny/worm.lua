@@ -13,12 +13,13 @@ if ComponentGetValue2(comp, "mTimesExecuted") == 1 then
         script_source_file="data/scripts/perks/radar.lua"
     })
     EntityAddComponent2(eid, "InheritTransformComponent")
-    EntityAddTag(eid, "boss_reworks_boss_rush")
+    -- EntityAddTag(eid, "boss_reworks_boss_rush") -- ???
     EntityAddChild(worm, eid)
     EntityRemoveTag(worm, "enemy")
     GlobalsSetValue("BR_WORM_SCORE", "0")
     if dmg then
         ComponentSetValue2(dmg, "wait_for_kill_flag_on_death", true)
+        ComponentSetValue2(dmg, "physics_objects_damage", true)
     end
     if wormcomp then
         ComponentSetValue2(wormcomp, "bite_damage", 0)
@@ -31,9 +32,13 @@ if ComponentGetValue2(comp, "mTimesExecuted") == 1 then
             target_tag="mortal",
             damage_type="DAMAGE_MELEE",
             ragdoll_fx="NONE",
-            damage_min=0.6,
-            damage_max=0.6,
+            damage_min=0.8,
+            damage_max=0.8,
         })
+    end
+    local genome = EntityGetFirstComponent(worm, "GenomeDataComponent")
+    if genome then
+        ComponentSetValue2(genome, "herd_id", StringToHerdId("player"))
     end
     local hp1 = EntityGetFirstComponent(worm, "HealthBarComponent")
     if hp1 then EntityRemoveComponent(worm, hp1) end

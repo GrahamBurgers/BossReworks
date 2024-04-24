@@ -324,7 +324,7 @@ Bosses = {
         if not GameHasFlagRun("br_boss_rush_end") then
             EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_out.xml", x, y - 50)
             GameAddFlagRun("br_boss_rush_end")
-            if ModIsEnabled("grahamsperks") then EntityLoad("mods/boss_reworks/files/boss_rush/secretbook.xml", x + 60, y + 10) end
+            EntityLoad("mods/boss_reworks/files/boss_rush/secretbook.xml", x + 60, y + 10)
         end
         local friend = EntityLoad("mods/boss_reworks/files/boss_rush/bff.xml")
         EntityLoadToEntity("data/entities/misc/effect_charm.xml", friend)

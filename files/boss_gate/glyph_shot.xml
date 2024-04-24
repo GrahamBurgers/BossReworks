@@ -6,6 +6,7 @@
       air_friction="0"
 	    mass="0"
       liquid_drag="0"
+      displace_liquid="0"
 	  >
     </VelocityComponent>
 	</Base>
@@ -45,7 +46,7 @@
       create_cell_probability="0"
 	    explosion_sprite_additive="1"
       hole_destroy_liquid="0" 
-      hole_enabled="1" 
+      hole_enabled="0" 
       ray_energy="1300000"
       particle_effect="0" 
       damage_mortals="1"

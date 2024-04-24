@@ -29,10 +29,6 @@
 			effect="REMOVE_FOG_OF_WAR"
 			frames="-1"
 		></GameEffectComponent>
-		<GameEffectComponent 
-			effect="BERSERK"
-			frames="-1"
-		></GameEffectComponent>
 	</Entity>
 
 	<LuaComponent
