@@ -1,0 +1,11 @@
+<Entity>
+
+    <SpriteComponent
+        image_file="mods/boss_reworks/files/boss_rush/perks/perk_storage.png"
+        offset_x="7"
+        offset_y="7"
+        z_index="2"
+        update_transform_rotation="false"
+    ></SpriteComponent>
+
+</Entity>

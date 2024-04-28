@@ -28,6 +28,10 @@ function damage_received( damage, message, entity_thats_responsible, is_fatal, p
             SetRandomSeed(GameGetFrameNum() + damage, GameGetFrameNum() + 24085)
             GamePrintImportant("$br_boss_rush_death_0", "$br_boss_rush_death_1")
             ComponentSetValue2(health, "mFireFramesLeft", 0)
+            local effect, entity = GetGameEffectLoadTo(me, "PROTECTION_ALL", true)
+            EntityAddComponent2(entity, "LifetimeComponent", {
+                lifetime=600,
+            })
             local entities = EntityGetWithTag("boss_reworks_boss_rush") or {}
             for i = 1, #entities do
                 EntitySetComponentsWithTagEnabled(entities[i], "boss_reworks_rush_remove", false)

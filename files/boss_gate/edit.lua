@@ -1,7 +1,7 @@
 local nxml = dofile("mods/boss_reworks/files/lib/nxml.lua")
 local path = "data/entities/animals/boss_gate/gate_monster_a.xml"
 local tree = nxml.parse(ModTextFileGetContent(path))
-tree.attr.tags = tree.attr.tags .. ",polymorphable_NOT"
+tree.attr.tags = tree.attr.tags .. ",polymorphable_NOT,miniboss,music_energy_100"
 table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_armor_init.lua"> </LuaComponent>'))
 table.insert(tree.children,
@@ -27,6 +27,7 @@ for k, v in ipairs(tree.children) do
 	end
 	if v.name == "CellEaterComponent" then
 		v.attr.ignored_material="boss_reworks_gate_monster_rock"
+		v.attr.eat_probability="20"
 	end
 end
 ModTextFileSetContent(path, tostring(tree))

@@ -88,15 +88,7 @@ function steal_player_stuff(player)
 	end
 
     if #perks_to_spawn > 0 then
-        local storage = EntityCreateNew()
-        EntitySetTransform(storage, 6482.5, 50065 + 25)
-        EntityAddComponent2(storage, "SpriteComponent", {
-            image_file="mods/boss_reworks/files/boss_rush/perks/perk_storage.png",
-            offset_x=7,
-            offset_y=7,
-            z_index=2,
-            update_transform_rotation=false,
-        })
+        local storage = EntityLoad("mods/boss_reworks/files/boss_rush/perks/perk_storage.xml", 6482.5, 50065 + 25)
         local thing = tostring(#perks_to_spawn)
         local offset = 2.5
         if string.len(thing) > 1 then offset = 5.5 end
