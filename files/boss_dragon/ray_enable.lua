@@ -8,4 +8,7 @@ for i = 1, #comps do
         local vx, vy = ComponentGetValue2(comps[i], "mVelocity")
         ComponentSetValue2(comps[i], "mVelocity", vx * 20, vy * 20)
     end
+    if ComponentGetTypeName(comps[i]) == "ParticleEmitterComponent" and ComponentGetValue2(comps[i], "emitted_material_name") == "fire" then
+        ComponentSetValue2(comps[i], "is_emitting", false)
+    end
 end

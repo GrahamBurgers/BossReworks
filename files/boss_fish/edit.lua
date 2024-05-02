@@ -2,7 +2,7 @@ dofile("mods/boss_reworks/files/lib/injection.lua")
 local nxml = dofile("mods/boss_reworks/files/lib/nxml.lua")
 local path = "data/entities/animals/boss_fish/fish_giga.xml"
 local tree = nxml.parse(ModTextFileGetContent(path))
-tree.attr.tags = tree.attr.tags .. ",boss_fish"
+tree.attr.tags = tree.attr.tags .. ",boss_fish,miniboss,boss"
 table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_armor_init.lua"> </LuaComponent>'))
 table.insert(tree.children,

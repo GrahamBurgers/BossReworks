@@ -1,7 +1,7 @@
 local nxml = dofile("mods/boss_reworks/files/lib/nxml.lua")
 local path = "data/entities/animals/boss_gate/gate_monster_a.xml"
 local tree = nxml.parse(ModTextFileGetContent(path))
-tree.attr.tags = tree.attr.tags .. ",polymorphable_NOT,miniboss,music_energy_100"
+tree.attr.tags = tree.attr.tags .. ",polymorphable_NOT,miniboss,boss,music_energy_100"
 table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_armor_init.lua"> </LuaComponent>'))
 table.insert(tree.children,
@@ -11,7 +11,7 @@ table.insert(tree.children,
 table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_gate/damage_scale.lua"> </LuaComponent>'))
 table.insert(tree.children,
-    nxml.parse('<HealthBarComponent></HealthBarComponent>'))
+    nxml.parse('<BossHealthBarComponent></BossHealthBarComponent>'))
 table.insert(tree.children,
     nxml.parse('<SpriteComponent _tags="health_bar_back,ui,no_hitbox" has_special_scale="1" image_file="data/ui_gfx/health_slider_back.png" offset_x="12" offset_y="42" emissive="1" never_ragdollify_on_death="1" z_index="-9000" update_transform_rotation="0" > </SpriteComponent>'))
 table.insert(tree.children,

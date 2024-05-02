@@ -1,6 +1,6 @@
 local x, y = EntityGetTransform(GetUpdatedEntityID())
 SetRandomSeed(GameGetFrameNum() + 24058 + x, y + GetUpdatedComponentID() + 42985)
-if Random(1, 50) < 50 then return end
+if Random(1, 500) < 500 then return end
 local entity = EntityGetAllChildren(GetUpdatedEntityID())[1]
 local comp = EntityGetFirstComponent(entity, "SpriteComponent")
 if comp then

@@ -322,12 +322,12 @@ Bosses = {
         EntityLoadToEntity("data/entities/misc/effect_charm.xml", friend)
     end},
 }
-local debug_load_specific_room = nil
+Debug_load_specific_room = nil
 
 function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x, to_y )
     local name = EntityGetName(GetUpdatedEntityID())
-    name = debug_load_specific_room or name
-    if debug_load_specific_room then
+    name = Debug_load_specific_room or name
+    if Debug_load_specific_room then
         start_boss_rush(entity_that_was_teleported)
     end
     if (EntityHasTag(entity_that_was_teleported, "player_unit") or EntityHasTag(entity_that_was_teleported, "polymorphed_player")) then

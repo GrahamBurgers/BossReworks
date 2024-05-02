@@ -3,6 +3,7 @@ local nxml = dofile("mods/boss_reworks/files/lib/nxml.lua")
 
 local path = "data/entities/animals/maggot_tiny/maggot_tiny.xml"
 local tree = nxml.parse(ModTextFileGetContent(path))
+tree.attr.tags = tree.attr.tags .. ",miniboss,boss"
 table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_armor_init.lua"> </LuaComponent>'))
 ModTextFileSetContent(path, tostring(tree))

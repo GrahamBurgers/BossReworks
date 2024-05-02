@@ -40,10 +40,23 @@ for k, v in ipairs(tree.children) do
 end
 ModTextFileSetContent(path, tostring(tree))
 
-inject(args.SS,modes.R,"data/entities/animals/boss_ghost/boss_ghost_polyp.xml", 'polyp_shot.xml', 'boss_ghost_polyp.xml')
-inject(args.SS,modes.R,"data/entities/animals/boss_ghost/boss_ghost_polyp.xml", 'damage="3"', 'damage="0"')
-inject(args.SS,modes.R,"data/entities/animals/boss_ghost/boss_ghost_polyp.xml", 'holy="3.0"', 'holy="1.6"')
-inject(args.SS,modes.A,"data/entities/animals/boss_ghost/boss_ghost_polyp.xml", 'penetrate_world="1"', 'collide_with_tag="player_unit"')
+path = "data/entities/animals/boss_ghost/boss_ghost_polyp.xml"
+tree = nxml.parse(ModTextFileGetContent(path))
+for k, v in ipairs(tree.children) do
+    if v.name == "ProjectileComponent" then
+        v.attr.collide_with_tag = "player_unit"
+        v.children[1].attr.holy = "2.0"
+        v.children[2].attr.damage = "0"
+    end
+    if v.name == "VariableStorageComponent" and v.attr.name == "projectile_file" then
+        v.attr.value_string = "data/entities/animals/boss_ghost/boss_ghost_polyp.xml"
+    end
+    if v.name == "LuaComponent" and v.attr.script_source_file == "data/entities/animals/boss_ghost/polyp_trajectory.lua" then
+        v.attr.execute_every_n_frame = "-1"
+    end
+end
+ModTextFileSetContent(path, tostring(tree))
+
 inject(args.SS,modes.R,"data/entities/animals/boss_ghost/death.lua", 'EntityLoad( "data/entities/items/pickup/heart_fullhp.xml",  x, y )', [[
     EntityLoad( "data/entities/items/pickup/heart_fullhp.xml", x + 8, y )
     if not GameHasFlagRun("br_killed_animal_boss_ghost") then

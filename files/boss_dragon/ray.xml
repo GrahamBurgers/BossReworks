@@ -70,20 +70,49 @@
   
   <SpriteComponent 
     _enabled="1"
-    alpha="0.5" 
+    alpha="0.2" 
     image_file="mods/boss_reworks/files/boss_dragon/ray.png" 
-    offset_x="2.5" 
-    offset_y="1.5">
+    offset_x="3.5" 
+    offset_y="2.5">
   </SpriteComponent>
 
   <SpriteComponent 
     _enabled="1"
-    alpha="0.5" 
+    alpha="0.8" 
     image_file="mods/boss_reworks/files/boss_dragon/ray.png" 
-    offset_x="2.5" 
-    offset_y="1.5"
+    offset_x="3.5" 
+    offset_y="2.5"
     emissive="1" >
   </SpriteComponent>
+
+  <ParticleEmitterComponent 
+    emitted_material_name="fire"
+    offset.x="0"
+    offset.y="0"
+    x_pos_offset_min="0"
+    y_pos_offset_min="0"
+    x_pos_offset_max="0"
+    y_pos_offset_max="0"
+    x_vel_min="0"
+    x_vel_max="0"
+    y_vel_min="0"
+    y_vel_max="0"
+    count_min="1"
+    count_max="1"
+    lifetime_min="2"
+    lifetime_max="2"
+  	fade_based_on_lifetime="1"
+  	is_trail="1"
+  	trail_gap="0"
+    create_real_particles="0"
+    emit_cosmetic_particles="1"
+    emission_interval_min_frames="1"
+    emission_interval_max_frames="1"
+    render_back="0"
+    gravity.y="0"
+    custom_alpha="0.6"
+    is_emitting="1" >
+  </ParticleEmitterComponent>
 
   <ParticleEmitterComponent 
     _enabled="0"

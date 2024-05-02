@@ -22,7 +22,7 @@ for i = 1, #targets do
             insert = false
         end
     end
-    if insert then
+    if insert and not (EntityHasTag(targets[i], "boss") or EntityHasTag(targets[i], "miniboss")) then
         if #valid == 0 then
             table.insert(valid, {targets[i], distance, name})
             table.insert(valid, {targets[i], distance, name})
