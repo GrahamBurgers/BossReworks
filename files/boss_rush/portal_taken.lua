@@ -4,13 +4,17 @@ dofile_once("data/scripts/perks/perk.lua")
 
 local mode = GlobalsGetValue("BR_MODE", "0")
 local function aaaaaa(entity)
-    if EntityGetComponentIncludingDisabled(entity, "ItemComponent") ~= nil and not EntityHasTag(entity, "card_action") then
+    if
+        EntityGetComponentIncludingDisabled(entity, "ItemComponent") ~= nil and not EntityHasTag(entity, "card_action")
+    then
         EntityRemoveFromParent(entity)
         EntitySetComponentsWithTagEnabled(entity, "enabled_in_hand", false)
         EntitySetComponentsWithTagEnabled(entity, "enabled_in_inventory", false)
         EntitySetComponentsWithTagEnabled(entity, "enabled_in_world", true)
         local vel = EntityGetFirstComponentIncludingDisabled(entity, "VelocityComponent")
-        if vel then EntitySetComponentIsEnabled(entity, vel, false) end
+        if vel then
+            EntitySetComponentIsEnabled(entity, vel, false)
+        end
         local isphysics = false
         local phys = EntityGetFirstComponentIncludingDisabled(entity, "PhysicsBodyComponent")
         if phys then
@@ -23,10 +27,14 @@ local function aaaaaa(entity)
             EntitySetComponentIsEnabled(entity, phys2, false)
         end
         local what = EntityGetFirstComponentIncludingDisabled(entity, "SpriteOffsetAnimatorComponent")
-        if what then EntityRemoveComponent(entity, what) end
+        if what then
+            EntityRemoveComponent(entity, what)
+        end
         local item = EntityGetFirstComponentIncludingDisabled(entity, "ItemComponent")
         local sprite = EntityGetFirstComponentIncludingDisabled(entity, "SpriteComponent", "enabled_in_hand")
-        if sprite then EntitySetComponentIsEnabled(entity, sprite, true) end
+        if sprite then
+            EntitySetComponentIsEnabled(entity, sprite, true)
+        end
         if isphysics then
             EntitySetTransform(entity, Shelf2, 50084 + 25, 0)
             EntityApplyTransform(entity, Shelf2, 50084 + 25, 0)
@@ -73,64 +81,79 @@ function steal_player_stuff(player)
     end
     local perks_to_spawn = {}
 
-	for i,perk_data in ipairs(perk_list) do
-		local perk_id = perk_data.id
-		if ( perk_data.one_off_effect == nil ) or ( perk_data.one_off_effect == false ) then
-			local flag_name = get_perk_picked_flag_name( perk_id )
-			local pickup_count = tonumber( GlobalsGetValue( flag_name .. "_PICKUP_COUNT", "0" ) ) or 0
-			
-			if GameHasFlagRun( flag_name ) or ( pickup_count > 0 ) then
+    for i, perk_data in ipairs(perk_list) do
+        local perk_id = perk_data.id
+        if (perk_data.one_off_effect == nil) or (perk_data.one_off_effect == false) then
+            local flag_name = get_perk_picked_flag_name(perk_id)
+            local pickup_count = tonumber(GlobalsGetValue(flag_name .. "_PICKUP_COUNT", "0")) or 0
+
+            if GameHasFlagRun(flag_name) or (pickup_count > 0) then
                 for j = 1, pickup_count do
-				    perks_to_spawn[#perks_to_spawn+1] = perk_id
+                    perks_to_spawn[#perks_to_spawn + 1] = perk_id
                 end
-			end
-		end
-	end
+            end
+        end
+    end
 
     if #perks_to_spawn > 0 then
         local storage = EntityLoad("mods/boss_reworks/files/boss_rush/perks/perk_storage.xml", 6482.5, 50065 + 25)
         local thing = tostring(#perks_to_spawn)
         local offset = 2.5
-        if string.len(thing) > 1 then offset = 5.5 end
+        if string.len(thing) > 1 then
+            offset = 5.5
+        end
         for i = 1, string.len(thing) do
             EntityAddComponent2(storage, "SpriteComponent", {
-                image_file="mods/boss_reworks/files/boss_rush/perks/" .. string.sub(thing, i, i) .. ".png",
-                offset_x=offset,
-                offset_y=3,
-                update_transform_rotation=false,
+                image_file = "mods/boss_reworks/files/boss_rush/perks/" .. string.sub(thing, i, i) .. ".png",
+                offset_x = offset,
+                offset_y = 3,
+                update_transform_rotation = false,
             })
             offset = offset - 6
         end
-        EntityAddComponent2( storage, "ItemComponent",
-        {
+        EntityAddComponent2(storage, "ItemComponent", {
             item_name = "$br_boss_rush_perks_name",
             ui_description = "$br_boss_rush_perks_desc",
             ui_display_description_on_pick_up_hint = true,
             play_spinning_animation = false,
             play_hover_animation = true,
             play_pick_sound = true,
-            ui_sprite = "mods/boss_reworks/files/boss_rush/perks/eye_spook.png" -- just in case sprite appears for a frame or two
-        } )
+            ui_sprite = "mods/boss_reworks/files/boss_rush/perks/eye_spook.png", -- just in case sprite appears for a frame or two
+        })
         EntityAddComponent2(storage, "LuaComponent", {
-            execute_every_n_frame=-1,
-            script_item_picked_up="mods/boss_reworks/files/boss_rush/perks/perkful_pickup.lua"
+            execute_every_n_frame = -1,
+            script_item_picked_up = "mods/boss_reworks/files/boss_rush/perks/perkful_pickup.lua",
         })
         for i = 1, #perks_to_spawn do
             EntityAddComponent2(storage, "VariableStorageComponent", {
-                _tags="br_boss_rush_storage",
-                value_string=perks_to_spawn[i]
+                _tags = "br_boss_rush_storage",
+                value_string = perks_to_spawn[i],
             })
         end
         local exits = EntityGetWithName("$br_boss_rush_portal_out")
-        if exits ~= nil then EntityKill(exits) end
+        if exits ~= nil then
+            EntityKill(exits)
+        end
+    end
+    -- NOTE: Nathan - perk_utilities.lua:167 has a bug that will break the fire and holy damage mults, so we store them before the buggy call.
+    local damage_model = EntityGetFirstComponent(player, "DamageModelComponent")
+    local fire = 1
+    local holy = 1
+    if damage_model then
+        fire = ComponentObjectGetValue2(damage_model, "damage_multiplier", "fire")
+        holy = ComponentObjectGetValue2(damage_model, "damage_multiplier", "holy")
     end
     IMPL_remove_all_perks(player)
+    if damage_model then
+        ComponentObjectSetValue2(damage_model, "damage_multiplier", "fire", fire)
+        ComponentObjectSetValue2(damage_model, "damage_multiplier", "holy", holy)
+    end
 end
 
 local function boss_portal(to_x, to_y, entity, x_off, y_off)
     local eid = EntityLoad("mods/boss_reworks/files/boss_rush/boss_in_portal.xml", to_x + x_off, to_y + y_off)
     EntityAddComponent2(eid, "VariableStorageComponent", {
-        value_string=entity
+        value_string = entity,
     })
     return eid
 end
@@ -139,7 +162,18 @@ local function load_scene(x, y, room_name)
     local gui = GuiCreate()
     local size_x, size_y = GuiGetImageDimensions(gui, room_name)
     GuiDestroy(gui)
-    LoadPixelScene(room_name, "", x + size_x * -0.5, y + size_y * -0.5, "mods/boss_reworks/files/boss_rush/bg_big.png", true, false, {}, 50, true)
+    LoadPixelScene(
+        room_name,
+        "",
+        x + size_x * -0.5,
+        y + size_y * -0.5,
+        "mods/boss_reworks/files/boss_rush/bg_big.png",
+        true,
+        false,
+        {},
+        50,
+        true
+    )
 end
 
 local function nextboss()
@@ -152,7 +186,8 @@ local function nextboss()
     GamePrint("$br_boss_rush_healed")
     GlobalsSetValue("BR_BOSS_RUSH_HP_LEFT", tostring(math.min(hpmax + multiplier * 40, multiplier * 40 + tonumber(GlobalsGetValue("BR_BOSS_RUSH_HP_LEFT", "0")))))
     GlobalsSetValue("BR_BOSS_RUSH_NOHIT", "1")
-    ]]--
+    ]]
+    --
 
     -- maybe a good idea?
     local entities = EntityGetWithTag("boss_reworks_boss_rush") or {}
@@ -198,139 +233,180 @@ local function start_boss_rush()
 end
 
 Bosses = {
-    {"$br_boss_rush_portal_in", function(x, y, player)
-        if not GameHasFlagRun("br_boss_rush_intro") then
-            load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/intro_room.png")
-            GameAddFlagRun("br_boss_rush_intro")
-            EntityLoad("mods/boss_reworks/files/boss_rush/boss_rush_book.xml", x, y + 30)
-            local entity = EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_base.xml", x + 130, y - 60)
-            local name = "$br_boss_rush_portal_pyramid"
-            EntitySetName(entity, name)
-            EntityRemoveTag(entity, "boss_reworks_boss_rush")
-            local ui = EntityGetFirstComponent(entity, "UIInfoComponent")
-            if ui then
-                ComponentSetValue2(ui, "name", name)
+    {
+        "$br_boss_rush_portal_in",
+        function(x, y, player)
+            if not GameHasFlagRun("br_boss_rush_intro") then
+                load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/intro_room.png")
+                GameAddFlagRun("br_boss_rush_intro")
+                EntityLoad("mods/boss_reworks/files/boss_rush/boss_rush_book.xml", x, y + 30)
+                local entity =
+                    EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_base.xml", x + 130, y - 60)
+                local name = "$br_boss_rush_portal_pyramid"
+                EntitySetName(entity, name)
+                EntityRemoveTag(entity, "boss_reworks_boss_rush")
+                local ui = EntityGetFirstComponent(entity, "UIInfoComponent")
+                if ui then
+                    ComponentSetValue2(ui, "name", name)
+                end
+                if mode ~= "Boss Rush" then
+                    EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_out.xml", x - 130, y - 60)
+                else
+                    EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_spawn.xml", x - 130, y - 60)
+                end
             end
-            if mode ~= "Boss Rush" then
-                EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_out.xml", x - 130, y - 60)
-            else
-                EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_spawn.xml", x - 130, y - 60)
+        end,
+    },
+    {
+        "$br_boss_rush_portal_pyramid",
+        function(x, y, player)
+            start_boss_rush(player)
+            load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_pyramid.png")
+            boss_portal(x, y, "data/entities/animals/boss_limbs/boss_limbs.xml", 130, -60)
+
+            steal_player_stuff(player)
+            spawn_wands("mods/boss_reworks/files/boss_rush/wands/limbs", player)
+            GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(200 * multiplier))
+        end,
+    },
+    {
+        "$br_boss_rush_portal_dragon",
+        function(x, y, player)
+            nextboss()
+            load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_dragon.png")
+            boss_portal(x, y, "data/entities/animals/boss_dragon.xml", 0, 80)
+            spawn_wands("mods/boss_reworks/files/boss_rush/wands/dragon", player)
+            GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(250 * multiplier))
+        end,
+    },
+    {
+        "$br_boss_rush_portal_forgotten",
+        function(x, y, player)
+            nextboss()
+            load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_forgotten.png")
+            boss_portal(x, y, "data/entities/animals/boss_ghost/boss_ghost.xml", 0, -80)
+            local eid = EntityLoad("data/entities/items/pickup/evil_eye.xml", x, y)
+            EntityAddTag(eid, "boss_reworks_boss_rush")
+            spawn_wands("mods/boss_reworks/files/boss_rush/wands/forgotten", player)
+            GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(300 * multiplier))
+        end,
+    },
+    {
+        "$br_boss_rush_portal_gate",
+        function(x, y, player)
+            nextboss()
+            load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_gate.png")
+            boss_portal(x, y, "data/entities/animals/boss_gate/gate_monster_a.xml", 0, -80)
+            boss_portal(x, y, "data/entities/animals/boss_gate/gate_monster_b.xml", -52, -88)
+            boss_portal(x, y, "data/entities/animals/boss_gate/gate_monster_c.xml", 52, -88)
+            boss_portal(x, y, "data/entities/animals/boss_gate/gate_monster_d.xml", 0, -110)
+            spawn_wands("mods/boss_reworks/files/boss_rush/wands/gate", player)
+            local eid = EntityCreateNew()
+            EntityAddComponent2(eid, "LuaComponent", {
+                script_source_file = "data/scripts/perks/radar.lua",
+            })
+            EntityAddComponent2(eid, "InheritTransformComponent")
+            EntityAddTag(eid, "boss_reworks_boss_rush")
+            EntityAddChild(player, eid)
+            GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(350 * multiplier))
+        end,
+    },
+    {
+        "$br_boss_rush_portal_alchemist",
+        function(x, y, player)
+            nextboss()
+            load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_alchemist.png")
+            boss_portal(x, y, "data/entities/animals/boss_alchemist/boss_alchemist.xml", 0, -70)
+            spawn_wands("mods/boss_reworks/files/boss_rush/wands/alchemist", player)
+            GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(400 * multiplier))
+        end,
+    },
+    {
+        "$br_boss_rush_portal_robot",
+        function(x, y, player)
+            nextboss()
+            load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_robot.png")
+            boss_portal(x, y, "data/entities/animals/boss_robot/boss_robot.xml", 0, -80)
+            spawn_wands("mods/boss_reworks/files/boss_rush/wands/robot", player)
+            GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(450 * multiplier))
+        end,
+    },
+    {
+        "$br_boss_rush_portal_leviathan",
+        function(x, y, player)
+            nextboss()
+            load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_levi.png")
+            boss_portal(x, y, "data/entities/animals/boss_fish/fish_giga.xml", 0, 100)
+            spawn_wands("mods/boss_reworks/files/boss_rush/wands/leviathan", player)
+            GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(500 * multiplier))
+            local perk = perk_spawn(x, y, "BREATH_UNDERWATER")
+            perk_pickup(perk, player, EntityGetName(perk), false, false)
+            local perk2 = perk_spawn(x, y, "UNLIMITED_SPELLS")
+            perk_pickup(perk2, player, EntityGetName(perk2), false, false)
+        end,
+    },
+    {
+        "$br_boss_rush_portal_master",
+        function(x, y, player)
+            nextboss()
+            load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_master.png")
+            boss_portal(x, y, "data/entities/animals/boss_wizard/boss_wizard.xml", 0, -30)
+            spawn_wands("mods/boss_reworks/files/boss_rush/wands/wizard", player)
+            GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(550 * multiplier))
+        end,
+    },
+    {
+        "$br_boss_rush_portal_squidward",
+        function(x, y, player)
+            nextboss()
+            load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_squidward.png")
+            boss_portal(x, y, "data/entities/animals/boss_pit/boss_pit.xml", 0, -30)
+            spawn_wands("mods/boss_reworks/files/boss_rush/wands/squidward", player)
+            GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(600 * multiplier))
+            local perk = perk_spawn(x, y, "UNLIMITED_SPELLS")
+            perk_pickup(perk, player, EntityGetName(perk), false, false)
+        end,
+    },
+    {
+        "$br_boss_rush_portal_kolmi",
+        function(x, y, player)
+            nextboss()
+            load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_kolmi.png")
+            boss_portal(x, y, "mods/boss_reworks/files/boss_centipede/boss_centipede_active.xml", 0, -50)
+            spawn_wands("mods/boss_reworks/files/boss_rush/wands/kolmi", player)
+            GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(650 * multiplier))
+        end,
+    },
+    {
+        "$br_boss_rush_portal_end",
+        function(x, y, player)
+            nextboss()
+            load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/endroom.png")
+            GlobalsSetValue("BR_BOSS_RUSH_ACTIVE", "0")
+            AddFlagPersistent("br_boss_rush_completed")
+            GamePrintImportant("$br_boss_rush_end_01", "$br_boss_rush_end_02")
+            if not GameHasFlagRun("br_boss_rush_end") then
+                EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_out.xml", x, y - 50)
+                GameAddFlagRun("br_boss_rush_end")
+                EntityLoad("mods/boss_reworks/files/boss_rush/secretbook.xml", x + 60, y + 10)
             end
-        end
-    end},
-    {"$br_boss_rush_portal_pyramid", function(x, y, player)
-        start_boss_rush(player)
-        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_pyramid.png")
-        boss_portal(x, y, "data/entities/animals/boss_limbs/boss_limbs.xml", 130, -60)
-        steal_player_stuff(player)
-        spawn_wands("mods/boss_reworks/files/boss_rush/wands/limbs", player)
-        GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(200 * multiplier))
-    end},
-    {"$br_boss_rush_portal_dragon", function(x, y, player)
-        nextboss()
-        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_dragon.png")
-        boss_portal(x, y, "data/entities/animals/boss_dragon.xml", 0, 80)
-        spawn_wands("mods/boss_reworks/files/boss_rush/wands/dragon", player)
-        GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(250 * multiplier))
-    end},
-    {"$br_boss_rush_portal_forgotten", function(x, y, player)
-        nextboss()
-        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_forgotten.png")
-        boss_portal(x, y, "data/entities/animals/boss_ghost/boss_ghost.xml", 0, -80)
-        local eid = EntityLoad("data/entities/items/pickup/evil_eye.xml", x, y)
-        EntityAddTag(eid, "boss_reworks_boss_rush")
-        spawn_wands("mods/boss_reworks/files/boss_rush/wands/forgotten", player)
-        GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(300 * multiplier))
-    end},
-    {"$br_boss_rush_portal_gate", function(x, y, player)
-        nextboss()
-        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_gate.png")
-        boss_portal(x, y, "data/entities/animals/boss_gate/gate_monster_a.xml", 0, -80)
-        boss_portal(x, y, "data/entities/animals/boss_gate/gate_monster_b.xml", -52, -88)
-        boss_portal(x, y, "data/entities/animals/boss_gate/gate_monster_c.xml", 52, -88)
-        boss_portal(x, y, "data/entities/animals/boss_gate/gate_monster_d.xml", 0, -110)
-        spawn_wands("mods/boss_reworks/files/boss_rush/wands/gate", player)
-        local eid = EntityCreateNew()
-        EntityAddComponent2(eid, "LuaComponent", {
-            script_source_file="data/scripts/perks/radar.lua"
-        })
-        EntityAddComponent2(eid, "InheritTransformComponent")
-        EntityAddTag(eid, "boss_reworks_boss_rush")
-        EntityAddChild(player, eid)
-        GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(350 * multiplier))
-    end},
-    {"$br_boss_rush_portal_alchemist", function(x, y, player)
-        nextboss()
-        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_alchemist.png")
-        boss_portal(x, y, "data/entities/animals/boss_alchemist/boss_alchemist.xml", 0, -70)
-        spawn_wands("mods/boss_reworks/files/boss_rush/wands/alchemist", player)
-        GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(400 * multiplier))
-    end},
-    {"$br_boss_rush_portal_robot", function(x, y, player)
-        nextboss()
-        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_robot.png")
-        boss_portal(x, y, "data/entities/animals/boss_robot/boss_robot.xml", 0, -80)
-        spawn_wands("mods/boss_reworks/files/boss_rush/wands/robot", player)
-        GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(450 * multiplier))
-    end},
-    {"$br_boss_rush_portal_leviathan", function(x, y, player)
-        nextboss()
-        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_levi.png")
-        boss_portal(x, y, "data/entities/animals/boss_fish/fish_giga.xml", 0, 100)
-        spawn_wands("mods/boss_reworks/files/boss_rush/wands/leviathan", player)
-        GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(500 * multiplier))
-        local perk = perk_spawn(x, y, "BREATH_UNDERWATER")
-        perk_pickup(perk, player, EntityGetName(perk), false, false)
-        local perk2 = perk_spawn(x, y, "UNLIMITED_SPELLS")
-        perk_pickup(perk2, player, EntityGetName(perk2), false, false)
-    end},
-    {"$br_boss_rush_portal_master", function(x, y, player)
-        nextboss()
-        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_master.png")
-        boss_portal(x, y, "data/entities/animals/boss_wizard/boss_wizard.xml", 0, -30)
-        spawn_wands("mods/boss_reworks/files/boss_rush/wands/wizard", player)
-        GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(550 * multiplier))
-    end},
-    {"$br_boss_rush_portal_squidward", function(x, y, player)
-        nextboss()
-        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_squidward.png")
-        boss_portal(x, y, "data/entities/animals/boss_pit/boss_pit.xml", 0, -30)
-        spawn_wands("mods/boss_reworks/files/boss_rush/wands/squidward", player)
-        GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(600 * multiplier))
-        local perk = perk_spawn(x, y, "UNLIMITED_SPELLS")
-        perk_pickup(perk, player, EntityGetName(perk), false, false)
-    end},
-    {"$br_boss_rush_portal_kolmi", function(x, y, player)
-        nextboss()
-        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/arena_kolmi.png")
-        boss_portal(x, y, "mods/boss_reworks/files/boss_centipede/boss_centipede_active.xml", 0, -50)
-        spawn_wands("mods/boss_reworks/files/boss_rush/wands/kolmi", player)
-        GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(650 * multiplier))
-    end},
-    {"$br_boss_rush_portal_end", function(x, y, player)
-        nextboss()
-        load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/endroom.png")
-        GlobalsSetValue("BR_BOSS_RUSH_ACTIVE", "0")
-        AddFlagPersistent("br_boss_rush_completed")
-        GamePrintImportant("$br_boss_rush_end_01", "$br_boss_rush_end_02")
-        if not GameHasFlagRun("br_boss_rush_end") then
-            EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_out.xml", x, y - 50)
-            GameAddFlagRun("br_boss_rush_end")
-            EntityLoad("mods/boss_reworks/files/boss_rush/secretbook.xml", x + 60, y + 10)
-        end
-        local friend = EntityLoad("mods/boss_reworks/files/boss_rush/bff.xml")
-        EntityLoadToEntity("data/entities/misc/effect_charm.xml", friend)
-    end},
+            local friend = EntityLoad("mods/boss_reworks/files/boss_rush/bff.xml")
+            EntityLoadToEntity("data/entities/misc/effect_charm.xml", friend)
+        end,
+    },
 }
 Debug_load_specific_room = nil
 
-function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x, to_y )
+function portal_teleport_used(entity_that_was_teleported, from_x, from_y, to_x, to_y)
     local name = EntityGetName(GetUpdatedEntityID())
     name = Debug_load_specific_room or name
     if Debug_load_specific_room then
         start_boss_rush(entity_that_was_teleported)
     end
-    if (EntityHasTag(entity_that_was_teleported, "player_unit") or EntityHasTag(entity_that_was_teleported, "polymorphed_player")) then
+    if
+        EntityHasTag(entity_that_was_teleported, "player_unit")
+        or EntityHasTag(entity_that_was_teleported, "polymorphed_player")
+    then
         EntityAddRandomStains(entity_that_was_teleported, CellFactory_GetType("boss_reworks_unstainer"), 2000)
         if mode == "Calamari" then
             load_scene(to_x, to_y, "mods/boss_reworks/files/boss_rush/rooms/arena_squidward.png")
@@ -372,6 +448,7 @@ function portal_teleport_used( entity_that_was_teleported, from_x, from_y, to_x,
         EntityApplyTransform(projectiles[i], to_x, to_y)
         EntityKill(projectiles[i])
     end
+
     GlobalsSetValue("BR_BOSS_RUSH_PORTAL_X", tostring(to_x))
     GlobalsSetValue("BR_BOSS_RUSH_PORTAL_Y", tostring(to_y))
 end
@@ -379,8 +456,9 @@ end
 function Insert_boss(after_who, name, func)
     for i = 1, #Bosses do
         if Bosses[i][1] == after_who then
-            table.insert(Bosses, i + 1, {name, func})
+            table.insert(Bosses, i + 1, { name, func })
         end
     end
 end
 -- TODO: write instructions on how to add a modded boss to boss rush (blehhhhhh)
+
