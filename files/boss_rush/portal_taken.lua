@@ -140,13 +140,13 @@ function steal_player_stuff(player)
     local fire = 1
     local holy = 1
     if damage_model then
-        fire = ComponentObjectGetValue2(damage_model, "damage_multiplier", "fire")
-        holy = ComponentObjectGetValue2(damage_model, "damage_multiplier", "holy")
+        fire = ComponentObjectGetValue2(damage_model, "damage_multipliers", "fire")
+        holy = ComponentObjectGetValue2(damage_model, "damage_multipliers", "holy")
     end
     IMPL_remove_all_perks(player)
     if damage_model then
-        ComponentObjectSetValue2(damage_model, "damage_multiplier", "fire", fire)
-        ComponentObjectSetValue2(damage_model, "damage_multiplier", "holy", holy)
+        ComponentObjectSetValue2(damage_model, "damage_multipliers", "fire", fire)
+        ComponentObjectSetValue2(damage_model, "damage_multipliers", "holy", holy)
     end
 end
 
