@@ -57,7 +57,10 @@ function damage_received(damage, message, entity_thats_responsible, is_fatal, pr
 			if damage_model then
 				fire = ComponentObjectGetValue2(damage_model, "damage_multipliers", "fire")
 				holy = ComponentObjectGetValue2(damage_model, "damage_multipliers", "holy")
+
+				print(fire, holy)
 			end
+			print(fire, holy)
 			IMPL_remove_all_perks(me)
 			if damage_model then
 				ComponentObjectSetValue2(damage_model, "damage_multipliers", "fire", fire)
@@ -97,4 +100,3 @@ function damage_received(damage, message, entity_thats_responsible, is_fatal, pr
 		end
 	end
 end
-
