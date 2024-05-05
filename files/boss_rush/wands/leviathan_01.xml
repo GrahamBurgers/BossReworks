@@ -13,7 +13,7 @@
         drop_as_item_on_death="0"
         use_gun_script="1"
 
-        add_these_child_actions="BLOODLUST,DAMAGE,PIERCING_SHOT,ACCELERATING_SHOT,LINE_ARC,ROCKET,RECOIL_DAMPER"
+        add_these_child_actions="BLOODLUST,DAMAGE,DAMAGE,PIERCING_SHOT,ACCELERATING_SHOT,ROCKET,RECOIL_DAMPER"
 		mana_charge_speed="320"
 		mana_max="700"
         >

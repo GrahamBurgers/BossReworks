@@ -126,7 +126,7 @@ mod_settings =
 		ui_fn = function(mod_id, gui, in_main_menu, im_id, setting)
 			copypaste("shuffle", gui, {false, true}, im_id, 0,
 			"Shuffle Boss Rush: ",
-			"Randomize the order of bosses in Boss Rush (besides the Pyramid Boss).\nMildly jank. Use with caution."
+			"Randomize the order of bosses in Boss Rush.\nMildly jank. Use with caution."
 			)
 		end
 	},
@@ -140,7 +140,7 @@ mod_settings =
 		ui_fn = function(mod_id, gui, in_main_menu, im_id, setting)
 			copypaste("timer", gui, {false, true}, im_id, 0,
 			"Boss Rush timer: ",
-			"Display a timer while in Boss Rush.\nYou'll still be shown your final time at the end if you have this disabled."
+			"Display a timer while in Boss Rush.\nYou'll still be shown your final time at the end if you have this disabled.\nMay be jank. Use with caution."
 			)
 		end
 	},
