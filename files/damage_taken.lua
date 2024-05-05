@@ -32,7 +32,7 @@ function damage_received(damage, message, entity_thats_responsible, is_fatal, pr
 		GlobalsSetValue("BR_BOSS_RUSH_HP_LEFT", tostring(math.min(max, fake_hp * multiplier)))
 		if fake_hp <= 0 then
 			local x, y = 6400, 50025
-			EntityAddRandomStains(me, CellFactory_GetType("boss_reworks_unstainer"), 2000)
+			EntityAddRandomStains(me, CellFactory_GetType("water"), 100)
 			EntitySetTransform(me, x, y)
 			EntityApplyTransform(me, x, y)
 			GameSetCameraPos(x, y)

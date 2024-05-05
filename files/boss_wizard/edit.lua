@@ -135,3 +135,9 @@ inject(args.SS,modes.A,"data/entities/animals/boss_wizard/death.lua", [[AddFlagP
 		CreateItemActionEntity(Soul("BR_REWARD_MASTER"), x + 4, y)
 	end
 ]])
+
+inject(args.SS,modes.P,"data/entities/animals/boss_wizard/spawn_wizard.lua", 'for i=1,1 do', [[
+	if GlobalsGetValue("BR_BOSS_RUSH_ACTIVE", "0") == "1" then
+		opts = { "wizard_dark", "wizard_poly", "wizard_homing", "wizard_twitchy", "wizard_neutral", "wizard_returner" }
+	end
+]])

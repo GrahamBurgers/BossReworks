@@ -381,22 +381,22 @@ Bosses = {
 			GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(700 * multiplier))
 		end,
 	},
-	{
-		"$br_boss_rush_portal_end",
-		function(x, y, player)
-			load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/endroom.png")
-			GlobalsSetValue("BR_BOSS_RUSH_ACTIVE", "0")
-			AddFlagPersistent("br_boss_rush_completed")
-			GamePrintImportant("$br_boss_rush_end_01", "$br_boss_rush_end_02")
-			if not GameHasFlagRun("br_boss_rush_end") then
-				EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_in.xml", x, y - 50)
-				GameAddFlagRun("br_boss_rush_end")
-				EntityLoad("mods/boss_reworks/files/boss_rush/secretbook.xml", x + 60, y + 10)
-			end
-			local friend = EntityLoad("mods/boss_reworks/files/boss_rush/bff.xml")
-			EntityLoadToEntity("data/entities/misc/effect_charm.xml", friend)
-		end,
-	}
+}
+local last = {
+	"$br_boss_rush_portal_end",
+	function(x, y, player)
+		load_scene(x, y, "mods/boss_reworks/files/boss_rush/rooms/endroom.png")
+		GlobalsSetValue("BR_BOSS_RUSH_ACTIVE", "0")
+		AddFlagPersistent("br_boss_rush_completed")
+		GamePrintImportant("$br_boss_rush_end_01", "$br_boss_rush_end_02")
+		if not GameHasFlagRun("br_boss_rush_end") then
+			EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_in.xml", x, y - 50)
+			GameAddFlagRun("br_boss_rush_end")
+			EntityLoad("mods/boss_reworks/files/boss_rush/secretbook.xml", x + 60, y + 10)
+		end
+		local friend = EntityLoad("mods/boss_reworks/files/boss_rush/bff.xml")
+		EntityLoadToEntity("data/entities/misc/effect_charm.xml", friend)
+	end,
 }
 Debug_load_specific_room = nil
 function Shuffle_order()
@@ -404,9 +404,7 @@ function Shuffle_order()
 	local bosses_hold = Bosses
 	local list = {}
 	local first = bosses_hold[1]
-	local last = bosses_hold[#bosses_hold]
 	table.remove(bosses_hold, 1)
-	table.remove(bosses_hold, #bosses_hold)
 	SetRandomSeed(25858 + attempts, attempts + 4285)
 	for i = 1, #bosses_hold do
 		local number = Random(1, #bosses_hold)
@@ -415,7 +413,6 @@ function Shuffle_order()
 		table.remove(bosses_hold, number)
 	end
 	table.insert(list, 1, first)
-	list[#list+1] = last
 	GlobalsSetValue("BR_BOSS_RUSH_FIRST", list[2][1])
 	return list
 end
@@ -439,12 +436,21 @@ function portal_teleport_used(entity_that_was_teleported, from_x, from_y, to_x, 
 			load_scene(to_x, to_y, "mods/boss_reworks/files/boss_rush/rooms/arena_squidward.png")
 			boss_portal(to_x, to_y, "data/entities/animals/boss_pit/boss_pit.xml", 0, -30)
 		else
-			for i = 1, #New do
-				if New[i][1] == name then
-					New[i][2](to_x, to_y, entity_that_was_teleported)
-					GlobalsSetValue("BR_BOSS_RUSH_PORTAL_THIS", name)
-					GlobalsSetValue("BR_BOSS_RUSH_PORTAL_NEXT", (New[i + 1] or New[i])[1])
-					GlobalsSetValue("BR_BOSS_RUSH_HP_LEFT", GlobalsGetValue("BR_BOSS_RUSH_HP_MAX"))
+			if GlobalsGetValue("BR_BOSS_RUSH_PORTAL_THIS") == New[#New][1] then
+				last[2](to_x, to_y, entity_that_was_teleported)
+				GlobalsSetValue("BR_BOSS_RUSH_PORTAL_THIS", last[1])
+				GlobalsSetValue("BR_BOSS_RUSH_PORTAL_NEXT", New[1][1])
+			else
+				for i = 1, #New do
+					if New[i][1] == name then
+						New[i][2](to_x, to_y, entity_that_was_teleported)
+						GlobalsSetValue("BR_BOSS_RUSH_PORTAL_THIS", name)
+						GlobalsSetValue("BR_BOSS_RUSH_PORTAL_NEXT", (New[i + 1] or New[i])[1])
+						GlobalsSetValue("BR_BOSS_RUSH_HP_LEFT", GlobalsGetValue("BR_BOSS_RUSH_HP_MAX"))
+						if name == New[#New][1] then
+							GlobalsSetValue("BR_BOSS_RUSH_PORTAL_NEXT", last[1])
+						end
+					end
 				end
 			end
 		end

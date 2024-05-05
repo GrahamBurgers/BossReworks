@@ -27,7 +27,7 @@ if #wandcore > 0 then
 		EntityKill(wandcore[1])
 	end
 end
-local phase = ComponentGetValue2(varsto, "value_int")
+local phase = math.min(6, ComponentGetValue2(varsto, "value_int"))
 local last = ComponentGetValue2(clock, "value_int")
 if last == 0 then
 	last = GameGetFrameNum()
