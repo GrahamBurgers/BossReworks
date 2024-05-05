@@ -225,9 +225,9 @@
 	<Entity>  <Base file="data/entities/animals/boss_centipede/verlet_chains/verlet_vine_short.xml"> <InheritTransformComponent><Transform position.x="-8"  position.y="-16" ></Transform></InheritTransformComponent> </Base>  </Entity>
 	<Entity>  <Base file="data/entities/animals/boss_centipede/verlet_chains/verlet_vine.xml"> <InheritTransformComponent><Transform position.x="8"  position.y="-20" ></Transform></InheritTransformComponent> </Base>  </Entity>
 
-	<HealthBarComponent
+	<BossHealthBarComponent
 		gui_special_final_boss="1"
 		gui_max_distance_visible="1500"
-	></HealthBarComponent>
+	></BossHealthBarComponent>
 
 </Entity>

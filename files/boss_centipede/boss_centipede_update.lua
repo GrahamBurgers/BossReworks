@@ -1,7 +1,7 @@
 dofile_once( "data/scripts/lib/coroutines.lua" )
 dofile_once( "data/scripts/lib/utilities.lua" )
 
-local ORBS_STANDIN = 6
+local ORBS_STANDIN = 7
 
 -- enum for changing C++ logic state. keep this in sync with the values in limbboss_system.cpp
 local states = {

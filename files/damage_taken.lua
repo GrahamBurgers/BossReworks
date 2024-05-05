@@ -1,6 +1,18 @@
 function turn_off_the_thingy()
 	-- hopefully prevents double-taps from dealing actual damage on your way out
 	GlobalsSetValue("BR_BOSS_RUSH_ACTIVE", "0")
+	local attempts = tonumber(GlobalsGetValue("BR_BOSS_RUSH_ATTEMPTS", "0"))
+	GlobalsSetValue("BR_BOSS_RUSH_ATTEMPTS", tostring(attempts + 1))
+	local portals = EntityGetWithTag("boss_rush_first_portal") or {}
+	for i = 1, #portals do
+		dofile("mods/boss_reworks/files/boss_rush/portal_taken.lua")
+		EntitySetName(portals[i], New[2][1])
+		GlobalsSetValue("BR_BOSS_RUSH_FIRST", New[2][1])
+		local ui = EntityGetFirstComponent(portals[i], "UIInfoComponent")
+		if ui then
+			ComponentSetValue2(ui, "name", New[2][1])
+		end
+	end
 end
 
 function damage_received(damage, message, entity_thats_responsible, is_fatal, projectile_thats_responsible)
@@ -58,9 +70,9 @@ function damage_received(damage, message, entity_thats_responsible, is_fatal, pr
 				fire = ComponentObjectGetValue2(damage_model, "damage_multipliers", "fire")
 				holy = ComponentObjectGetValue2(damage_model, "damage_multipliers", "holy")
 
-				print(fire, holy)
+				-- print(fire, holy) -- NATHAN stop leaving your prints uncommented
 			end
-			print(fire, holy)
+			-- print(fire, holy)
 			IMPL_remove_all_perks(me)
 			if damage_model then
 				ComponentObjectSetValue2(damage_model, "damage_multipliers", "fire", fire)

@@ -45,7 +45,7 @@ tree = nxml.parse(ModTextFileGetContent(path))
 for k, v in ipairs(tree.children) do
     if v.name == "ProjectileComponent" then
         v.attr.collide_with_tag = "player_unit"
-        v.children[1].attr.holy = "2.0"
+        v.children[1].attr.holy = "1.0"
         v.children[2].attr.damage = "0"
     end
     if v.name == "VariableStorageComponent" and v.attr.name == "projectile_file" then
@@ -65,4 +65,5 @@ inject(args.SS,modes.R,"data/entities/animals/boss_ghost/death.lua", 'EntityLoad
 		CreateItemActionEntity(Soul("BR_REWARD_FORGOTTEN"), x - 8, y)
     end
 ]])
-inject(args.SS,modes.R,"data/entities/animals/boss_ghost/damage.lua", 'status = status + 1.0', 'status = status + damage * 3\nstatus = math.min( 100, status )')
+inject(args.SS,modes.R,"data/entities/animals/boss_ghost/lasers.lua", '0, status - 0.02', '0, status - 0.05')
+inject(args.SS,modes.R,"data/entities/animals/boss_ghost/damage.lua", 'status = status + 1.0', 'status = status + damage * 4\nstatus = math.min( 60, status )')

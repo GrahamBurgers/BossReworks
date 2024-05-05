@@ -14,6 +14,32 @@ end
 function mod_setting_change_callback( mod_id, gui, in_main_menu, setting, old_value, new_value  )
 end
 
+local defaults = {
+	{"boss_armor", true},
+	{"mode", "Normal"},
+	{"souls", true},
+	{"shuffle", false},
+	{"rework_limbs", true},
+	{"rework_dragon", true},
+	{"rework_alchemist", true},
+	{"rework_gate", true},
+	{"rework_fish", true},
+	{"rework_ghost", true},
+	{"rework_robot", true},
+	{"rework_wizard", true},
+	{"rework_pit", true},
+	{"rework_tiny", true},
+	{"rework_meat", true},
+}
+for i = 1, #defaults do
+	local id = "boss_reworks." .. defaults[i][1]
+	local id_fake = "boss_reworks.fake_" .. defaults[i][1]
+	if ModSettingGet(id) == nil then
+		ModSettingSet(id, defaults[i][2])
+		ModSettingSet(id_fake, 1)
+	end
+end
+
 local function copypaste(setting, gui, options, im_id, offset_x, name, desc)
 	local id = "boss_reworks." .. setting
 	local id_fake = "boss_reworks.fake_" .. setting
@@ -86,6 +112,20 @@ mod_settings =
 			copypaste("souls", gui, {true, false}, im_id, 0,
 			"Souls: ",
 			"Killed bosses will drop their Soul if their rework is enabled.\nSouls are special spells that always and only drop from their respective boss.\nThese aren't just any old projectile spells, though!\nThey have unique effects that aren't explored by any vanilla spells.\nCollect them all!"
+			)
+		end
+	},
+	{
+		id = "shuffle",
+		ui_name = "",
+		ui_description = "",
+		value_default = false,
+		not_setting = true,
+		scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
+		ui_fn = function(mod_id, gui, in_main_menu, im_id, setting)
+			copypaste("shuffle", gui, {false, true}, im_id, 0,
+			"Shuffle Boss Rush: ",
+			"Randomize the order of bosses in Boss Rush (besides the Pyramid Boss)."
 			)
 		end
 	},
