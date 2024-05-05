@@ -19,6 +19,7 @@ local defaults = {
 	{"mode", "Normal"},
 	{"souls", true},
 	{"shuffle", false},
+	{"timer", false},
 	{"rework_limbs", true},
 	{"rework_dragon", true},
 	{"rework_alchemist", true},
@@ -125,7 +126,21 @@ mod_settings =
 		ui_fn = function(mod_id, gui, in_main_menu, im_id, setting)
 			copypaste("shuffle", gui, {false, true}, im_id, 0,
 			"Shuffle Boss Rush: ",
-			"Randomize the order of bosses in Boss Rush (besides the Pyramid Boss)."
+			"Randomize the order of bosses in Boss Rush (besides the Pyramid Boss).\nMildly jank. Use with caution."
+			)
+		end
+	},
+	{
+		id = "timer",
+		ui_name = "",
+		ui_description = "",
+		value_default = false,
+		not_setting = true,
+		scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
+		ui_fn = function(mod_id, gui, in_main_menu, im_id, setting)
+			copypaste("timer", gui, {false, true}, im_id, 0,
+			"Boss Rush timer: ",
+			"Display a timer while in Boss Rush.\nYou'll still be shown your final time at the end if you have this disabled."
 			)
 		end
 	},

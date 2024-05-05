@@ -32,6 +32,9 @@ if mode ~= "Calamari" then
 end
 
 function OnPlayerSpawned(player)
+	if GlobalsGetValue("BR_SHUFFLE_RUSH", "nil") == "nil" then
+		GlobalsSetValue("BR_SHUFFLE_RUSH", tostring(ModSettingGet("boss_reworks.shuffle")))
+	end
 	if not GameHasFlagRun("boss_reworks_init") then
 		GameAddFlagRun("boss_reworks_init")
 		EntityAddComponent2(player, "LuaComponent", {
@@ -146,7 +149,14 @@ function OnWorldPreUpdate()
 			end
 		end
 	end
-	if GlobalsGetValue("BR_BOSS_RUSH_ACTIVE", "0") == "1" then
+	local is_boss_rush = GlobalsGetValue("BR_BOSS_RUSH_ACTIVE", "0") == "1"
+	local show_timer = ModSettingGet("boss_reworks.timer") and is_boss_rush
+	if GlobalsGetValue("BR_BOSS_RUSH_PORTAL_THIS") == "$br_boss_rush_portal_end" then
+		show_timer = true
+	else
+		GlobalsSetValue("BR_BOSS_RUSH_FRAME_NOW", tostring(GameGetFrameNum()))
+	end
+	if is_boss_rush or show_timer then
 		-- i stole this code from lap 2 and modified it
 		Gui = Gui or GuiCreate()
 		GuiIdPushString(Gui, "br_healthbar")
@@ -177,64 +187,74 @@ function OnWorldPreUpdate()
 		local frame = "mods/boss_reworks/files/boss_rush/health_frame.png"
 		local frame_w, frame_h = GuiGetImageDimensions(Gui, frame)
 		local back = "mods/boss_reworks/files/boss_rush/health_back.png"
+		local timer = (tonumber(GlobalsGetValue("BR_BOSS_RUSH_FRAME_NOW", "0")) - tonumber(GlobalsGetValue("BR_BOSS_RUSH_FRAME_START", "0")))
+		local timertext = ("%.2fs"):format(timer / 60)
 
+		if is_boss_rush then
 		-- these overlap with the pickup prompt but there's not much I can do without making the healthbar very obtrusive
-		-- Back
-		GuiOptionsAdd(Gui, 2) -- Make non interactive
-		GuiZSetForNextWidget(Gui, -999)
-		GuiImage(Gui, 0, (screen_w - frame_w) / 2, screen_h / 1.1 - frame_h / 2, back, 1, 1, 1)
-		-- Red bar
-		GuiZSetForNextWidget(Gui, -1000)
-		GuiImage(Gui, 1, (screen_w - frame_w) / 2, screen_h / 1.1 - tween_h / 2, tween, 1, frame_w * thing / max, 1)
-		-- Bar
-		GuiZSetForNextWidget(Gui, -1001)
-		GuiImage(Gui, 2, (screen_w - frame_w) / 2, screen_h / 1.1 - bar_h / 2, bar, 1, frame_w * amount / max, 1)
-		-- Frame
-		GuiZSetForNextWidget(Gui, -1002)
-		GuiImage(Gui, 3, (screen_w - frame_w) / 2, screen_h / 1.1 - frame_h / 2, frame, 1, 1, 1)
-		-- Countdown
-		GuiZSetForNextWidget(Gui, -1003)
-		GuiColorSetForNextWidget(Gui, 0, 0, 0, 1)
-		GuiText(Gui, (screen_w - text_w) / 2, screen_h / 1.1 - text_h / 2, text)
+			-- Back
+			GuiOptionsAdd(Gui, 2) -- Make non interactive
+			GuiZSetForNextWidget(Gui, -999)
+			GuiImage(Gui, 0, (screen_w - frame_w) / 2, screen_h / 1.1 - frame_h / 2, back, 1, 1, 1)
+			-- Red bar
+			GuiZSetForNextWidget(Gui, -1000)
+			GuiImage(Gui, 1, (screen_w - frame_w) / 2, screen_h / 1.1 - tween_h / 2, tween, 1, frame_w * thing / max, 1)
+			-- Bar
+			GuiZSetForNextWidget(Gui, -1001)
+			GuiImage(Gui, 2, (screen_w - frame_w) / 2, screen_h / 1.1 - bar_h / 2, bar, 1, frame_w * amount / max, 1)
+			-- Frame
+			GuiZSetForNextWidget(Gui, -1002)
+			GuiImage(Gui, 3, (screen_w - frame_w) / 2, screen_h / 1.1 - frame_h / 2, frame, 1, 1, 1)
+			-- Countdown
+			GuiZSetForNextWidget(Gui, -1003)
+			GuiColorSetForNextWidget(Gui, 0, 0, 0, 1)
+			GuiText(Gui, (screen_w - text_w) / 2, screen_h / 1.1 - text_h / 2, text)
+
+			local players = EntityGetWithTag("player_unit") or {}
+			for i = 1, #players do
+				-- disable % based damage effects since those use the player's real HP
+				local comp = GameGetGameEffect(players[i], "POISON")
+				local comp2 = GameGetGameEffect(players[i], "RADIOACTIVE")
+				local comp3 = EntityGetFirstComponent(players[i], "DamageModelComponent")
+				if comp and comp ~= 0 then
+					ComponentSetValue2(comp, "effect", "NONE")
+					ComponentSetValue2(comp, "frames", 0)
+				end
+				if comp2 and comp2 ~= 0 then
+					ComponentSetValue2(comp2, "effect", "NONE")
+					ComponentSetValue2(comp2, "frames", 0)
+				end
+				if comp3 and comp3 ~= 0 then
+					ComponentSetValue2(comp3, "mFireDamageBufferedNextDeliveryFrame", GameGetFrameNum() + 3)
+					ComponentSetValue2(comp3, "mFireDamageBuffered", 0)
+				end
+				if GameGetGameEffectCount(players[i], "ON_FIRE") > 0 then
+					local dmg = max / multiplier / 50 / 60 / 25
+					EntityInflictDamage(players[i], dmg, "DAMAGE_FIRE", "$damage_fire", "NONE", 0, 0)
+				end
+			end
+			local poly = EntityGetWithTag("polymorphed_player") or {}
+			for i = 1, #poly do
+				local comp_poly = GameGetGameEffect(poly[i], "POLYMORPH")
+				if (comp_poly == 0 or comp_poly == nil) then comp_poly = GameGetGameEffect(poly[i], "POLYMORPH_RANDOM") end
+				if (comp_poly == 0 or comp_poly == nil) then comp_poly = GameGetGameEffect(poly[i], "POLYMORPH_UNSTABLE") end
+
+				-- forever polymorph!
+				if comp_poly then
+					ComponentSetValue2(comp_poly, "frames", 1)
+					GamePrint("$br_boss_rush_polymorphed")
+					local hp = tostring(0.5 * tonumber(GlobalsGetValue("BR_BOSS_RUSH_HP_LEFT", "0")))
+					GlobalsSetValue("BR_BOSS_RUSH_HP_LEFT", hp)
+				end
+			end
+		end
+		-- Timer
+		if show_timer then
+			GuiZSetForNextWidget(Gui, -1004)
+			GuiColorSetForNextWidget(Gui, 1, 1, 1, 1)
+			GuiText(Gui, (screen_w - text_w) / 2, screen_h / 14 - text_h / 2, timertext)
+		end
 
 		GuiIdPop(Gui)
-
-		local players = EntityGetWithTag("player_unit") or {}
-		for i = 1, #players do
-			-- disable % based damage effects since those use the player's real HP
-			local comp = GameGetGameEffect(players[i], "POISON")
-			local comp2 = GameGetGameEffect(players[i], "RADIOACTIVE")
-			local comp3 = EntityGetFirstComponent(players[i], "DamageModelComponent")
-			if comp and comp ~= 0 then
-				ComponentSetValue2(comp, "effect", "NONE")
-				ComponentSetValue2(comp, "frames", 0)
-			end
-			if comp2 and comp2 ~= 0 then
-				ComponentSetValue2(comp2, "effect", "NONE")
-				ComponentSetValue2(comp2, "frames", 0)
-			end
-			if comp3 and comp3 ~= 0 then
-				ComponentSetValue2(comp3, "mFireDamageBufferedNextDeliveryFrame", GameGetFrameNum() + 3)
-				ComponentSetValue2(comp3, "mFireDamageBuffered", 0)
-			end
-			if GameGetGameEffectCount(players[i], "ON_FIRE") > 0 then
-				local dmg = max / multiplier / 50 / 60 / 25
-				EntityInflictDamage(players[i], dmg, "DAMAGE_FIRE", "$damage_fire", "NONE", 0, 0)
-			end
-		end
-		local poly = EntityGetWithTag("polymorphed_player") or {}
-		for i = 1, #poly do
-			local comp_poly = GameGetGameEffect(poly[i], "POLYMORPH")
-			if (comp_poly == 0 or comp_poly == nil) then comp_poly = GameGetGameEffect(poly[i], "POLYMORPH_RANDOM") end
-			if (comp_poly == 0 or comp_poly == nil) then comp_poly = GameGetGameEffect(poly[i], "POLYMORPH_UNSTABLE") end
-
-			-- forever polymorph!
-			if comp_poly then
-				ComponentSetValue2(comp_poly, "frames", 1)
-				GamePrint("$br_boss_rush_polymorphed")
-				local hp = tostring(0.5 * tonumber(GlobalsGetValue("BR_BOSS_RUSH_HP_LEFT", "0")))
-				GlobalsSetValue("BR_BOSS_RUSH_HP_LEFT", hp)
-			end
-		end
 	end
 end

@@ -246,6 +246,7 @@ local function start_boss_rush()
 	GlobalsSetValue("BR_BOSS_RUSH_ACTIVE", "1")
 	GlobalsSetValue("BR_BOSS_RUSH_HP_LEFT", tostring(max))
 	GlobalsSetValue("BR_BOSS_RUSH_HP_TWEEN", tostring(max))
+	GlobalsSetValue("BR_BOSS_RUSH_FRAME_START", tostring(GameGetFrameNum()))
 end
 
 Bosses = {
@@ -388,7 +389,7 @@ Bosses = {
 			AddFlagPersistent("br_boss_rush_completed")
 			GamePrintImportant("$br_boss_rush_end_01", "$br_boss_rush_end_02")
 			if not GameHasFlagRun("br_boss_rush_end") then
-				EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_out.xml", x, y - 50)
+				EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_in.xml", x, y - 50)
 				GameAddFlagRun("br_boss_rush_end")
 				EntityLoad("mods/boss_reworks/files/boss_rush/secretbook.xml", x + 60, y + 10)
 			end
@@ -409,7 +410,7 @@ function Shuffle_order()
 	SetRandomSeed(25858 + attempts, attempts + 4285)
 	for i = 1, #bosses_hold do
 		local number = Random(1, #bosses_hold)
-		if not ModSettingGet("boss_reworks.shuffle") then number = 1 end
+		if GlobalsGetValue("BR_SHUFFLE_RUSH", "nil") ~= "true" then number = 1 end
 		list[#list+1] = bosses_hold[number]
 		table.remove(bosses_hold, number)
 	end
@@ -441,6 +442,7 @@ function portal_teleport_used(entity_that_was_teleported, from_x, from_y, to_x, 
 			for i = 1, #New do
 				if New[i][1] == name then
 					New[i][2](to_x, to_y, entity_that_was_teleported)
+					GlobalsSetValue("BR_BOSS_RUSH_PORTAL_THIS", name)
 					GlobalsSetValue("BR_BOSS_RUSH_PORTAL_NEXT", (New[i + 1] or New[i])[1])
 					GlobalsSetValue("BR_BOSS_RUSH_HP_LEFT", GlobalsGetValue("BR_BOSS_RUSH_HP_MAX"))
 				end
