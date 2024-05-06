@@ -5,8 +5,8 @@
     ></InheritTransformComponent>
 
     <ParticleEmitterComponent
-        area_circle_radius.min="25"
-        area_circle_radius.max="30"
+        area_circle_radius.min="20"
+        area_circle_radius.max="23"
         area_circle_sector_degrees="0"
         collide_with_gas_and_fire="0"
         collide_with_grid="0"
