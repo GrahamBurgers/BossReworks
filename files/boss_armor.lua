@@ -22,7 +22,7 @@ function damage_about_to_be_received(damage, x, y, entity_thats_responsible, cri
     
     local armor_multipler = -_DAMAGERESISTANCEAT100/(_DAMAGERESISTANCEAT100-1) --intermediate step to make it easier to read.
     local armor= 1-(1/(armor_multipler*recent_relative_damage+1))
-	GamePrint(tostring(armor))
+	-- GamePrint(tostring(armor))
     
     local new_damage=(1 - armor) * damage
     
