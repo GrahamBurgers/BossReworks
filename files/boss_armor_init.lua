@@ -1,8 +1,4 @@
 local me = GetUpdatedEntityID()
-if not ModSettingGet("boss_reworks.boss_armor") then
-    EntityRemoveComponent(me, GetUpdatedComponentID())
-    return
-end
 local comp = EntityGetFirstComponent(me, "VariableStorageComponent", "boss_reworks_armor")
 if comp == nil then
     local health = EntityGetFirstComponent(me, "DamageModelComponent")
@@ -16,5 +12,5 @@ if comp == nil then
         execute_every_n_frame=-1,
     })
 else
-    ComponentSetValue2(comp, "value_float", ComponentGetValue2(comp, "value_float") * 0.992) -- decay by 50% over 60f
+    ComponentSetValue2(comp, "value_float", ComponentGetValue2(comp, "value_float") * 0.9885140203529) -- decay by 50% over 60f
 end

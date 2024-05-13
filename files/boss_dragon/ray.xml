@@ -35,10 +35,9 @@
     camera_shake_when_shot="2.0"
     shoot_light_flash_radius="100" 
     knockback_force="0.5"
-    damage_game_effect_entities="data/entities/misc/effect_on_fire.xml,"
     >
     <damage_by_type
-      fire="0.2"
+      fire="0.15"
     ></damage_by_type>
     <config_explosion
       never_cache="1" 
@@ -152,29 +151,14 @@
     remove_after_executed="1"
 	></LuaComponent>
 
-  <ParticleEmitterComponent 
-    _enabled="0"
-    emitted_material_name="fire"
-    offset.x="0"
-    offset.y="0"
-    x_pos_offset_min="-3"
-    y_pos_offset_min="-3"
-    x_pos_offset_max="3"
-    y_pos_offset_max="3"
-    x_vel_min="-10"
-    x_vel_max="10"
-    y_vel_min="-10"
-    y_vel_max="10"
-    count_min="8"
-    count_max="12"
-    lifetime_min="0.2"
-    lifetime_max="0.4"
-    create_real_particles="1"
-    emit_cosmetic_particles="0"
-    emission_interval_min_frames="1"
-    emission_interval_max_frames="1"
-    is_emitting="1" >
-  </ParticleEmitterComponent>
+  <MagicConvertMaterialComponent
+    from_material="acid_gas_static"
+    to_material="fire"
+    steps_per_frame="8"
+    loop="1"
+    is_circle="1"
+    radius="4" >
+</MagicConvertMaterialComponent>
 
   <ParticleEmitterComponent 
     _enabled="0"
@@ -182,13 +166,13 @@
     offset.x="0"
     offset.y="0"
 		area_circle_radius.min="0"
-		area_circle_radius.max="5"
+		area_circle_radius.max="7"
     x_vel_min="-10"
     x_vel_max="10"
     y_vel_min="-10"
     y_vel_max="10"
-    count_min="8"
-    count_max="12"
+    count_min="12"
+    count_max="16"
     lifetime_min="0.2"
     lifetime_max="0.4"
     create_real_particles="1"
