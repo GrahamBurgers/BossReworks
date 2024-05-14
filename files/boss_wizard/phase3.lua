@@ -62,4 +62,4 @@ ComponentSetValue2(comp, "area_circle_radius", radius, radius)
 ComponentSetValue2(comp, "count_min", radius)
 ComponentSetValue2(comp, "count_max", radius)
 
-EntityInflictDamage(GetUpdatedEntityID(), (regen * -0.25) / 60, "DAMAGE_HEALING", "$damage_healing", "NONE", 0, 0, GetUpdatedEntityID())
+-- EntityInflictDamage(GetUpdatedEntityID(), (regen * -0.25) / 60, "DAMAGE_HEALING", "$damage_healing", "NONE", 0, 0, GetUpdatedEntityID())

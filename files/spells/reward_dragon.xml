@@ -1,6 +1,7 @@
 <Entity name="$projectile_default" tags="projectile">
 
     <ParticleEmitterComponent
+        _enabled="0"
         area_circle_radius.min="16"
         area_circle_radius.max="16"
         area_circle_sector_degrees="360"

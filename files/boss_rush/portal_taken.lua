@@ -427,8 +427,7 @@ function portal_teleport_used(entity_that_was_teleported, from_x, from_y, to_x, 
 	else
 		nextboss()
 	end
-	if
-		EntityHasTag(entity_that_was_teleported, "player_unit")
+	if EntityHasTag(entity_that_was_teleported, "player_unit")
 		or EntityHasTag(entity_that_was_teleported, "polymorphed_player")
 	then
 		EntityAddRandomStains(entity_that_was_teleported, CellFactory_GetType("boss_reworks_unstainer"), 2000)
@@ -447,7 +446,7 @@ function portal_teleport_used(entity_that_was_teleported, from_x, from_y, to_x, 
 						GlobalsSetValue("BR_BOSS_RUSH_PORTAL_THIS", name)
 						GlobalsSetValue("BR_BOSS_RUSH_PORTAL_NEXT", (New[i + 1] or New[i])[1])
 						GlobalsSetValue("BR_BOSS_RUSH_HP_LEFT", GlobalsGetValue("BR_BOSS_RUSH_HP_MAX"))
-						if name == New[#New][1] then
+						if name == New[#New][1] and i > 2 then
 							GlobalsSetValue("BR_BOSS_RUSH_PORTAL_NEXT", last[1])
 						end
 					end
@@ -494,4 +493,5 @@ function Insert_boss(after_who, name, func)
 		end
 	end
 end
--- TODO: write instructions on how to add a modded boss to boss rush (blehhhhhh)
+-- check the noita discord for a guide on how to add your own boss to the Boss Rush
+-- https://discord.com/channels/453998283174576133/942029678657548288/1234608174384943226

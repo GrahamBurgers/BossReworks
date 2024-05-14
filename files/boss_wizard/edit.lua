@@ -9,6 +9,8 @@ table.insert(tree.children,
 table.insert(tree.children,
 	nxml.parse('<LuaComponent script_source_file="mods/boss_reworks/files/boss_wizard/phase3.lua" </LuaComponent>'))
 table.insert(tree.children,
+	nxml.parse('<LuaComponent script_damage_about_to_be_received="mods/boss_reworks/files/boss_wizard/resist.lua" </LuaComponent>'))
+table.insert(tree.children,
 	nxml.parse('<CellEaterComponent radius="50" eat_probability="4" ignored_material="swamp" ></CellEaterComponent>'))
 table.insert(tree.children,
 	nxml.parse('<GameEffectComponent effect="KNOCKBACK_IMMUNITY" frames="-1" </GameEffectComponent>'))

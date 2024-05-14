@@ -43,6 +43,7 @@ function damage_received(damage, message, entity_thats_responsible, is_fatal, pr
 			local effect, entity = GetGameEffectLoadTo(me, "PROTECTION_ALL", true)
 			EntityAddComponent2(entity, "LifetimeComponent", {
 				lifetime = 600,
+				serialize_duration = true
 			})
 			local entities = EntityGetWithTag("boss_reworks_boss_rush") or {}
 			for i = 1, #entities do
