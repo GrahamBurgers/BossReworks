@@ -17,9 +17,12 @@ if go then
 	for i = 1, #orbs do
 		EntityKill(orbs[i])
 	end
-	local target_entity = EntityGetClosestWithTag(x, y, "player_unit") or EntityGetClosestWithTag(x, y, "polymorphed_player") or 0
+	local player = EntityGetClosestWithTag(x, y, "player_unit") or 0
+	if player == 0 then
+		player = EntityGetClosestWithTag(x, y, "polymorphed_player") or 0
+	end
 	dofile_once("mods/boss_reworks/files/projectile_utils.lua")
-	if target_entity > 0 then
+	if player > 0 then
 		ShootProjectileAtEntity(whoshot, "mods/boss_reworks/files/boss_gate/dart.xml", (x + x2) / 2, (y + y2) / 2, target_entity)
 	end
 end

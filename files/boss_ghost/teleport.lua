@@ -1,10 +1,13 @@
 dofile_once("mods/boss_reworks/files/projectile_utils.lua")
 local x, y = EntityGetTransform(GetUpdatedEntityID())
 local teleporters = EntityGetWithTag("boss_ghost_teleporter")
-local target_entity = EntityGetClosestWithTag(x, y, "player_unit") or EntityGetClosestWithTag(x, y, "polymorphed_player") or 0
-if target_entity > 0 then
-    x, y = EntityGetTransform(target_entity)
+local player = EntityGetClosestWithTag(x, y, "player_unit") or 0
+if player == 0 then
+	player = EntityGetClosestWithTag(x, y, "polymorphed_player") or 0
 end
+if player > 0 then
+    x, y = EntityGetTransform(player)
+else return end
 local highest = 0
 local highest_entity = GetUpdatedEntityID()
 local x2, y2

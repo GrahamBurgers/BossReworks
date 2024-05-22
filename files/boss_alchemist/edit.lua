@@ -40,7 +40,7 @@ for k, v in ipairs(tree.children) do
 				v2.attr.attack_ranged_frames_between = v2.attr.attack_ranged_frames_between * 2
 			end
 			if v2.name == "DamageModelComponent" then
-				v2.blood_multiplier = 0.1
+				v2.attr.blood_multiplier = 0.1
 				v2.children[1].attr.slice = 0.5
 				v2.children[1].attr.projectile = 0.6
 			end

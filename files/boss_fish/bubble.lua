@@ -1,6 +1,9 @@
 local me = GetUpdatedEntityID()
 local x, y = EntityGetTransform(me)
-local player = EntityGetClosestWithTag(x, y, "player_unit") or EntityGetClosestWithTag(x, y, "polymorphed_player") or 0
+local player = EntityGetClosestWithTag(x, y, "player_unit") or 0
+if player == 0 then
+	player = EntityGetClosestWithTag(x, y, "polymorphed_player") or 0
+end
 local px, py = 0, nil
 if player > 0 then
     local x2, y2 = EntityGetTransform(player)

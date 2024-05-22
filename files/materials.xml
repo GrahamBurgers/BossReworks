@@ -46,4 +46,12 @@
 		liquid_stains="0"
 		>
 	</CellDataChild>
+	<CellDataChild
+		_parent="cursed_liquid"
+		_inherit_reactions="0"
+		wang_color="ff8d4d87"
+		name="boss_reworks_cursed_liquid_nostain"
+		liquid_stains="0"
+		>
+	</CellDataChild>
 </Materials>

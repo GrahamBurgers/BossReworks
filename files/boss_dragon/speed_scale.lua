@@ -4,7 +4,7 @@ if comp == nil then return end
 local xs, ys = ComponentGetValue2(comp, "mTargetVec")
 if xs and ys then
 	local scale = (math.abs(xs) + math.abs(ys)) -- probably deals more damage diagonally?
-	ComponentSetValue2(comp, "bite_damage", scale * 0.8)
+	ComponentSetValue2(comp, "bite_damage", scale * 0.6)
 end
 local toggle = ComponentGetValue2(GetUpdatedComponentID(), "mTimesExecuted")
 if (toggle + 1) % 150 == 0 then

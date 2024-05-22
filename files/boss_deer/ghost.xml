@@ -1,0 +1,33 @@
+<Entity tags="hittable,islandspirit,necrobot_NOT,glue_NOT,curse_NOT,spiritghost">
+	
+	<AreaDamageComponent
+		aabb_min.x="-6" 
+		aabb_min.y="-6" 
+		aabb_max.x="6" 
+		aabb_max.y="6" 
+		damage_per_frame="0.3"
+		update_every_n_frame="1"
+		entities_with_tag="prey"
+		death_cause="$damage_holy"
+		damage_type="DAMAGE_HOLY"
+		circle_radius="16"
+		>
+	</AreaDamageComponent>
+
+    <VelocityComponent
+		gravity_y="0"
+    ></VelocityComponent>
+
+	<!-- ghost functionality and visuals -->		
+	<SpriteComponent 
+		image_file="data/projectiles_gfx/death_ghost.xml"
+		emissive="1"
+		additive="1"
+		>
+	</SpriteComponent>
+
+	<LuaComponent
+		script_source_file="mods/boss_reworks/files/boss_deer/ghost.lua"
+	></LuaComponent>
+
+</Entity>

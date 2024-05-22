@@ -31,6 +31,7 @@ local defaults = {
 	{"rework_pit", true},
 	{"rework_tiny", true},
 	{"rework_meat", true},
+	{"rework_deer", true},
 }
 for i = 1, #defaults do
 	local id = "boss_reworks." .. defaults[i][1]
@@ -305,6 +306,20 @@ mod_settings =
 					)
 				end
 			},
+			--[[{
+				id = "rework_deer",
+				ui_name = "",
+				ui_description = "",
+				value_default = true,
+				not_setting = true,
+				scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
+				ui_fn = function(mod_id, gui, in_main_menu, im_id, setting)
+					copypaste("rework_deer", gui, {true, false}, im_id, 5,
+					"Deer: ",
+					"Rework Deer (Tapion vasalli)."
+					)
+				end
+			},]]--
 		},
 	},
 }

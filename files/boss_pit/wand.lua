@@ -2,7 +2,10 @@ dofile_once("mods/boss_reworks/files/projectile_utils.lua")
 
 local me = GetUpdatedEntityID()
 local x, y = EntityGetTransform(me)
-local player = EntityGetClosestWithTag(x, y, "player_unit") or EntityGetClosestWithTag(x, y, "polymorphed_player") or 0
+local player = EntityGetClosestWithTag(x, y, "player_unit") or 0
+if player == 0 then
+	player = EntityGetClosestWithTag(x, y, "polymorphed_player") or 0
+end
 local proj = ""
 local mult = 1
 local comps = EntityGetComponent(me, "VariableStorageComponent") or {}

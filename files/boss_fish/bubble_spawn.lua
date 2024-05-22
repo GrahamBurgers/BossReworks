@@ -1,5 +1,8 @@
 local x, y = EntityGetTransform(GetUpdatedEntityID())
-local player = EntityGetClosestWithTag(x, y, "player_unit") or EntityGetClosestWithTag(x, y, "polymorphed_player") or 0
+local player = EntityGetClosestWithTag(x, y, "player_unit") or 0
+if player == 0 then
+	player = EntityGetClosestWithTag(x, y, "polymorphed_player") or 0
+end
 if player > 0 then
     x, y = EntityGetTransform(player)
 end

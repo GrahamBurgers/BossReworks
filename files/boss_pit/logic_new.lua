@@ -2,7 +2,10 @@ local me = GetUpdatedEntityID()
 local x, y = EntityGetTransform(me)
 local varsto = EntityGetFirstComponentIncludingDisabled(me, "VariableStorageComponent", "squid_shield_trigger")
 local clock = EntityGetFirstComponentIncludingDisabled(me, "VariableStorageComponent", "squid_last_attack_frame")
-local player = EntityGetClosestWithTag(x, y, "player_unit") or EntityGetClosestWithTag(x, y, "polymorphed_player") or 0
+local player = EntityGetClosestWithTag(x, y, "player_unit")
+if player == 0 then
+	player = EntityGetClosestWithTag(x, y, "polymorphed_player") or 0
+end
 if not varsto or not clock or player <= 0 then return end
 dofile_once("mods/boss_reworks/files/projectile_utils.lua")
 local wandcore = EntityGetInRadiusWithTag(x, y, 40, "br_wandcore") or {}
@@ -40,8 +43,8 @@ for i = 1, #children do
 		shield_is_up = true
 	end
 end
-local wait = { 7, 6, 5, 4, 4, 3 } -- how long he waits between attacks for each phase
-wait = wait[phase] * 60
+local wait_table = { 7, 6, 5, 4, 4, 3 } -- how long he waits between attacks for each phase
+local wait = wait_table[phase] * 60
 if shield_is_up then wait = wait * (2 / 3) end
 if GameGetFrameNum() == last + math.ceil(wait / 2) and phase <= 3 then
 	local entities = CircleShot(me, "mods/boss_reworks/files/boss_wizard/effect_orb.xml", 7, x, y, 180, 0, true)

@@ -37,6 +37,13 @@ for k, v in ipairs(tree.children) do
     if v.name == "DamageModelComponent" then
         v.attr.materials_damage = "0"
     end
+    if v.name == "LuaComponent" and v.attr.script_source_file == "data/scripts/animals/ethereal_check.lua" then
+        v.attr.script_source_file = "mods/boss_reworks/files/boss_ghost/reveal.lua"
+        v.attr.execute_every_n_frame = "1"
+    end
+    if v.attr._tags == "magic_eye" then
+        v.attr._enabled="0"
+    end
 end
 ModTextFileSetContent(path, tostring(tree))
 

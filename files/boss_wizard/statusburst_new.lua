@@ -1,8 +1,11 @@
 dofile_once("mods/boss_reworks/files/projectile_utils.lua")
 local me = GetUpdatedEntityID()
 local x, y = EntityGetTransform(me)
-local player = EntityGetClosestWithTag(x, y, "player_unit") or EntityGetClosestWithTag(x, y, "polymorphed_player")
-if not player then return end
+local player = EntityGetClosestWithTag(x, y, "player_unit") or 0
+if player == 0 then
+	player = EntityGetClosestWithTag(x, y, "polymorphed_player") or 0
+end
+if player == 0 then return end
 local orbs = EntityGetWithTag("wizard_orb_blood") or {}
 for i = 1, #orbs do
     x, y = EntityGetTransform(orbs[i])

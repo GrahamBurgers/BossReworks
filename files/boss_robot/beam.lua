@@ -3,7 +3,10 @@ if (tick % 700 == 0 or (240 + tick) % 700 == 0) then
     local me = GetUpdatedEntityID()
     dofile_once("mods/boss_reworks/files/projectile_utils.lua")
     local x, y = EntityGetTransform(me)
-    local player = EntityGetClosestWithTag(x, y, "player_unit") or EntityGetClosestWithTag(x, y, "polymorphed_player") or 0
+    local player = EntityGetClosestWithTag(x, y, "player_unit") or 0
+    if player == 0 then
+        player = EntityGetClosestWithTag(x, y, "polymorphed_player") or 0
+    end
     local amount = 5
     local speed = 20
     if player > 0 then
