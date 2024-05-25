@@ -12,5 +12,8 @@ if comp == nil then
         execute_every_n_frame=-1,
     })
 else
-    ComponentSetValue2(comp, "value_float", ComponentGetValue2(comp, "value_float") * 0.9885140203529) -- decay by 50% over 60f
+    local this = GetUpdatedComponentID()
+    if ComponentGetValue2(this, "mTimesExecuted") % 2 == 0 then
+        ComponentSetValue2(comp, "value_float", ComponentGetValue2(comp, "value_float") * 0.9885140203529) -- decay by 50% over 60f
+    end
 end

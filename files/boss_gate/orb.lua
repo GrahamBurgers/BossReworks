@@ -23,6 +23,6 @@ if go then
 	end
 	dofile_once("mods/boss_reworks/files/projectile_utils.lua")
 	if player > 0 then
-		ShootProjectileAtEntity(whoshot, "mods/boss_reworks/files/boss_gate/dart.xml", (x + x2) / 2, (y + y2) / 2, target_entity)
+		ShootProjectileAtEntity(whoshot, "mods/boss_reworks/files/boss_gate/dart.xml", (x + x2) / 2, (y + y2) / 2, player)
 	end
 end
