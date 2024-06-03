@@ -83,7 +83,7 @@ mod_settings =
 		not_setting = true,
 		scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
 		ui_fn = function(mod_id, gui, in_main_menu, im_id, setting)
-			copypaste("boss_armor_intensity", gui, {"Default (50%)", "Weak (20%)", "Strong (80%)", "Off (0%)"}, im_id, 0,
+			copypaste("boss_armor_intensity", gui, {"Default (60%)", "Weak (30%)", "Strong (90%)", "Off (0%)"}, im_id, 0,
 			"Boss armor intensity: ",
 			"Boss armor makes bosses more fair by making it less effective to deal massive amounts of damage at once.\nThis creates a more fair fight and ensures the boss will survive for long enough to do a few attacks.\nYou can turn this off if you want but it will make me sad.\nAll reworked bosses have boss armor by default, except for Sauvojen Tuntija.\nRequires a restart to change. Maybe don't change this mid-fight."
 			)

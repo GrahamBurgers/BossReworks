@@ -1,10 +1,10 @@
 local setting = ModSettingGet("boss_reworks.boss_armor_intensity")
 --damage to resist when you would deal 100% damage. this should be less than or equal to 1
 local values = {
-	["Default"] = 0.5,
-	["Weak"] = 0.2,
+	["Default"] = 0.6,
+	["Weak"] = 0.3,
 	["Off"] = 0,
-	["Strong"] = 0.8,
+	["Strong"] = 0.9,
 }
 local _DAMAGERESISTANCEAT100 = values[setting] or values["Default"]
 

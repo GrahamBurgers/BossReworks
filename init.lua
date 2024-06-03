@@ -53,6 +53,13 @@ function OnPlayerSpawned(player)
 			local x, y = EntityGetTransform(player)
 			local portal = EntityLoad("mods/boss_reworks/files/boss_rush/portals/boss_rush_portal_in.xml", x, y)
 			EntityAddComponent2(portal, "LifetimeComponent", {lifetime=120})
+			if mode == "Calamari" then
+				local dmg = EntityGetFirstComponent(player, "DamageModelComponent")
+				if dmg then
+					ComponentSetValue2(dmg, "hp", ComponentGetValue2(dmg, "hp") * 4)
+					ComponentSetValue2(dmg, "max_hp", ComponentGetValue2(dmg, "max_hp") * 4)
+				end
+			end
 		end
 		if mode == "Powerful" then
 			EntityAddComponent2(player, "LuaComponent", {
