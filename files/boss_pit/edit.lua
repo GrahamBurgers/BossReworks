@@ -32,6 +32,13 @@ for k, v in ipairs(tree.children) do
 end
 ModTextFileSetContent(path, tostring(tree))
 inject(args.SS,modes.P,"data/entities/animals/boss_pit/boss_pit_death.lua", 'if flag_status then', [[
+	local wands = EntityGetWithTag("br_squid_wand") or {}
+	for i = 1, #wands do
+		local x2, y2 = EntityGetTransform(wands[i])
+		EntityLoad("data/entities/particles/poof_blue.xml", x2, y2)
+		EntityKill(wands[i])
+	end
+
 	if not GameHasFlagRun("br_killed_animal_boss_pit") then
 		GameAddFlagRun("br_killed_animal_boss_pit")
 		dofile_once("mods/boss_reworks/files/soul_things.lua")

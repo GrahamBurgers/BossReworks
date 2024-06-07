@@ -1,12 +1,12 @@
 local setting = ModSettingGet("boss_reworks.boss_armor_intensity")
 --damage to resist when you would deal 100% damage. this should be less than or equal to 1
 local values = {
-	["Default"] = 0.6,
-	["Weak"] = 0.3,
-	["Off"] = 0,
-	["Strong"] = 0.9,
+	["Default (60%)"] = 0.6,
+	["Weak (30%)"] = 0.3,
+	["Off (0%)"] = 0,
+	["Strong (90%)"] = 0.9,
 }
-local _DAMAGERESISTANCEAT100 = values[setting] or values["Default"]
+local _DAMAGERESISTANCEAT100 = values[setting] or values["Default (60%)"]
 
 function damage_about_to_be_received(damage, x, y, entity_thats_responsible, critical_hit_chance)
     if damage < 0 or GameGetGameEffectCount(GetUpdatedEntityID(), "PROTECTION_ALL") > 0 or _DAMAGERESISTANCEAT100 == 0 then

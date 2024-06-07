@@ -174,7 +174,7 @@ end
 
 local function chainsaw()
 	local wand = ShootProjectile(me, "mods/boss_reworks/files/boss_pit/wand.xml", x, y, 0, 40, 0.3)
-	modify_wand(wand, "data/entities/projectiles/deck/chainsaw.xml", 2, "data/items_gfx/wands/custom/chainsaw.xml", 500,
+	modify_wand(wand, "data/entities/projectiles/deck/chainsaw.xml", 3, "data/items_gfx/wands/custom/chainsaw.xml", 500,
 		0, 3)
 	EntityAddComponent2(wand, "LuaComponent", {
 		remove_after_executed = true,
@@ -190,8 +190,8 @@ local function earthquake()
 	if px < x then theta = theta + math.pi end
 	local wand = ShootProjectile(me, "mods/boss_reworks/files/boss_pit/wand.xml", x, y, math.cos(theta), math.sin(theta),
 		2)
-	modify_wand(wand, "data/entities/projectiles/deck/crumbling_earth.xml", 7200, "data/items_gfx/wands/wand_0533.png",
-		7300, 4, 0, true)
+	modify_wand(wand, "data/entities/projectiles/deck/crumbling_earth.xml", 3600, "data/items_gfx/wands/wand_0533.png",
+		3700, 4, 0, true)
 end
 
 local function missile()

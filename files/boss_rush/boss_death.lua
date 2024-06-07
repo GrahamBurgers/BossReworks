@@ -1,7 +1,7 @@
 function death( damage_type_bit_field, damage_message, entity_thats_responsible, drop_items )
     if #(EntityGetWithTag("boss_reworks_this_is_boss") or {}) <= 1 then -- hopefully works well for multi-bosses
-        local x = GlobalsGetValue("BR_BOSS_RUSH_PORTAL_X", "0")
-        local y = GlobalsGetValue("BR_BOSS_RUSH_PORTAL_Y", "0")
+        local x = tonumber(GlobalsGetValue("BR_BOSS_RUSH_PORTAL_X", "0")) or 0
+        local y = tonumber(GlobalsGetValue("BR_BOSS_RUSH_PORTAL_Y", "0")) or 0
         local next = GlobalsGetValue("BR_BOSS_RUSH_PORTAL_NEXT", "") or ""
         local portal
         if GlobalsGetValue("BR_MODE", "0") == "Calamari" then
