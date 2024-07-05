@@ -13,7 +13,7 @@ if comp == nil then
     })
 else
     local this = GetUpdatedComponentID()
-    if ComponentGetValue2(this, "mTimesExecuted") % 2 == 0 then
+    if ComponentGetValue2(this, "mTimesExecuted") % 3 == 0 then
         ComponentSetValue2(comp, "value_float", ComponentGetValue2(comp, "value_float") * 0.9885140203529) -- decay by 50% over 60f
     end
 end

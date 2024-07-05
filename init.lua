@@ -56,8 +56,8 @@ function OnPlayerSpawned(player)
 			if mode == "Calamari" then
 				local dmg = EntityGetFirstComponent(player, "DamageModelComponent")
 				if dmg then
-					ComponentSetValue2(dmg, "hp", ComponentGetValue2(dmg, "hp") * 4)
-					ComponentSetValue2(dmg, "max_hp", ComponentGetValue2(dmg, "max_hp") * 4)
+					ComponentSetValue2(dmg, "hp", ComponentGetValue2(dmg, "hp") * 6)
+					ComponentSetValue2(dmg, "max_hp", ComponentGetValue2(dmg, "max_hp") * 6)
 				end
 			end
 		end
