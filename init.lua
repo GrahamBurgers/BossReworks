@@ -31,7 +31,20 @@ if mode ~= "Calamari" then
 	ModTextFileSetContent("data/biome/_pixel_scenes.xml", content) -- mostly functional
 end
 
+dofile_once("data/scripts/perks/perk.lua")
 function OnPlayerSpawned(player)
+	-- Gets the player's position
+	local x, y = EntityGetTransform(player)
+
+	-- Giving myself stuff to playtest with - Sharpy796
+	if ModSettingGet("boss_reworks.master_spell_list_testing") then
+		-- Gives the player Tinker With Wands Everywhere
+		local perk = perk_spawn(x, y, "EDIT_WANDS_EVERYWHERE")
+		perk_pickup(perk, player, EntityGetName(perk), false, false)
+		-- Gives the player the Soul of Revision
+		CreateItemActionEntity("BR_REWARD_MASTER", x, y-20)
+	end
+
 	if GlobalsGetValue("BR_SHUFFLE_RUSH", "nil") == "nil" then
 		GlobalsSetValue("BR_SHUFFLE_RUSH", tostring(ModSettingGet("boss_reworks.shuffle")))
 	end
@@ -71,6 +84,23 @@ function OnPlayerSpawned(player)
 		end
 	end
 end
+
+-- Giving myself stuff to playtest with - Sharpy796
+-- function OnWorldInitialized()
+-- 	if ModSettingGet("boss_reworks.master_spell_list_testing") then
+-- 		dofile_once("data/scripts/perks/perk.lua")
+-- 		-- Gets the player's position
+-- 		local pos = {
+-- 			x = tonumber(MagicNumbersGetValue("DESIGN_PLAYER_START_POS_X")),
+-- 			y = tonumber(MagicNumbersGetValue("DESIGN_PLAYER_START_POS_Y")),
+-- 		}
+-- 		-- Gives the player Tinker With Wands Everywhere
+-- 		local perk = perk_spawn(x, y, "EDIT_WANDS_EVERYWHERE")
+-- 		perk_pickup(perk, player_entity, EntityGetName(perk), false, false)
+-- 		-- Gives the player the Soul of Revision
+-- 		CreateItemActionEntity("BR_REWARD_MASTER", pos.x, pos.y)
+-- 	end
+-- end
 
 function OnWorldPreUpdate()
 	if mode == "Regular Armor" then
