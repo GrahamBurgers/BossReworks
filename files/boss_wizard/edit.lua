@@ -28,7 +28,8 @@ for k, v in ipairs(tree.children) do
 	if v.name == "Base" then
 		for k2, v2 in ipairs(v.children) do
 			if v2.name == "DamageModelComponent" then
-				v2.attr.materials_damage = "0"
+				v2.attr.materials_damage = false
+				v2.attr.minimum_knockback_force = 99999
 			end
 		end
 	end

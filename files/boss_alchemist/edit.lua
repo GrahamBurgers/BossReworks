@@ -41,6 +41,7 @@ for k, v in ipairs(tree.children) do
 			end
 			if v2.name == "DamageModelComponent" then
 				v2.attr.blood_multiplier = 0.1
+				v2.attr.minimum_knockback_force = 99999
 				v2.children[1].attr.slice = 0.5
 				v2.children[1].attr.projectile = 0.6
 			end
