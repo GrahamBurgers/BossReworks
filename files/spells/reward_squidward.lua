@@ -41,7 +41,24 @@ if #valid >= spells_needed then
     dofile_once("data/scripts/items/chest_random.lua")
     EntityLoad("data/entities/particles/poof_green.xml", totalx, totaly)
     SetRandomSeed(x + totalx, y + totaly)
-    make_random_card(totalx, totaly)
+    -- GamePrint("1: " .. valid[1][3])
+    -- GamePrint("2: " .. valid[2][3])
+    -- GamePrint("3: " .. valid[3][3])
+    local redo = true
+    local newid = ""
+    while redo do
+        local eid = make_random_card(totalx, totaly)
+        local idc = EntityGetFirstComponent(eid, "ItemActionComponent")
+        if idc then
+            newid = ComponentGetValue2(idc, "action_id")
+        end
+        --  GamePrint("try: " .. newid)
+        redo = false
+        if newid == valid[1][3] or newid == valid[2][3] or newid == valid[3][3] then
+            EntityKill(eid)
+            redo = true
+        end
+    end
     GamePlaySound("data/audio/Desktop/items.bank", "magic_wand/mana_fully_recharged", totalx, totaly)
 else
     GamePlaySound("data/audio/Desktop/ui.bank", "ui/button_denied", x, y)
