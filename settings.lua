@@ -32,7 +32,7 @@ local defaults = {
 	{"rework_tiny", true},
 	{"rework_meat", true},
 	{"rework_deer", true},
-	{"master_spell_list_testing", false},
+	-- {"master_spell_list_testing", false}, -- Sharpy796: Giving myself things to test Revision with
 }
 for i = 1, #defaults do
 	local id = "boss_reworks." .. defaults[i][1]
@@ -323,20 +323,20 @@ mod_settings =
 			},]]--
 		},
 	},
-	{
-		id = "master_spell_list_testing",
-		ui_name = "",
-		ui_description = "",
-		value_default = false,
-		not_setting = true,
-		scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
-		ui_fn = function(mod_id, gui, in_main_menu, im_id, setting)
-			copypaste("master_spell_list_testing", gui, {true, false}, im_id, 0,
-			"Soul of Revison Testing: ",
-			"Gives you Tinker With Wands Everywhere and the Soul of Revision at the start of the run.\nThis was implemented to more easily test appended versions of Revision's spell rotations."
-			)
-		end
-	},
+	-- { -- Sharpy796: Giving myself things to test Revision with
+	-- 	id = "master_spell_list_testing",
+	-- 	ui_name = "",
+	-- 	ui_description = "",
+	-- 	value_default = false,
+	-- 	not_setting = true,
+	-- 	scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
+	-- 	ui_fn = function(mod_id, gui, in_main_menu, im_id, setting)
+	-- 		copypaste("master_spell_list_testing", gui, {true, false}, im_id, 0,
+	-- 		"Soul of Revison Testing: ",
+	-- 		"Gives you Tinker With Wands Everywhere and the Soul of Revision at the start of the run.\nThis was implemented to more easily test appended versions of Revision's spell rotations."
+	-- 		)
+	-- 	end
+	-- },
 }
 
 function ModSettingsUpdate( init_scope )
