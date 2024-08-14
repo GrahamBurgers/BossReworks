@@ -31,9 +31,8 @@ if mode ~= "Calamari" then
 	ModTextFileSetContent("data/biome/_pixel_scenes.xml", content) -- mostly functional
 end
 
-dofile_once("data/scripts/perks/perk.lua")
+-- dofile_once("data/scripts/perks/perk.lua")
 function OnPlayerSpawned(player)
-
 	if GlobalsGetValue("BR_SHUFFLE_RUSH", "nil") == "nil" then
 		GlobalsSetValue("BR_SHUFFLE_RUSH", tostring(ModSettingGet("boss_reworks.shuffle")))
 	end
