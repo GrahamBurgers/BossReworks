@@ -59,12 +59,15 @@ else
 	local amount = 5 + (math.floor(#vscs / 5) * 2)
 	if #valid > 0 and string.len(valid[1].name) > 0 then
 		local root = EntityGetRootEntity(valid[1].target)
+		StatsLogPlayerKill(root)
 		EntityConvertToMaterial(root, "spark_white_bright")
 		EntityKill(root)
 		EntityAddComponent2(child, "VariableStorageComponent", {
 			_tags = "dragon_soul",
 			value_string = valid[1].name,
 		})
+		GamePrint(GameTextGet("$br_max_hp_increased", tostring(amount)))
+		GameScreenshake(50)
 		local players = EntityGetWithTag("player_unit") or {}
 		for i = 1, #players do
 			local dmg = EntityGetFirstComponent(players[i], "DamageModelComponent")
@@ -72,8 +75,6 @@ else
 				ComponentSetValue2(dmg, "max_hp", ComponentGetValue2(dmg, "max_hp") + amount / 25)
 				local x2, y2 = EntityGetTransform(players[i])
 				EntityLoad("data/entities/particles/poof_green.xml", x2, y2)
-				GameScreenshake(50)
-				GamePrint(GameTextGet("$br_max_hp_increased", tostring(amount)))
 			end
 		end
 		GamePlaySound("data/audio/Desktop/items.bank", "magic_wand/mana_fully_recharged", x, y)
