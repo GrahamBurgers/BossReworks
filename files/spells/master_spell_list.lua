@@ -118,7 +118,7 @@ return {
     -- tbh, I bet we could do something funnily meta with these spells here. If a spell is placed in more than one list, it'll be used in the first list. So what we can do is place one spell in a lower list, and when it rotates to that spell, it will begin the rotation in a higher list that it's also in.
     {"COPITH_BOMB_SMALL", "BOMB", "COPITH_ALT_FIRE_BOMB", "APOTHEOSIS_BOMB_GIGA",}, -- bombs
     {"GLITTER_BOMB", "COPITH_STUN_BOMBS",},
-    {"COPITH_COIN", "COPITH_ALT_FIRE_COIN",}, -- ultrakill!!!!!!!! headshot + railcoin + disrespect + l-ratio
+    {"COPITH_COIN", "COPITH_ALT_FIRE_COIN",}, -- ultrakill!!!!!!!! headshot + railcoin + disrespect +  + ratio
     {"FLAMETHROWER", "COPITH_ALT_FIRE_FLAMETHROWER",}, -- flamethrowers, if there is an ice thrower I'll put that there too
     {"HOOK", "COPITH_GRAPPLING_HOOK", "COPITH_ALT_FIRE_GRAPPLING_HOOK",},
     {"COPITH_AMMO_BOX", "COPITH_AMMO_FROM_HP",}, -- too strong? idk, these spells are very uncommon

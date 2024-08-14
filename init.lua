@@ -40,10 +40,10 @@ function OnPlayerSpawned(player)
 	if not GameHasFlagRun("boss_reworks_init") then
 		GameAddFlagRun("boss_reworks_init")
 		
-		-- Gets the player's position
-		local x, y = EntityGetTransform(player)
 		
 		-- Sharpy796: Giving myself things to test Revision with
+		-- -- Gets the player's position
+		-- local x, y = EntityGetTransform(player)
 		-- if ModSettingGet("boss_reworks.master_spell_list_testing") then
 		-- 	-- Gives the player Tinker With Wands Everywhere
 		-- 	local perk = perk_spawn(x, y, "EDIT_WANDS_EVERYWHERE")
