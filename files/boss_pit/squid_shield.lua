@@ -10,8 +10,8 @@ if parent ~= me then
     y = y - 1
 end
 local amount = ComponentGetValue2(var, "frames")
-local player = EntityGetInRadiusWithTag(x, y, 300, "player_unit") or {}
-if #player <= 0 then
+local players = EntityGetInRadiusWithTag(x, y, 350, "player_unit") or EntityGetInRadiusWithTag(x, y, 350, "polymorphed_player") or {}
+if #players <= 0 then
     amount = amount + 1
     ComponentSetValue2(var, "frames", amount)
 end
@@ -57,7 +57,6 @@ if (toggle + 1) % 50 == 0 then
 	end
 end
 
-local players = EntityGetWithTag("player_unit")
 for i = 1, #players do
 	EntityRemoveStainStatusEffect( players[i], "PROTECTION_ALL", 5 )
 end

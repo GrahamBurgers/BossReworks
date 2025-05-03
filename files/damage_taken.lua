@@ -38,7 +38,7 @@ function damage_received(damage, message, entity_thats_responsible, is_fatal, pr
 			GameSetCameraPos(x, y)
 			SetTimeOut(0.08, "mods/boss_reworks/files/damage_taken.lua", "turn_off_the_thingy")
 			SetRandomSeed(GameGetFrameNum() + damage, GameGetFrameNum() + 24085)
-			GamePrintImportant("$br_boss_rush_death_0", "$br_boss_rush_death_1")
+			GamePrintImportant("$br_boss_rush_death_0", "$br_boss_rush_death_" .. Random(1, 9))
 			ComponentSetValue2(health, "mFireFramesLeft", 0)
 			local effect, entity = GetGameEffectLoadTo(me, "PROTECTION_ALL", true)
 			EntityAddComponent2(entity, "LifetimeComponent", {
@@ -61,6 +61,7 @@ function damage_received(damage, message, entity_thats_responsible, is_fatal, pr
 			})
 			EntityAddChild(me, effect)
 
+			--[[
 			dofile_once("data/scripts/perks/perk.lua")
 
 			-- NOTE: Nathan - perk_utilities.lua:167 has a bug that will break the fire and holy damage mults, so we store them before the buggy call.
@@ -79,6 +80,7 @@ function damage_received(damage, message, entity_thats_responsible, is_fatal, pr
 				ComponentObjectSetValue2(damage_model, "damage_multipliers", "fire", fire)
 				ComponentObjectSetValue2(damage_model, "damage_multipliers", "holy", holy)
 			end
+			]]--
 			local projectiles = EntityGetWithTag("projectile") or {} -- this will cause no issues
 			for i = 1, #projectiles do
 				local comps = EntityGetComponent(projectiles[i], "ProjectileComponent") or {}

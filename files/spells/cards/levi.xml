@@ -5,6 +5,11 @@
 		action_id="BR_REWARD_LEVI" >
 	</ItemActionComponent>
 
+	<LuaComponent
+		_tags="enabled_in_hand"
+		script_source_file="mods/boss_reworks/files/spells/cards/right_click_things.lua"
+	></LuaComponent>
+
     <SpriteComponent 
         _tags="enabled_in_world,item_identified"
         image_file="mods/boss_reworks/files/spells/reward_levi.png"

@@ -1,5 +1,6 @@
 Items = { -- will mods want to append to this?
 	-- format: tag, image, r, g, b
+	{ "chest", "mods/boss_reworks/files/spells/forgotten/chest.png", 146, 125, 83 },
 	{ "alchemist_key", "mods/boss_reworks/files/spells/forgotten/key.png", 0, 119, 63 },
 	{ "wand", "mods/boss_reworks/files/spells/forgotten/wand.png", 0, 66, 115 },
 	{ "potion", "mods/boss_reworks/files/spells/forgotten/potion.png", 136, 136, 136 },

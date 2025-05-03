@@ -24,7 +24,7 @@
         cosmetic_force_create="1"
         count_min="1"
         count_max="3"
-        custom_alpha="0.4"
+        custom_alpha="0.25"
         draw_as_long="1"
         emission_interval_min_frames="2"
         emission_interval_max_frames="5"

@@ -1,9 +1,16 @@
 <Entity name="card" tags="card_action">
 
+	<!-- 5/3/25: how is this swapped with alchemist? -->
+
 	<ItemActionComponent 
 		_tags="enabled_in_world"
 		action_id="BR_REWARD_ALCHEMIST" >
 	</ItemActionComponent>
+
+	<LuaComponent
+		_tags="enabled_in_hand"
+		script_source_file="mods/boss_reworks/files/spells/cards/right_click_things.lua"
+	></LuaComponent>
 
     <SpriteComponent 
         _tags="enabled_in_world,item_identified"

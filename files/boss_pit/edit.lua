@@ -29,6 +29,9 @@ for k, v in ipairs(tree.children) do
 	if v.name == "HitboxComponent" then
 		v.attr.damage_multiplier = "1"
 	end
+	if v.name == "BossHealthBarComponent" then
+		v.attr.gui_max_distance_visible = 350
+	end
 end
 ModTextFileSetContent(path, tostring(tree))
 inject(args.SS,modes.P,"data/entities/animals/boss_pit/boss_pit_death.lua", 'if flag_status then', [[

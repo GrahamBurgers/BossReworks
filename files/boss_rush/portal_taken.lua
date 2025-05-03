@@ -79,6 +79,7 @@ function steal_player_stuff(player)
 			end
 		end
 	end
+	--[[
 	local perks_to_spawn = {}
 
 	for i, perk_data in ipairs(perk_list) do
@@ -111,15 +112,6 @@ function steal_player_stuff(player)
 			})
 			offset = offset - 6
 		end
-		EntityAddComponent2(storage, "ItemComponent", {
-			item_name = "$br_boss_rush_perks_name",
-			ui_description = "$br_boss_rush_perks_desc",
-			ui_display_description_on_pick_up_hint = true,
-			play_spinning_animation = false,
-			play_hover_animation = true,
-			play_pick_sound = true,
-			ui_sprite = "mods/boss_reworks/files/boss_rush/perks/eye_spook.png", -- just in case sprite appears for a frame or two
-		})
 		EntityAddComponent2(storage, "LuaComponent", {
 			execute_every_n_frame = -1,
 			script_item_picked_up = "mods/boss_reworks/files/boss_rush/perks/perkful_pickup.lua",
@@ -148,6 +140,7 @@ function steal_player_stuff(player)
 		ComponentObjectSetValue2(damage_model, "damage_multipliers", "fire", fire)
 		ComponentObjectSetValue2(damage_model, "damage_multipliers", "holy", holy)
 	end
+	]]--
 end
 
 local function boss_portal(to_x, to_y, entity, x_off, y_off)
@@ -201,6 +194,7 @@ local function nextboss()
 	end
 
 	-- NOTE: Nathan - perk_utilities.lua:167 has a bug that will break the fire and holy damage mults, so we store them before the buggy call.
+	--[[
 	local players = get_players()
 	for k, player in ipairs(players) do
 		local damage_model = EntityGetFirstComponent(player, "DamageModelComponent")
@@ -216,6 +210,7 @@ local function nextboss()
 			ComponentObjectSetValue2(damage_model, "damage_multipliers", "holy", holy)
 		end
 	end
+	]]--
 end
 
 local function spawn_wands(name, entity)
@@ -235,8 +230,20 @@ local function spawn_wands(name, entity)
 			end
 		end
 	end
-	EntityLoad(name .. "_01.xml", x - 12, y)
-	EntityLoad(name .. "_02.xml", x + 12, y)
+	-- wand 1
+	local a = EntityLoad(name .. "_01.xml", x - 12, y)
+	EntityAddComponent2(a, "LuaComponent", {
+		_tags="enabled_in_hand,enabled_in_inventory,enabled_in_world",
+		execute_every_n_frame=1,
+		script_source_file="mods/boss_reworks/files/unlimited_spells.lua"
+	})
+	-- wand 2
+	local b = EntityLoad(name .. "_02.xml", x + 12, y)
+	EntityAddComponent2(b, "LuaComponent", {
+		_tags="enabled_in_hand,enabled_in_inventory,enabled_in_world",
+		execute_every_n_frame=1,
+		script_source_file="mods/boss_reworks/files/unlimited_spells.lua"
+	})
 end
 
 local function start_boss_rush()
@@ -346,10 +353,24 @@ Bosses = {
 			boss_portal(x, y, "data/entities/animals/boss_fish/fish_giga.xml", 0, 100)
 			spawn_wands("mods/boss_reworks/files/boss_rush/wands/leviathan", player)
 			GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(500 * multiplier))
+			local thing = LoadGameEffectEntityTo(player, "data/entities/misc/effect_breath_underwater.xml")
+			EntityAddTag(thing, "boss_reworks_boss_rush")
+			EntityAddComponent2(thing, "LuaComponent", {
+				script_source_file="mods/boss_reworks/files/boss_rush/breathless_on.lua",
+				remove_after_executed=true,
+			})
+			EntityAddComponent2(thing, "LuaComponent", {
+				script_source_file="mods/boss_reworks/files/boss_rush/breathless_off.lua",
+				execute_every_n_frame=-1,
+				execute_on_removed=true,
+				remove_after_executed=true,
+			})
+			--[[
 			local perk = perk_spawn(x, y, "BREATH_UNDERWATER")
 			perk_pickup(perk, player, EntityGetName(perk), false, false)
 			local perk2 = perk_spawn(x, y, "UNLIMITED_SPELLS")
 			perk_pickup(perk2, player, EntityGetName(perk2), false, false)
+			]]--
 		end,
 	},
 	{
@@ -368,8 +389,10 @@ Bosses = {
 			boss_portal(x, y, "data/entities/animals/boss_pit/boss_pit.xml", 0, -30)
 			spawn_wands("mods/boss_reworks/files/boss_rush/wands/squidward", player)
 			GlobalsSetValue("BR_BOSS_RUSH_HP_MAX", tostring(600 * multiplier))
+			--[[
 			local perk = perk_spawn(x, y, "UNLIMITED_SPELLS")
 			perk_pickup(perk, player, EntityGetName(perk), false, false)
+			]]--
 		end,
 	},
 	{

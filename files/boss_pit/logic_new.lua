@@ -6,7 +6,8 @@ local player = EntityGetClosestWithTag(x, y, "player_unit")
 if player == 0 then
 	player = EntityGetClosestWithTag(x, y, "polymorphed_player") or 0
 end
-if not varsto or not clock or player <= 0 then return end
+local player_is_near = #(EntityGetInRadiusWithTag(x, y, 350, "player_unit") or EntityGetInRadiusWithTag(x, y, 350, "polymorphed_player") or {}) > 0
+if (not varsto) or (not clock) or (player <= 0) or (not player_is_near) then return end
 dofile_once("mods/boss_reworks/files/projectile_utils.lua")
 local wandcore = EntityGetInRadiusWithTag(x, y, 40, "br_wandcore") or {}
 if #wandcore > 0 then
