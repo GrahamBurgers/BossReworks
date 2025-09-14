@@ -21,11 +21,16 @@ if comp and proj and platforming and damage and vel then
         local distance = math.sqrt((x2 - x)^2 + (y2 - y)^2)
         if distance < 50 then -- try not to spam when going through portals
             EntitySetTransform(who, x, y)
+            local c = EntityGetFirstComponentIncludingDisabled(who, "PlatformShooterPlayerComponent")
+            if c then
+                local cx, cy = ComponentGetValue2(c, "mSmoothedCameraPosition")
+                ComponentSetValue2(c, "mSmoothedCameraPosition", (cx + x) / 2, (cy + y) / 2)
+            end
         else
             EntityKill(me)
         end
         local gravity = ComponentGetValue2(platforming, "pixel_gravity") / -60.0106489103
-        ComponentSetValue2(comp, "mVelocity", vx, vy + gravity) -- how do we trigger fast camera?
+        ComponentSetValue2(comp, "mVelocity", vx, vy + gravity)
     end
 end
 local toggle = ComponentGetValue2(GetUpdatedComponentID(), "mTimesExecuted")
