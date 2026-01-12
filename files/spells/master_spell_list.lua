@@ -106,7 +106,7 @@ return {
     {"GRAHAM_SHIELD_DRONE", "GRAHAM_ATTACK_DRONE",}, -- no support drone
     {"CRITICAL_HIT", "GRAHAM_CRIT_DOWN",},
     {"FLY_UPWARDS", "FLY_DOWNWARDS", "GRAHAM_DIVEBOMB",},
-	{"WORM_SHOT", "EL_WORM_SHOTGUN",}
+	{"WORM_SHOT", "EL_WORM_SHOTGUN",},
     -- no souls here because that would defeat the point
 
     -- modded spell lists
